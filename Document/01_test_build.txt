@@ -1,0 +1,4 @@
+PS D:\WorkSpace\loginJwtRSA> .\gradlew.bat clean
+PS D:\WorkSpace\loginJwtRSA> .\gradlew.bat build
+
+PS D:\WorkSpace\loginJwtRSA\build\libs> java -jar .\loginJwtRSA-0.0.1-SNAPSHOT.jar

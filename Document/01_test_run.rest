@@ -1,0 +1,9 @@
+@BaseURL = http://localhost:8080
+
+### TEST login success if password is "18"
+POST {{BaseURL}}/api/v1/security/signin HTTP/1.1
+content-Type: application/json
+
+{
+    "password": "18"
+}
