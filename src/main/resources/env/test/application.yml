@@ -1,0 +1,22 @@
+server:
+  port: 29999
+  servlet:
+    contextPath: /test
+
+str:
+  individual: "Individual test"
+
+logging:
+  pattern:
+    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    rolling-file-name: "D:/WorkSpace/log/test/loginRSA-test.%d{yyyy-MM-dd}.%i.log"
+    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+  file:
+    name: D:/WorkSpace/log/test/loginRSA-test.log
+    max-history: 30
+  level:
+    org:
+      springframework: INFO
+    com:
+      example:
+        loginJwtRSA: DEBUG

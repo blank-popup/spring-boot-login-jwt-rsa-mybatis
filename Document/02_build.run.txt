@@ -1,0 +1,8 @@
+PS D:\WorkSpace\loginJwtRSA> .\gradlew.bat clean
+PS D:\WorkSpace\loginJwtRSA> .\gradlew.bat build
+PS D:\WorkSpace\loginJwtRSA> .\gradlew.bat clean build
+
+PS D:\WorkSpace\loginJwtRSA\build\libs> java -jar .\loginJwtRSA-0.0.1-SNAPSHOT.jar
+PS D:\WorkSpace\loginJwtRSA\build\libs> java -jar .\loginJwtRSA-0.0.1-SNAPSHOT.jar --spring.profiles.active=local
+D:\WorkSpace\loginJwtRSA\build\libs> java -jar -Dspring.profiles.active=local .\loginJwtRSA-0.0.1-SNAPSHOT.jar
+PS D:\WorkSpace\loginJwtRSA\build\libs> java -jar "-Dspring.profiles.active=local" .\loginJwtRSA-0.0.1-SNAPSHOT.jar

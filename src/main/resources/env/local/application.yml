@@ -1,0 +1,22 @@
+server:
+  port: 28888
+  servlet:
+    contextPath: /local
+
+str:
+  individual: "Individual local"
+
+logging:
+  pattern:
+    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    rolling-file-name: "D:/WorkSpace/log/test/loginRSA-local.%d{yyyy-MM-dd}.%i.log"
+    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+  file:
+    name: D:/WorkSpace/log/test/loginRSA-local.log
+    max-history: 30
+  level:
+    org:
+      springframework: INFO
+    com:
+      example:
+        loginJwtRSA: TRACE

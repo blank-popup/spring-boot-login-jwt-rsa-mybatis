@@ -1,0 +1,20 @@
+str:
+  common: "COMMON"
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "local"
+    import:
+      - classpath:/env/local/application.yml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "test"
+    import:
+      - classpath:/env/test/application.yml
