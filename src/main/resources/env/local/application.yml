@@ -20,3 +20,12 @@ logging:
     com:
       example:
         loginJwtRSA: TRACE
+    log4jdbc:
+      log4j2: ERROR
+#    jdbc:
+#      sqlonly: TRACE
+#      sqltiming: TRACE
+#      resultsettable: TRACE
+#      audit: TRACE
+#      resultset: TRACE
+#      connection: TRACE

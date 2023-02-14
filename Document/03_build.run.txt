@@ -1,0 +1,26 @@
+dave@dave-VirtualBox:~$ sudo vi /etc/mysql/mariadb.conf.d/50-server.cnf
+------------------
+...
+bind-address            = 127.0.0.1
+...
+------------------
+...
+# bind-address            = 127.0.0.1
+bind-address            = 0.0.0.0
+...
+------------------
+
+dave@dave-VirtualBox:~$ sudo systemctl stop mysql
+dave@dave-VirtualBox:~$ sudo /usr/bin/mysqld_safe –skip-grant &
+dave@dave-VirtualBox:~$ mysql -u root mysql
+MariaDB [(none)]> UPDATE user SET PASSWORD=PASSWORD('000000') WHERE user='root';
+MariaDB [(none)]> FLUSH PRIVILEGES;
+dave@dave-VirtualBox:~$ mysqladmin -u root -p shutdown
+dave@dave-VirtualBox:~$ sudo systemctl start mariadb
+
+
+dave@dave-VirtualBox:~$ mysql -u root -p
+MariaDB [(none)]> CREATE USER 'davebase'@'%' IDENTIFIED BY '0000';
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON *.* to 'davebase'@'%';
+MariaDB [(none)]> FLUSH PRIVILEGES;
+MariaDB [(none)]> SHOW GRANTS FOR 'davebase'@'%';

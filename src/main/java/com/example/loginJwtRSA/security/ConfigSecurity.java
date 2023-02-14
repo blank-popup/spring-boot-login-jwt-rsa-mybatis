@@ -6,14 +6,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.web.SecurityFilterChain;
 
 @EnableWebSecurity
-public class SecurityConfig {
+public class ConfigSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             // Solution 403 for POST request
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/v1/security/signin").permitAll()
+            .antMatchers("/api/v1/security/**").permitAll()
+//            .antMatchers("/api/v1/security/signin").permitAll()
             .anyRequest().authenticated();
         return http.build();
     }

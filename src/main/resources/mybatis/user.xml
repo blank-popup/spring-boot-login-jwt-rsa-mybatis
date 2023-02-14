@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.loginJwtRSA.security.MapperUser">
+    <select id="getAllUserInfo" resultType="com.example.loginJwtRSA.security.ResponseUser">
+        SELECT
+            username,
+            password
+        FROM
+            aha_user
+    </select>
+
+    <select id="getUserInfo" parameterType="com.example.loginJwtRSA.security.RequestUser" resultType="com.example.loginJwtRSA.security.ResponseUser">
+        SELECT
+            username,
+            password
+        FROM
+            aha_user
+        WHERE
+            username = #{username}
+    </select>
+    <insert id="createUserInfo" parameterType="com.example.loginJwtRSA.security.RequestUser">
+        INSERT INTO aha_user
+        (
+            username,
+            password
+        )
+        VALUES
+        (
+            #{username},
+            #{password}
+        )
+    </insert>
+    <update id="modifyUserPassword" parameterType="com.example.loginJwtRSA.security.RequestUser">
+        UPDATE
+            aha_user
+        SET
+            password = #{password}
+        WHERE
+            username = #{username}
+    </update>
+    <delete id="removeUserInfo" parameterType="com.example.loginJwtRSA.security.RequestUser">
+        DELETE
+        FROM
+            aha_user
+        WHERE
+            username = #{username}
+    </delete>
+</mapper>

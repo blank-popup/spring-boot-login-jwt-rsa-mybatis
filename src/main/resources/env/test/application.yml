@@ -16,7 +16,16 @@ logging:
     max-history: 30
   level:
     org:
-      springframework: INFO
+      springframework: TRACE
     com:
       example:
-        loginJwtRSA: DEBUG
+        loginJwtRSA: TRACE
+    log4jdbc:
+      log4j2: TRACE
+#    jdbc:
+#      sqlonly: TRACE
+#      sqltiming: TRACE
+#      resultsettable: TRACE
+#      audit: TRACE
+#      resultset: TRACE
+#      connection: TRACE

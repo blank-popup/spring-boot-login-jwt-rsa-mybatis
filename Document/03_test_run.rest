@@ -1,0 +1,43 @@
+@BaseURL = http://localhost:28888/local
+# @BaseURL = http://localhost:29999/test
+
+### Get all users information
+POST {{BaseURL}}/api/v1/security/getAllUserInfo HTTP/1.1
+content-Type: application/json
+
+{
+}
+
+### Get user information with username
+POST {{BaseURL}}/api/v1/security/getUserInfo HTTP/1.1
+content-Type: application/json
+
+{
+    "username": "ahaname"
+}
+
+### Create user information with username, password
+POST {{BaseURL}}/api/v1/security/createUserInfo HTTP/1.1
+content-Type: application/json
+
+{
+    "username": "aha9876",
+    "password": "1234"
+}
+
+### Modify user password with username
+POST {{BaseURL}}/api/v1/security/modifyUserPassword HTTP/1.1
+content-Type: application/json
+
+{
+    "username": "aha9876",
+    "password": "1234000"
+}
+
+### Remove user information with username
+POST {{BaseURL}}/api/v1/security/removeUserInfo HTTP/1.1
+content-Type: application/json
+
+{
+    "username": "aha9876"
+}
