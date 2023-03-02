@@ -1,15 +1,5 @@
-str:
-  common: "COMMON"
-
-spring:
-  datasource:
-    url: jdbc:log4jdbc:mariadb://192.168.200.159:3306/davebase?characterEncoding=UTF-8&allowMultiQueries=true
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    username: base
-    password: "0000"
-
 mybatis:
-  mapper-locations: mybatis/**/*.xml
+  mapper-locations: classpath:/mybatis/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
 

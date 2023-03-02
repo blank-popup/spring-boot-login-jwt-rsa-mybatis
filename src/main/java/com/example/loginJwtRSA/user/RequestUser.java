@@ -1,9 +1,9 @@
-package com.example.loginJwtRSA.security;
+package com.example.loginJwtRSA.user;
 
 import lombok.Data;
 
 @Data
-public class ResponseUser {
+public class RequestUser {
     private String username;
     private String password;
 }

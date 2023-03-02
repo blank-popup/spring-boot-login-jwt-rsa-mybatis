@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.loginJwtRSA.security.MapperUser">
-    <select id="getAllUserInfo" resultType="com.example.loginJwtRSA.security.ResponseUser">
+<mapper namespace="com.example.loginJwtRSA.user.MapperUser">
+    <select id="getAll" resultType="com.example.loginJwtRSA.user.ResponseUser">
         SELECT
             username,
             password
@@ -10,7 +10,7 @@
             aha_user
     </select>
 
-    <select id="getUserInfo" parameterType="com.example.loginJwtRSA.security.RequestUser" resultType="com.example.loginJwtRSA.security.ResponseUser">
+    <select id="get" parameterType="com.example.loginJwtRSA.user.RequestUser" resultType="com.example.loginJwtRSA.user.ResponseUser">
         SELECT
             username,
             password
@@ -19,7 +19,7 @@
         WHERE
             username = #{username}
     </select>
-    <insert id="createUserInfo" parameterType="com.example.loginJwtRSA.security.RequestUser">
+    <insert id="create" parameterType="com.example.loginJwtRSA.user.RequestUser">
         INSERT INTO aha_user
         (
             username,
@@ -31,7 +31,7 @@
             #{password}
         )
     </insert>
-    <update id="modifyUserPassword" parameterType="com.example.loginJwtRSA.security.RequestUser">
+    <update id="modify" parameterType="com.example.loginJwtRSA.user.RequestUser">
         UPDATE
             aha_user
         SET
@@ -39,7 +39,7 @@
         WHERE
             username = #{username}
     </update>
-    <delete id="removeUserInfo" parameterType="com.example.loginJwtRSA.security.RequestUser">
+    <delete id="remove" parameterType="com.example.loginJwtRSA.user.RequestUser">
         DELETE
         FROM
             aha_user

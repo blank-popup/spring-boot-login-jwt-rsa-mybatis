@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.loginJwtRSA.security.MapperAuth">
+    <select id="selectUserDetailsByUsername" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
+        SELECT
+            id,
+            username,
+            password
+        FROM aha_user
+        WHERE username = #{username}
+    </select>
+
+    <select id="selectUserDetailsById" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
+        SELECT
+            id,
+            username,
+            password
+        FROM aha_user
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectRolesByUsername" resultType="String">
+        SELECT
+            ar.name
+        FROM aha_user au
+        JOIN aha_user_role aur
+        ON aur.id_user = au.id
+        JOIN aha_role ar
+        ON ar.id = aur.id_role
+        WHERE au.username = #{username}
+    </select>
+
+    <select id="selectRolesById" resultType="String">
+        SELECT
+            ar.name
+        FROM aha_user_role aur
+        JOIN aha_role ar
+        ON aur.id_role = ar.id
+        WHERE aur.id_user = #{id}
+    </select>
+
+    <insert id="insertUserDetails" parameterType="com.example.loginJwtRSA.security.UserDetailsCustom">
+        INSERT INTO aha_user (
+            username,
+            password
+        )
+        VALUES (
+            #{username},
+            #{password}
+        )
+    </insert>
+</mapper>
