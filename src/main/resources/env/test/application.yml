@@ -5,14 +5,15 @@ server:
 
 spring:
   datasource:
-    url: jdbc:log4jdbc:mariadb://192.168.200.159:3306/davebase?characterEncoding=UTF-8&allowMultiQueries=true
+    url: jdbc:log4jdbc:mariadb://192.168.200.159:3306/davebase_test?characterEncoding=UTF-8&allowMultiQueries=true
+#    url: jdbc:log4jdbc:mariadb://192.168.0.13:3306/davebase_test?characterEncoding=UTF-8&allowMultiQueries=true
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: base
     password: "0000"
 
 jwt:
   secret: ImPossible$$
-  token-validity-in-seconds: 86400000
+  token-validity-ms: 86400000
 
 logging:
   pattern:
@@ -24,12 +25,12 @@ logging:
     max-history: 30
   level:
     org:
-      springframework: TRACE
+      springframework: INFO
     com:
       example:
         loginJwtRSA: TRACE
     log4jdbc:
-      log4j2: TRACE
+      log4j2: ERROR
 #    jdbc:
 #      sqlonly: TRACE
 #      sqltiming: TRACE

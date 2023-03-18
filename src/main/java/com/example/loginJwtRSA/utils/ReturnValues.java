@@ -18,34 +18,9 @@ public class ReturnValues {
         return map;
     }
 
-    public static Map<String, Object> createReturnCountMessage(int count, String message) {
+    public static Map<String, Object> createReturnMessage(String message) {
         Map map = new HashMap<String, Object>();
-        map.put("count", count);
         map.put("message", message);
-        return map;
-    }
-
-    public static Map<String, Object> createReturnStatusMessage(String status, String message) {
-        Map map = new HashMap<String, Object>();
-        map.put("status", status);
-        map.put("message", message);
-        return map;
-    }
-
-    public static Map<String, Object> createReturnStatusMessageList(String status, String message, List<?> list) {
-        Map map = new HashMap<String, Object>();
-        map.put("status", status);
-        map.put("message", message);
-        map.put("data", list);
-        map.put("count", list.size());
-        return map;
-    }
-
-    public static Map<String, Object> createReturnStatusMessageData(String status, String message, Object object) {
-        Map map = new HashMap<String, Object>();
-        map.put("status", status);
-        map.put("message", message);
-        map.put("data", object);
         return map;
     }
 }

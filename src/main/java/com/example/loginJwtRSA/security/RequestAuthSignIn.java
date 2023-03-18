@@ -3,7 +3,7 @@ package com.example.loginJwtRSA.security;
 import lombok.Data;
 
 @Data
-public class RequestAuth {
+public class RequestAuthSignIn {
     private String username;
     private String password;
 }

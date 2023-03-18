@@ -29,7 +29,7 @@ public class JwtFilterBean extends GenericFilterBean {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             log.info("Save authentication in security context : {}", requestURI);
         } else {
-            log.debug("There is not available JWT : {}", requestURI);
+            log.warn("There is not available JWT : {}", requestURI);
         }
 
         chain.doFilter(request, response);

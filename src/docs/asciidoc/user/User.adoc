@@ -1,0 +1,43 @@
+[[User]]
+== User
+This is just an example for CRUD.
+
+=== Get all users
+
+include::{snippets}/user/GetUserAll/http-request.adoc[]
+include::{snippets}/user/GetUserAll/curl-request.adoc[]
+include::{snippets}/user/GetUserAll/request-fields.adoc[]
+include::{snippets}/user/GetUserAll/http-response.adoc[]
+include::{snippets}/user/GetUserAll/response-fields.adoc[]
+
+=== Get one user
+
+include::{snippets}/user/GetUserByUsername/http-request.adoc[]
+include::{snippets}/user/GetUserByUsername/curl-request.adoc[]
+include::{snippets}/user/GetUserByUsername/request-fields.adoc[]
+include::{snippets}/user/GetUserByUsername/http-response.adoc[]
+include::{snippets}/user/GetUserByUsername/response-fields.adoc[]
+
+=== Create one user
+
+include::{snippets}/user/CreateUser/http-request.adoc[]
+include::{snippets}/user/CreateUser/curl-request.adoc[]
+include::{snippets}/user/CreateUser/request-fields.adoc[]
+include::{snippets}/user/CreateUser/http-response.adoc[]
+include::{snippets}/user/CreateUser/response-fields.adoc[]
+
+=== Modify one user
+
+include::{snippets}/user/ModifyUser/http-request.adoc[]
+include::{snippets}/user/ModifyUser/curl-request.adoc[]
+include::{snippets}/user/ModifyUser/request-fields.adoc[]
+include::{snippets}/user/ModifyUser/http-response.adoc[]
+include::{snippets}/user/ModifyUser/response-fields.adoc[]
+
+=== Remove one user
+
+include::{snippets}/user/RemoveUser/http-request.adoc[]
+include::{snippets}/user/RemoveUser/curl-request.adoc[]
+include::{snippets}/user/RemoveUser/request-fields.adoc[]
+include::{snippets}/user/RemoveUser/http-response.adoc[]
+include::{snippets}/user/RemoveUser/response-fields.adoc[]

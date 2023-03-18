@@ -2,24 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.loginJwtRSA.user.MapperUser">
-    <select id="getAll" resultType="com.example.loginJwtRSA.user.ResponseUser">
+    <select id="getUserAll" resultType="com.example.loginJwtRSA.user.ResponseUser">
         SELECT
+            id,
             username,
             password
-        FROM
-            aha_user
+        FROM aha_user
     </select>
 
-    <select id="get" parameterType="com.example.loginJwtRSA.user.RequestUser" resultType="com.example.loginJwtRSA.user.ResponseUser">
+    <select id="getUserByUsername" parameterType="com.example.loginJwtRSA.user.RequestUser" resultType="com.example.loginJwtRSA.user.ResponseUser">
         SELECT
+            id,
             username,
             password
-        FROM
-            aha_user
-        WHERE
-            username = #{username}
+        FROM aha_user
+        WHERE username = #{username}
     </select>
-    <insert id="create" parameterType="com.example.loginJwtRSA.user.RequestUser">
+    <insert id="createUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
         INSERT INTO aha_user
         (
             username,
@@ -31,19 +30,16 @@
             #{password}
         )
     </insert>
-    <update id="modify" parameterType="com.example.loginJwtRSA.user.RequestUser">
+    <update id="modifyUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
         UPDATE
             aha_user
         SET
             password = #{password}
-        WHERE
-            username = #{username}
+        WHERE username = #{username}
     </update>
-    <delete id="remove" parameterType="com.example.loginJwtRSA.user.RequestUser">
+    <delete id="removeUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
         DELETE
-        FROM
-            aha_user
-        WHERE
-            username = #{username}
+        FROM aha_user
+        WHERE username = #{username}
     </delete>
 </mapper>

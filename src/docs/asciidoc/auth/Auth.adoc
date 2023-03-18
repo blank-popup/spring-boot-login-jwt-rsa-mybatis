@@ -1,0 +1,25 @@
+[[Auth]]
+== Auth
+This API is used until user authentication.
+
+=== Sign Up
+
+include::{snippets}/auth/signup/http-request.adoc[]
+include::{snippets}/auth/signup/curl-request.adoc[]
+// include::{snippets}/auth/signup/httpie-request.adoc[]
+// include::{snippets}/auth/signup/request-body.adoc[]
+include::{snippets}/auth/signup/request-fields.adoc[]
+include::{snippets}/auth/signup/http-response.adoc[]
+// include::{snippets}/auth/signup/response-body.adoc[]
+include::{snippets}/auth/signup/response-fields.adoc[]
+
+=== Sign In
+
+include::{snippets}/auth/signin/http-request.adoc[]
+include::{snippets}/auth/signin/curl-request.adoc[]
+// include::{snippets}/auth/signin/httpie-request.adoc[]
+// include::{snippets}/auth/signin/request-body.adoc[]
+include::{snippets}/auth/signin/request-fields.adoc[]
+include::{snippets}/auth/signin/http-response.adoc[]
+// include::{snippets}/auth/signin/response-body.adoc[]
+include::{snippets}/auth/signin/response-fields.adoc[]

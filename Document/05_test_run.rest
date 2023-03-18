@@ -1,0 +1,69 @@
+# @BaseURL = http://localhost:8080
+@BaseURL = http://localhost:28888/local/api/v1
+# @BaseURL = http://localhost:29999/test/api/v1
+
+### SignUp
+POST {{BaseURL}}/auth/signup HTTP/1.1
+content-Type: application/json
+
+{
+    "username": "newuser",
+    "password": "newpass",
+    "roles": ["ROLE_ADMIN", "ROLE_MANAGER"]
+}
+
+### SignIn
+POST {{BaseURL}}/auth/signin HTTP/1.1
+content-Type: application/json
+
+{
+    "username": "newuser",
+    "password": "newpass"
+}
+
+### Get User All
+GET {{BaseURL}}/userAll HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaXAiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJ2c2NvZGUtcmVzdGNsaWVudCIsImlhdCI6MTY3ODk4MTk2OCwiZXhwIjoxNjc4OTg1NTY4fQ.n6qTO22eZYyPia5DozIoVok1MEdYOQVZgzawO_u1zd8
+
+{
+
+}
+
+### Get User By Username
+GET {{BaseURL}}/user HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaXAiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJ2c2NvZGUtcmVzdGNsaWVudCIsImlhdCI6MTY3ODk4MTk2OCwiZXhwIjoxNjc4OTg1NTY4fQ.n6qTO22eZYyPia5DozIoVok1MEdYOQVZgzawO_u1zd8
+
+{
+    "username": "newuser"
+}
+
+### Create User
+POST {{BaseURL}}/user HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaXAiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJ2c2NvZGUtcmVzdGNsaWVudCIsImlhdCI6MTY3ODk4MTk2OCwiZXhwIjoxNjc4OTg1NTY4fQ.n6qTO22eZYyPia5DozIoVok1MEdYOQVZgzawO_u1zd8
+
+{
+    "username": "newuser2",
+    "password": "newpass2"
+}
+
+### ModifyUser
+PUT {{BaseURL}}/user HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaXAiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJ2c2NvZGUtcmVzdGNsaWVudCIsImlhdCI6MTY3ODk4MTk2OCwiZXhwIjoxNjc4OTg1NTY4fQ.n6qTO22eZYyPia5DozIoVok1MEdYOQVZgzawO_u1zd8
+
+{
+    "username": "newuser2",
+    "password": "1234"
+}
+
+### Delete User
+DELETE {{BaseURL}}/user HTTP/1.1
+content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI5IiwiaXAiOiIxMjcuMC4wLjEiLCJ1c2VyQWdlbnQiOiJ2c2NvZGUtcmVzdGNsaWVudCIsImlhdCI6MTY3ODk4MTk2OCwiZXhwIjoxNjc4OTg1NTY4fQ.n6qTO22eZYyPia5DozIoVok1MEdYOQVZgzawO_u1zd8
+
+{
+    "username": "newuser2"
+}

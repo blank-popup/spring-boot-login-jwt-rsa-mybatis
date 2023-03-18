@@ -1,0 +1,15 @@
+:snippets: {docdir}/../../../build/generated-snippets
+
+
+= RESTful API Guide
+:doctype: user
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectnums:
+:sectlinks:
+:sectanchors:
+
+include::auth/Auth.adoc[]
+include::user/User.adoc[]

@@ -6,9 +6,9 @@ import java.util.List;
 
 @Mapper
 public interface MapperUser {
-    List<ResponseUser> getAll();
-    ResponseUser get(RequestUser requestUser);
-    int create(RequestUser requestUser);
-    int modify(RequestUser requestUser);
-    int remove(RequestUser requestUser);
+    List<ResponseUser> getUserAll();
+    ResponseUser getUserByUsername(RequestUser requestUser);
+    int createUser(RequestUser requestUser);
+    int modifyUser(RequestUser requestUser);
+    int removeUser(RequestUser requestUser);
 }

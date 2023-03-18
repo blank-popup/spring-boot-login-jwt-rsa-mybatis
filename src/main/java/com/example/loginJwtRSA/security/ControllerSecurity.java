@@ -18,19 +18,18 @@ public class ControllerSecurity {
     private final ServiceAuth serviceAuth;
 
     @PostMapping("/auth/signup")
-    public ResponseEntity signup(@RequestBody UserDetailsCustom userDetailsCustom) {
+    public ResponseEntity signup(@RequestBody RequestAuthSignUp requestAuthSignUp) {
         ResponseEntity responseEntity = null;
         try {
-            UserDetailsCustom newUser = serviceAuth.signup(userDetailsCustom);
+            ResponseAuthSignUp responseAuthSignUp = serviceAuth.signup(requestAuthSignUp);
 
             responseEntity = ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(newUser);
+                    .body(responseAuthSignUp);
         } catch (RuntimeException exception) {
-            log.debug(exception.getMessage());
+            log.warn(exception.getMessage());
             Map<String, Object> response = ReturnValues
-                    .createReturnStatusMessage(
-                            "Fail",
+                    .createReturnMessage(
                             exception.getMessage()
                     );
 
@@ -42,23 +41,22 @@ public class ControllerSecurity {
     }
 
     @PostMapping("/auth/signin")
-    public ResponseEntity signin(@RequestBody RequestAuth requestAuth) {
+    public ResponseEntity signin(@RequestBody RequestAuthSignIn requestAuthSignIn) {
         ResponseEntity responseEntity = null;
         try {
-            ResponseAuth responseAuth = serviceAuth.signin(requestAuth);
+            ResponseAuthSignIn responseAuthSignIn = serviceAuth.signin(requestAuthSignIn);
 
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", "Bearer " + responseAuth.getToken());
+            httpHeaders.add("Authorization", "Bearer " + responseAuthSignIn.getToken());
 
             responseEntity = ResponseEntity
                     .status(HttpStatus.OK)
                     .headers(httpHeaders)
-                    .body(responseAuth);
+                    .body(responseAuthSignIn);
         } catch (RuntimeException exception) {
-            log.debug(exception.getMessage());
+            log.warn(exception.getMessage());
             Map<String, Object> response = ReturnValues
-                    .createReturnStatusMessage(
-                            "Fail",
+                    .createReturnMessage(
                             exception.getMessage()
                     );
 

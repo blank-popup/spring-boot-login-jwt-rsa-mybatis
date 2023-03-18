@@ -1,39 +1,43 @@
 package com.example.loginJwtRSA.user;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class ServiceUser {
-    @Autowired
-    MapperUser mapperUser;
+    private final MapperUser mapperUser;
+    private final PasswordEncoder passwordEncoder;
 
-    public List<ResponseUser> getAll() {
-        List<ResponseUser> users = mapperUser.getAll();
+    public List<ResponseUser> getUserAll() {
+        List<ResponseUser> users = mapperUser.getUserAll();
         return users;
     }
 
-    public ResponseUser get(RequestUser requestUser) {
-        ResponseUser user = mapperUser.get(requestUser);
+    public ResponseUser getUserByUsername(RequestUser requestUser) {
+        ResponseUser user = mapperUser.getUserByUsername(requestUser);
         return user;
     }
 
-    public int create(RequestUser requestUser) {
-        int result = mapperUser.create(requestUser);
+    public int createUser(RequestUser requestUser) {
+        requestUser.setPassword(passwordEncoder.encode(requestUser.getPassword()));
+        int result = mapperUser.createUser(requestUser);
         return result;
     }
 
-    public int modify(RequestUser requestUser) {
-        int result = mapperUser.modify(requestUser);
+    public int modifyUser(RequestUser requestUser) {
+        requestUser.setPassword(passwordEncoder.encode(requestUser.getPassword()));
+        int result = mapperUser.modifyUser(requestUser);
         return result;
     }
 
-    public int remove(RequestUser requestUser) {
-        int reault = mapperUser.remove(requestUser);
+    public int removeUser(RequestUser requestUser) {
+        int reault = mapperUser.removeUser(requestUser);
         return reault;
     }
 }

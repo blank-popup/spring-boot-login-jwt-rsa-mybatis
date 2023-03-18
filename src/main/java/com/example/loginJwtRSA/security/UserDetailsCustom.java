@@ -1,5 +1,6 @@
 package com.example.loginJwtRSA.security;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Data
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDetailsCustom implements UserDetails {
     private Long id;
     private String username;

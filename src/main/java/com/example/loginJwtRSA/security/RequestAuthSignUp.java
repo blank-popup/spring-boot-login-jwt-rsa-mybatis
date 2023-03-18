@@ -5,9 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ResponseAuth {
-    private Long id;
+public class RequestAuthSignUp {
     private String username;
-    private String token;
+    private String password;
     private List<String> roles;
 }

@@ -20,6 +20,24 @@
         WHERE id = #{id}
     </select>
 
+    <select id="selectRole" resultType="com.example.loginJwtRSA.security.ModelRole">
+        SELECT
+            id,
+            name
+        FROM aha_role
+    </select>
+
+    <insert id="insertUserRole" parameterType="com.example.loginJwtRSA.security.ModelUserRole">
+        INSERT INTO aha_user_role (
+            id_user,
+            id_role
+        )
+        VALUES (
+            #{idUser},
+            #{idRole}
+        )
+    </insert>
+
     <select id="selectRolesByUsername" resultType="String">
         SELECT
             ar.name
@@ -40,7 +58,7 @@
         WHERE aur.id_user = #{id}
     </select>
 
-    <insert id="insertUserDetails" parameterType="com.example.loginJwtRSA.security.UserDetailsCustom">
+    <insert id="insertUser" parameterType="com.example.loginJwtRSA.security.RequestAuthSignUp">
         INSERT INTO aha_user (
             username,
             password
