@@ -24,7 +24,7 @@ public class ServiceAuth {
 
     @Transactional
     public ResponseAuthSignUp signup(RequestAuthSignUp requestAuthSignUp) {
-        log.error("ROLES : {}", requestAuthSignUp.getRoles());
+        log.info("ROLES : {}", requestAuthSignUp.getRoles());
         if (mapperAuth.selectUserDetailsByUsername(requestAuthSignUp.getUsername()).isPresent()) {
             throw new RuntimeException("Username exist already");
         }

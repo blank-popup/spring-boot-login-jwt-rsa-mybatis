@@ -1,12 +1,13 @@
 |===
-    |Field|Type|Description|Required|Constraints|Example
+|Field|Type|Description|Required|Constraints|Example
 
-    {{#fields}}
-        |{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
-        |{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
-        |{{#tableCellContent}}{{description}}{{/tableCellContent}}
-        |{{#tableCellContent}}{{^optional}}TRUE{{/optional}}{{/tableCellContent}}
-        |{{#tableCellContent}}{{#constraints}}{{constraints}}{{/constraints}}{{/tableCellContent}}
-        |{{#tableCellContent}}{{#example}}{{example}}{{/example}}{{/tableCellContent}}
-    {{/fields}}
+{{#fields}}
+|{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
+|{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
+|{{#tableCellContent}}{{description}}{{/tableCellContent}}
+|{{#tableCellContent}}{{^optional}}TRUE{{/optional}}{{/tableCellContent}}
+|{{#tableCellContent}}{{#constraints}}{{constraints}}{{/constraints}}{{/tableCellContent}}
+|{{#tableCellContent}}{{#example}}{{example}}{{/example}}{{/tableCellContent}}
+
+{{/fields}}
 |===

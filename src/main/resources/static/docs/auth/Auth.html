@@ -448,31 +448,43 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div class="sect2">
 <h3 id="_sign_up">Sign Up</h3>
-<div class="listingblock">
+<div class="literalblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/v1/auth/signup HTTP/1.1
-Content-Type: application/json;charset=UTF-8
-Content-Length: 103
-Host: localhost:8080
-
-{
-  "username" : "newuser",
-  "password" : "newpass",
-  "roles" : [ "ROLE_USER", "ROLE_MANAGER" ]
-}</code></pre>
+<pre>POST /api/v1/auth/signup HTTP/1.1</pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/v1/auth/signup' -i -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{
-  "username" : "newuser",
-  "password" : "newpass",
-  "roles" : [ "ROLE_USER", "ROLE_MANAGER" ]
-}'</code></pre>
+<div class="sect3">
+<h4 id="_request_headers">Request Headers</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Constraints</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The content type of the payload</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/json;charset=UTF-8</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
+<div class="sect3">
+<h4 id="_request_fields">Request Fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -519,28 +531,9 @@ Host: localhost:8080
 </tr>
 </tbody>
 </table>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Content-Type: application/json;charset=UTF-8
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 90
-
-{
-  "id" : 52,
-  "username" : "newuser",
-  "roles" : [ "ROLE_USER", "ROLE_MANAGER" ]
-}</code></pre>
 </div>
-</div>
+<div class="sect3">
+<h4 id="_response_fields">Response Fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -588,31 +581,88 @@ Content-Length: 90
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="_sign_in">Sign In</h3>
+<div class="sect3">
+<h4 id="_example_of_request">Example of Request</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/v1/auth/signin HTTP/1.1
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/v1/auth/signup HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 54
+Content-Length: 103
 Host: localhost:8080
 
 {
-  "username" : "nonuser",
-  "password" : "0000"
+  "username" : "newuser",
+  "password" : "newpass",
+  "roles" : [ "ROLE_USER", "ROLE_MANAGER" ]
 }</code></pre>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_example_of_response">Example of Response</h4>
 <div class="listingblock">
 <div class="content">
-<pre class="highlight"><code class="language-bash" data-lang="bash">$ curl 'http://localhost:8080/api/v1/auth/signin' -i -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    -d '{
-  "username" : "nonuser",
-  "password" : "0000"
-}'</code></pre>
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 89
+
+{
+  "id" : 9,
+  "username" : "newuser",
+  "roles" : [ "ROLE_USER", "ROLE_MANAGER" ]
+}</code></pre>
 </div>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sign_in">Sign In</h3>
+<div class="literalblock">
+<div class="content">
+<pre>POST /api/v1/auth/signin HTTP/1.1</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_request_headers_2">Request Headers</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Required</th>
+<th class="tableblock halign-left valign-top">Constraints</th>
+<th class="tableblock halign-left valign-top">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Content-Type</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The content type of the payload</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">application/json;charset=UTF-8</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="_request_fields_2">Request Fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -651,30 +701,9 @@ Host: localhost:8080
 </tr>
 </tbody>
 </table>
-<div class="listingblock">
-<div class="content">
-<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
-Vary: Origin
-Vary: Access-Control-Request-Method
-Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE2NzkxMjIyNjMsImV4cCI6MTY3OTIwODY2M30.NlNK29zgn1bVnplaQMtL-EviGfalGLGXl5SaRqKvLA4
-Content-Type: application/json;charset=UTF-8
-X-Content-Type-Options: nosniff
-X-XSS-Protection: 1; mode=block
-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
-Pragma: no-cache
-Expires: 0
-X-Frame-Options: DENY
-Content-Length: 226
-
-{
-  "id" : 8,
-  "username" : "nonuser",
-  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE2NzkxMjIyNjMsImV4cCI6MTY3OTIwODY2M30.NlNK29zgn1bVnplaQMtL-EviGfalGLGXl5SaRqKvLA4",
-  "roles" : [ ]
-}</code></pre>
 </div>
-</div>
+<div class="sect3">
+<h4 id="_response_fields_2">Response Fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 16.6666%;">
@@ -730,13 +759,57 @@ Content-Length: 226
 </tbody>
 </table>
 </div>
+<div class="sect3">
+<h4 id="_example_of_request_2">Example of Request</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/v1/auth/signin HTTP/1.1
+Content-Type: application/json;charset=UTF-8
+Content-Length: 54
+Host: localhost:8080
+
+{
+  "username" : "nonuser",
+  "password" : "0000"
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_example_of_response_2">Example of Response</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 200 OK
+Vary: Origin
+Vary: Access-Control-Request-Method
+Vary: Access-Control-Request-Headers
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE2ODA3Mjc3MTcsImV4cCI6MTY4MDgxNDExN30.SJkxTx74R3blqDVm7rw6QkQjbZJHa0ocmrg6QuBO4Q8
+Content-Type: application/json;charset=UTF-8
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+Pragma: no-cache
+Expires: 0
+X-Frame-Options: DENY
+Content-Length: 226
+
+{
+  "id" : 8,
+  "username" : "nonuser",
+  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE2ODA3Mjc3MTcsImV4cCI6MTY4MDgxNDExN30.SJkxTx74R3blqDVm7rw6QkQjbZJHa0ocmrg6QuBO4Q8",
+  "roles" : [ ]
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-03-18 15:47:54 +0900
+Last updated 2023-04-06 05:32:09 +0900
 </div>
 </div>
 </body>

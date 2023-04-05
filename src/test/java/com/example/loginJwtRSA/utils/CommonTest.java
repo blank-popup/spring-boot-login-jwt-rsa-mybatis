@@ -5,12 +5,14 @@ import org.springframework.restdocs.operation.preprocess.OperationPreprocessor;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
+import org.springframework.restdocs.request.RequestPartDescriptor;
 import org.springframework.stereotype.Component;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.removeHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.snippet.Attributes.key;
 
 @Component
@@ -66,21 +68,6 @@ public class CommonTest {
         return parameter;
     }
 
-    public static ParameterDescriptor createRequestParameter(
-            String name,
-            Object explanation,
-            boolean option,
-            Object restriction,
-            Object sample) {
-        ParameterDescriptor parameter = parameterWithName(name)
-                .description(explanation);
-        if (option == true) parameter.optional();
-        if (restriction != null) parameter.attributes(key("constraints").value(restriction));
-        if (sample != null) parameter.attributes(key("example").value(sample));
-
-        return parameter;
-    }
-
     public static FieldDescriptor createRequestFields(
             String path,
             JsonFieldType jsonFieldType,
@@ -96,6 +83,36 @@ public class CommonTest {
         if (sample != null) field.attributes(key("example").value(sample));
 
         return field;
+    }
+
+    public static ParameterDescriptor createRequestParameter(
+            String name,
+            Object explanation,
+            boolean option,
+            Object restriction,
+            Object sample) {
+        ParameterDescriptor parameter = parameterWithName(name)
+                .description(explanation);
+        if (option == true) parameter.optional();
+        if (restriction != null) parameter.attributes(key("constraints").value(restriction));
+        if (sample != null) parameter.attributes(key("example").value(sample));
+
+        return parameter;
+    }
+
+    public static RequestPartDescriptor createRequestPart(
+            String name,
+            Object explanation,
+            boolean option,
+            Object restriction,
+            Object sample) {
+        RequestPartDescriptor parameter = partWithName(name)
+                .description(explanation);
+        if (option == true) parameter.optional();
+        if (restriction != null) parameter.attributes(key("constraints").value(restriction));
+        if (sample != null) parameter.attributes(key("example").value(sample));
+
+        return parameter;
     }
 
     public static FieldDescriptor createResponseFields(

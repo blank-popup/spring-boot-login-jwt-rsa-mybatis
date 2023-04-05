@@ -15,6 +15,10 @@ jwt:
   secret: ImPossible$$
   token-validity-ms: 3600000
 
+directory:
+  user:
+    image: D:/SPRING_DATA/user/image
+
 logging:
   pattern:
     file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"

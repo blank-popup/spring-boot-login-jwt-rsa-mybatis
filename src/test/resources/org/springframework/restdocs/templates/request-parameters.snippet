@@ -1,9 +1,12 @@
 |===
-|Parameter|Description
+|Parameter|Description|Required|Constraints|Example
 
 {{#parameters}}
 |{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
 |{{#tableCellContent}}{{description}}{{/tableCellContent}}
+|{{#tableCellContent}}{{^optional}}TRUE{{/optional}}{{/tableCellContent}}
+|{{#tableCellContent}}{{#constraints}}{{constraints}}{{/constraints}}{{/tableCellContent}}
+|{{#tableCellContent}}{{#example}}{{example}}{{/example}}{{/tableCellContent}}
 
 {{/parameters}}
 |===

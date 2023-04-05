@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockPart;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import java.io.FileInputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -76,23 +79,25 @@ class ControllerUserTest {
     @Test
     @DisplayName("Get User All")
     public void getUserAll() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = new LinkedHashMap<>();
-        String content = mapper.writeValueAsString(map);
+//        ObjectMapper mapper = new ObjectMapper();
+//        Map<String, Object> map = new LinkedHashMap<>();
+//        String content = mapper.writeValueAsString(map);
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.get("/api/v1/userAll")
+                        RestDocumentationRequestBuilders.get("/api/v1/user/information")
                                 .header(keyAuthorization, valueAuthorization)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(content)
+//                                .content(content)
                 )
                 .andExpect(status().isOk())
                 .andDo(document("/user/GetUserAll",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
-                        responseHeaders(),
-                        pathParameters(),
-                        requestFields(),
+//                        responseHeaders(),
+//                        pathParameters(),
+//                        requestFields(),
+//                        requestParameters(),
+//                        requestParts(),
                         responseFields(
                                 CommonTest.createResponseFields(
                                         "data",
@@ -127,6 +132,38 @@ class ControllerUserTest {
                                         "$2a$10$ieKR2IiozV2KLfs5bp3JOe2tkjmYmHGDP8jlwXjO2fYrirO.Zd9YW"
                                 ),
                                 CommonTest.createResponseFields(
+                                        "data[].email",
+                                        JsonFieldType.STRING,
+                                        "E-mail of user",
+                                        true,
+                                        "",
+                                        "example@gmail.com"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "data[].phone",
+                                        JsonFieldType.STRING,
+                                        "Phone of user",
+                                        true,
+                                        "",
+                                        "000-0000-0000"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "data[].createdAt",
+                                        JsonFieldType.STRING,
+                                        "When creating user",
+                                        false,
+                                        "",
+                                        "2020-04-01T04:01:00"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "data[].updatedAt",
+                                        JsonFieldType.STRING,
+                                        "When updating user",
+                                        false,
+                                        "",
+                                        "2020-04-01T04:01:00"
+                                ),
+                                CommonTest.createResponseFields(
                                         "count",
                                         JsonFieldType.NUMBER,
                                         "The count of user",
@@ -141,34 +178,33 @@ class ControllerUserTest {
     @Test
     @DisplayName("Get User By Username")
     void getUserByUsername() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("username", "nonuser");
-        String content = mapper.writeValueAsString(map);
+//        ObjectMapper mapper = new ObjectMapper();
+//        Map<String, Object> map = new LinkedHashMap<>();
+//        String content = mapper.writeValueAsString(map);
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.get("/api/v1/user")
+                        RestDocumentationRequestBuilders.get("/api/v1/user/{username}/information", "nonuser")
                                 .header(keyAuthorization, valueAuthorization)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(content)
+//                                .content(content)
                 )
                 .andExpect(status().isOk())
                 .andDo(document("/user/GetUserByUsername",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
-                        responseHeaders(),
-                        pathParameters(),
-                        requestParameters(),
-                        requestFields(
-                                CommonTest.createRequestFields(
+//                        responseHeaders(),
+                        pathParameters(
+                                CommonTest.createPathParameter(
                                         "username",
-                                        JsonFieldType.STRING,
                                         "ID to select",
                                         false,
                                         null,
                                         "username"
                                 )
                         ),
+//                        requestFields(),
+//                        requestParameters(),
+//                        requestParts(),
                         responseFields(
                                 CommonTest.createResponseFields(
                                         "id",
@@ -193,6 +229,38 @@ class ControllerUserTest {
                                         false,
                                         "Encrypted password",
                                         "$2a$10$ieKR2IiozV2KLfs5bp3JOe2tkjmYmHGDP8jlwXjO2fYrirO.Zd9YW"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "email",
+                                        JsonFieldType.STRING,
+                                        "E-mail of user",
+                                        true,
+                                        "",
+                                        "example@gmail.com"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "phone",
+                                        JsonFieldType.STRING,
+                                        "Phone of user",
+                                        true,
+                                        "",
+                                        "000-0000-0000"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "createdAt",
+                                        JsonFieldType.STRING,
+                                        "When creating user",
+                                        false,
+                                        "",
+                                        "2020-04-01T04:01:00"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "updatedAt",
+                                        JsonFieldType.STRING,
+                                        "When updating user",
+                                        false,
+                                        "",
+                                        "2020-04-01T04:01:00"
                                 )
                         )
                 ));
@@ -207,19 +275,18 @@ class ControllerUserTest {
         map.put("password", "newpass");
         String content = mapper.writeValueAsString(map);
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.post("/api/v1/user")
+                        RestDocumentationRequestBuilders.post("/api/v1/user/information")
                                 .header(keyAuthorization, valueAuthorization)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andDo(document("/user/CreateUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
-                        responseHeaders(),
-                        pathParameters(),
-                        requestParameters(),
+//                        responseHeaders(),
+//                        pathParameters(),
                         requestFields(
                                 CommonTest.createRequestFields(
                                         "username",
@@ -236,8 +303,26 @@ class ControllerUserTest {
                                         false,
                                         "Plain password",
                                         "newpass"
+                                ),
+                                CommonTest.createRequestFields(
+                                        "email",
+                                        JsonFieldType.STRING,
+                                        "E-mail of user to create",
+                                        true,
+                                        "",
+                                        "example@gmail.com"
+                                ),
+                                CommonTest.createRequestFields(
+                                        "phone",
+                                        JsonFieldType.STRING,
+                                        "Phone of user to create",
+                                        true,
+                                        "Phone number",
+                                        "000-0000-0000"
                                 )
                         ),
+//                        requestParameters(),
+//                        requestParts(),
                         responseFields(
                                 CommonTest.createResponseFields(
                                         "count",
@@ -252,36 +337,36 @@ class ControllerUserTest {
     }
 
     @Test
-    @DisplayName("Modify User")
-    void modifyUser() throws Exception {
+    @DisplayName("Put User")
+    void putUser() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("username", "nonuser");
         map.put("password", "newpass");
+        map.put("email", "testPutUser@gmail.com");
+        map.put("phone", "000-1111-9999");
         String content = mapper.writeValueAsString(map);
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.put("/api/v1/user")
+                        RestDocumentationRequestBuilders.put("/api/v1/user/{username}/information", "nonuser")
                                 .header(keyAuthorization, valueAuthorization)
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("/user/ModifyUser",
+                .andDo(document("/user/PutUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
-                        responseHeaders(),
-                        pathParameters(),
-                        requestParameters(),
-                        requestFields(
-                                CommonTest.createRequestFields(
+//                        responseHeaders(),
+                        pathParameters(
+                                CommonTest.createPathParameter(
                                         "username",
-                                        JsonFieldType.STRING,
-                                        "ID to modify",
+                                        "ID to select",
                                         false,
                                         null,
                                         "username"
-                                ),
+                                )
+                        ),
+                        requestFields(
                                 CommonTest.createRequestFields(
                                         "password",
                                         JsonFieldType.STRING,
@@ -289,8 +374,97 @@ class ControllerUserTest {
                                         false,
                                         "Plain password",
                                         "newpass"
+                                ),
+                                CommonTest.createRequestFields(
+                                        "email",
+                                        JsonFieldType.STRING,
+                                        "E-mail of user",
+                                        true,
+                                        "",
+                                        "example@gmail.com"
+                                ),
+                                CommonTest.createRequestFields(
+                                        "phone",
+                                        JsonFieldType.STRING,
+                                        "Phone of user",
+                                        true,
+                                        "Phone number",
+                                        "000-0000-0000"
                                 )
                         ),
+//                        requestParameters(),
+//                        requestParts(),
+                        responseFields(
+                                CommonTest.createResponseFields(
+                                        "count",
+                                        JsonFieldType.NUMBER,
+                                        "The count of user modified",
+                                        false,
+                                        null,
+                                        1
+                                )
+                        )
+                ));
+    }
+
+    @Test
+    @DisplayName("Patch User")
+    void patchUser() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("password", "newpass");
+        map.put("email", "testPutUser@gmail.com");
+        map.put("phone", "000-1111-9999");
+        String content = mapper.writeValueAsString(map);
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.patch("/api/v1/user/{username}/information", "nonuser")
+                                .header(keyAuthorization, valueAuthorization)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content)
+                )
+                .andExpect(status().isOk())
+                .andDo(document("/user/PatchUser",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(CommonTest.createRequestHeadersCommon()),
+//                        responseHeaders(),
+                        pathParameters(
+                                CommonTest.createPathParameter(
+                                        "username",
+                                        "ID to select",
+                                        false,
+                                        null,
+                                        "username"
+                                )
+                        ),
+                        requestFields(
+                                CommonTest.createRequestFields(
+                                        "password",
+                                        JsonFieldType.STRING,
+                                        "Password to modify",
+                                        false,
+                                        "Plain password",
+                                        "newpass"
+                                ),
+                                CommonTest.createRequestFields(
+                                        "email",
+                                        JsonFieldType.STRING,
+                                        "E-mail of user",
+                                        true,
+                                        "",
+                                        "example@gmail.com"
+                                ),
+                                CommonTest.createRequestFields(
+                                        "phone",
+                                        JsonFieldType.STRING,
+                                        "Phone of user",
+                                        true,
+                                        "Phone number",
+                                        "000-0000-0000"
+                                )
+                        ),
+//                        requestParameters(),
+//                        requestParts(),
                         responseFields(
                                 CommonTest.createResponseFields(
                                         "count",
@@ -307,34 +481,33 @@ class ControllerUserTest {
     @Test
     @DisplayName("Remove User")
     void removeUser() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> map = new LinkedHashMap<>();
-        map.put("username", "nonuser");
-        String content = mapper.writeValueAsString(map);
+//        ObjectMapper mapper = new ObjectMapper();
+//        Map<String, Object> map = new LinkedHashMap<>();
+//        String content = mapper.writeValueAsString(map);
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.delete("/api/v1/user")
+                        RestDocumentationRequestBuilders.delete("/api/v1/user/{username}/information", "nonuser")
                                 .header(keyAuthorization, valueAuthorization)
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(content)
+//                                .content(content)
                 )
-                .andExpect(status().isOk())
+                .andExpect(status().isNoContent())
                 .andDo(document("/user/RemoveUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
-                        responseHeaders(),
-                        pathParameters(),
-                        requestParameters(),
-                        requestFields(
-                                CommonTest.createRequestFields(
+//                        responseHeaders(),
+                        pathParameters(
+                                CommonTest.createPathParameter(
                                         "username",
-                                        JsonFieldType.STRING,
-                                        "ID to remove",
+                                        "ID to select",
                                         false,
                                         null,
                                         "username"
                                 )
                         ),
+//                        requestFields(),
+//                        requestParameters(),
+//                        requestParts(),
                         responseFields(
                                 CommonTest.createResponseFields(
                                         "count",
@@ -348,92 +521,102 @@ class ControllerUserTest {
                 ));
     }
 
-//    @Test
-//    void testTemplat() throws Exception {
-//        ObjectMapper mapper = new ObjectMapper();
-//        Map<String, Object> map = new LinkedHashMap<>();
-//        map.put("username", "newuser");
-//        map.put("password", "newpass");
-//        map.put("roles", new ArrayList<String>(Arrays.asList("ROLE_USER", "ROLE_MANAGER")));
-//        String content = mapper.writeValueAsString(map);
-//        mockMvc.perform(
-//                        RestDocumentationRequestBuilders.get("/api/v1/user/{username}", "amuuser")
-//                                .with(user("admin").password("pass").roles("USER","ADMIN"))
-//                                .header(keyAuthorization, valueAuthorization)
-////                                .param("param1", "12")
-////                                .param("param2", "charley")
-////                                .with(user("username").password("0000").roles("USER", "ADMIN", "MANAGER"))
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(content)
-//                )
-//                .andExpect(status().isOk())
-//                .andDo(document("/user/GetUserByUsername",
-//                        preprocessRequest(prettyPrint()),
-//                        preprocessResponse(prettyPrint()),
-//                        requestHeaders(CommonTest.createRequestHeadersCommon());
+    @Test
+    @DisplayName("Download User Image")
+    void downloadUserImage() throws Exception {
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.get("/api/v1/user/image/{filenameServer}", "6318d0ae-873b-4bd8-a2c5-868597e2bc2a")
+                                .header(keyAuthorization, valueAuthorization)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isOk())
+                .andDo(document("/user/DownloadUserImage",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(CommonTest.createRequestHeadersCommon()),
 //                        responseHeaders(),
-//                        pathParameters(
-//                                CommonTest.createRequestParameter(
-//                                        "username",
-//                                        "ID to modify",
-//                                        false,
-//                                        null,
-//                                        "username"
-//                                )
-//                        ),
-//                        requestParameters(
-//                                CommonTest.createRequestParameter(
-//                                        "username",
-//                                        "ID to modify",
-//                                        false,
-//                                        null,
-//                                        "username"
-//                                )
-//                        ),
-//                        requestFields(
-//                                CommonTest.createRequestFields(
-//                                        "username",
-//                                        JsonFieldType.STRING,
-//                                        "ID to modify",
-//                                        false,
-//                                        null,
-//                                        "username"
-//                                ),
-//                                CommonTest.createRequestFields(
-//                                        "password",
-//                                        JsonFieldType.STRING,
-//                                        "Password to modify",
-//                                        false,
-//                                        "Plain password",
-//                                        "newpass"
-//                                )
-//                        ),
-//                        responseFields(
-//                                CommonTest.createResponseFields(
-//                                        "id",
-//                                        JsonFieldType.NUMBER,
-//                                        "The unique number of user",
-//                                        false,
-//                                        null,
-//                                        1
-//                                ),
-//                                CommonTest.createResponseFields(
-//                                        "username",
-//                                        JsonFieldType.STRING,
-//                                        "ID of user",
-//                                        false,
-//                                        null,
-//                                        "username"
-//                                ),
-//                                CommonTest.createResponseFields(
-//                                        "password",
-//                                        JsonFieldType.STRING,
-//                                        "Password of user",
-//                                        false,
-//                                        "Encrypted password",
-//                                        "$2a$10$ieKR2IiozV2KLfs5bp3JOe2tkjmYmHGDP8jlwXjO2fYrirO.Zd9YW"
-//                                )
-//                        )
-//                ));
-//    }
+                        pathParameters(
+                                CommonTest.createPathParameter(
+                                        "filenameServer",
+                                        "Filename in server storage",
+                                        false,
+                                        null,
+                                        "6318d0ae-873b-4bd8-a2c5-868597e2bc2a"
+                                )
+                        )
+//                        requestFields(),
+//                        requestParameters(),
+//                        requestParts(),
+//                        responseFields()
+                ));
+    }
+
+    @Test
+    @DisplayName("Upload User Image")
+    void uploadUserImage() throws Exception {
+        MockMultipartFile requestFile = new MockMultipartFile(
+                "userImage",
+                "image.png",
+                "image/png",
+                "<<<< Image Data >>>>".getBytes()
+        );
+//        MockMultipartFile requestFile = new MockMultipartFile(
+//                "userImage",
+//                "image.png",
+//                "image/png",
+//                new FileInputStream("C:/Users/syjeon/Downloads/image.png")
+//        );
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.multipart("/api/v1/user/image")
+                                .file(requestFile)
+                                .param("id", "6")
+                                .param("description", "description for image")
+                                .header(keyAuthorization, valueAuthorization)
+                                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                )
+                .andExpect(status().isCreated())
+                .andDo(document("/user/UploadUserImage",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(CommonTest.createRequestHeadersCommon()),
+//                        responseHeaders(),
+//                        pathParameters(),
+//                        requestFields(),
+                        requestParameters(
+                                CommonTest.createRequestParameter(
+                                        "id",
+                                        "The unique number of user",
+                                        false,
+                                        null,
+                                        3
+                                ),
+                                CommonTest.createRequestParameter(
+                                        "description",
+                                        "description for image",
+                                        true,
+                                        null,
+                                        "selfie"
+                                )
+                        ),
+                        requestParts(
+                                CommonTest.createRequestPart(
+                                        "userImage",
+                                        "User Image",
+                                        false,
+                                        null,
+                                        "Image file selected"
+                                )
+                        ),
+                        responseFields(
+                                CommonTest.createResponseFields(
+                                        "count",
+                                        JsonFieldType.NUMBER,
+                                        "The count of image uploaded",
+                                        false,
+                                        null,
+                                        1
+                                )
+                        )
+                ));
+    }
 }

@@ -3,9 +3,15 @@ package com.example.loginJwtRSA.user;
 import com.example.loginJwtRSA.utils.ReturnValues;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.List;
 
 @Slf4j
@@ -15,33 +21,53 @@ import java.util.List;
 public class ControllerUser {
     private final ServiceUser serviceUser;
 
-    @GetMapping("/userAll")
+    @GetMapping("/user/information")
     public ResponseEntity<?> getUserAll() {
-        List<ResponseUser> responseUsers = serviceUser.getUserAll();
-        return ResponseEntity.ok(ReturnValues.createReturnListCount(responseUsers));
+        return serviceUser.getUserAll();
     }
 
-    @GetMapping("/user")
-    public ResponseEntity<?> getUserByUsername(@RequestBody RequestUser requestUser) {
-        ResponseUser responseUser = serviceUser.getUserByUsername(requestUser);
-        return ResponseEntity.ok(responseUser);
+    @GetMapping("/user/{username}/information")
+    public ResponseEntity<?> getUserByUsername(@PathVariable(value="username") String username) {
+        RequestUser requestUser = new RequestUser();
+        requestUser.setUsername(username);
+        return  serviceUser.getUserByUsername(requestUser);
     }
 
-    @PostMapping("/user")
+    @PostMapping("/user/information")
     public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser) {
-        int count = serviceUser.createUser(requestUser);
-        return ResponseEntity.ok(ReturnValues.createReturnCount(count));
+        return  serviceUser.createUser(requestUser);
     }
 
-    @PutMapping("/user")
-    public ResponseEntity<?>  modifyUser(@RequestBody RequestUser requestUser) {
-        int count = serviceUser.modifyUser(requestUser);
-        return ResponseEntity.ok(ReturnValues.createReturnCount(count));
+    @PutMapping("/user/{username}/information")
+    public ResponseEntity<?>  putUser(@PathVariable(value="username") String username, @RequestBody RequestUser requestUser) {
+        requestUser.setUsername(username);
+        return  serviceUser.putUser(requestUser);
     }
 
-    @DeleteMapping("/user")
-    public ResponseEntity<?> removeUser(@RequestBody RequestUser requestUser) {
-        int count = serviceUser.removeUser(requestUser);
-        return ResponseEntity.ok(ReturnValues.createReturnCount(count));
+    @PatchMapping("/user/{username}/information")
+    public ResponseEntity<?>  patchUser(@PathVariable(value="username") String username, @RequestBody RequestUser requestUser) {
+        requestUser.setUsername(username);
+        return  serviceUser.patchUser(requestUser);
+    }
+
+    @DeleteMapping("/user/{username}/information")
+    public ResponseEntity<?> removeUser(@PathVariable(value="username") String username) {
+        RequestUser requestUser = new RequestUser();
+        requestUser.setUsername(username);
+        return  serviceUser.removeUser(requestUser);
+    }
+
+    @Value("${directory.user.image}")
+    private String directoryUserImage;
+    @GetMapping(value="/user/image/{filenameServer}")
+    public void downloadUserImage(HttpServletResponse response, @PathVariable(value="filenameServer") String filenameServer) {
+        RequestUserImage requestUserImage = new RequestUserImage();
+        requestUserImage.setFilenameServer(filenameServer);
+        serviceUser.downloadUserImage(response, requestUserImage);
+    }
+
+    @PostMapping("/user/image")
+    public ResponseEntity<?> uploadUserImage(RequestUserImage requestUserImage, @RequestPart(value = "userImage", required = true) MultipartFile file) {
+        return serviceUser.uploadUserImage(requestUserImage, file);
     }
 }

@@ -6,40 +6,87 @@
         SELECT
             id,
             username,
-            password
+            password,
+            email,
+            phone,
+            created_at,
+            updated_at
         FROM aha_user
     </select>
 
-    <select id="getUserByUsername" parameterType="com.example.loginJwtRSA.user.RequestUser" resultType="com.example.loginJwtRSA.user.ResponseUser">
+    <select id="getUserByUsername" parameterType="String" resultType="com.example.loginJwtRSA.user.ResponseUser">
         SELECT
             id,
             username,
-            password
+            password,
+            email,
+            phone,
+            created_at,
+            updated_at
         FROM aha_user
         WHERE username = #{username}
     </select>
+
     <insert id="createUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
-        INSERT INTO aha_user
-        (
+        INSERT INTO aha_user (
             username,
-            password
+            password,
+            email,
+            phone
         )
-        VALUES
-        (
+        VALUES (
             #{username},
-            #{password}
+            #{password},
+            #{email},
+            #{phone}
         )
     </insert>
-    <update id="modifyUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
-        UPDATE
-            aha_user
+
+    <update id="putUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
+        UPDATE aha_user
         SET
-            password = #{password}
+            password = #{password},
+            email = #{email},
+            phone = #{phone},
+            updated_at = NOW()
         WHERE username = #{username}
     </update>
+
+    <update id="patchUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
+        UPDATE aha_user
+        SET
+            password = IFNULL(#{password}, password),
+            email = IFNULL(#{email}, email),
+            phone = IFNULL(#{phone}, phone),
+            updated_at = NOW()
+        WHERE username = #{username}
+    </update>
+
     <delete id="removeUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
         DELETE
         FROM aha_user
         WHERE username = #{username}
     </delete>
+
+    <insert id="createUserImage" parameterType="com.example.loginJwtRSA.user.RequestUserImage">
+        INSERT aha_user_image (
+            id_user,
+            description,
+            filename_server,
+            filename_client
+        )
+        VALUES (
+            #{id},
+            #{description},
+            #{filenameServer},
+            #{filenameClient}
+        )
+    </insert>
+
+    <select id="getFilenameClientByFilenameServer" parameterType="String" resultType="String">
+        SELECT
+            filename_client
+        FROM aha_user_image
+        WHERE filename_server = #{filenameServer}
+    </select>
 </mapper>

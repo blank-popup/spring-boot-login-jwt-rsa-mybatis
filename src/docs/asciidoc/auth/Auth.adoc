@@ -3,23 +3,41 @@
 This API is used until user authentication.
 
 === Sign Up
+ POST /api/v1/auth/signup HTTP/1.1
 
-include::{snippets}/auth/signup/http-request.adoc[]
-include::{snippets}/auth/signup/curl-request.adoc[]
-// include::{snippets}/auth/signup/httpie-request.adoc[]
-// include::{snippets}/auth/signup/request-body.adoc[]
-include::{snippets}/auth/signup/request-fields.adoc[]
-include::{snippets}/auth/signup/http-response.adoc[]
-// include::{snippets}/auth/signup/response-body.adoc[]
-include::{snippets}/auth/signup/response-fields.adoc[]
+==== Request Headers
+include::{snippets}/auth/SignUp/request-headers.adoc[]
+// ==== Path Parameters
+// include::{snippets}/auth/SignUp/path-parameters.adoc[]
+==== Request Fields
+include::{snippets}/auth/SignUp/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/auth/SignUp/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/auth/SignUp/request-parts.adoc[]
+==== Response Fields
+include::{snippets}/auth/SignUp/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/auth/SignUp/http-request.adoc[]
+==== Example of Response
+include::{snippets}/auth/SignUp/http-response.adoc[]
 
 === Sign In
+ POST /api/v1/auth/signin HTTP/1.1
 
-include::{snippets}/auth/signin/http-request.adoc[]
-include::{snippets}/auth/signin/curl-request.adoc[]
-// include::{snippets}/auth/signin/httpie-request.adoc[]
-// include::{snippets}/auth/signin/request-body.adoc[]
-include::{snippets}/auth/signin/request-fields.adoc[]
-include::{snippets}/auth/signin/http-response.adoc[]
-// include::{snippets}/auth/signin/response-body.adoc[]
-include::{snippets}/auth/signin/response-fields.adoc[]
+==== Request Headers
+include::{snippets}/auth/SignIn/request-headers.adoc[]
+// ==== Path Parameters
+// include::{snippets}/auth/SignIn/path-parameters.adoc[]
+==== Request Fields
+include::{snippets}/auth/SignIn/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/auth/SignIn/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/auth/SignIn/request-parts.adoc[]
+==== Response Fields
+include::{snippets}/auth/SignIn/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/auth/SignIn/http-request.adoc[]
+==== Example of Response
+include::{snippets}/auth/SignIn/http-response.adoc[]

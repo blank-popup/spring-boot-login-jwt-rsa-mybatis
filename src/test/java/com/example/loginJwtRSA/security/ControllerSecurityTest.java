@@ -83,8 +83,8 @@ class ControllerSecurityTest {
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersWithoutAuthorization()),
-                        responseHeaders(),
-                        pathParameters(),
+//                        responseHeaders(),
+//                        pathParameters(),
                         requestFields(
                                 CommonTest.createRequestFields(
                                         "username",
@@ -111,6 +111,8 @@ class ControllerSecurityTest {
                                         "[ROLE_USER]"
                                 )
                         ),
+//                        requestParameters(),
+//                        requestParts(),
                         responseFields(
                                 CommonTest.createResponseFields(
                                         "id",
@@ -160,7 +162,7 @@ class ControllerSecurityTest {
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersWithoutAuthorization()),
                         responseHeaders(),
-                        pathParameters(),
+//                        pathParameters(),
                         requestFields(
                                 CommonTest.createRequestFields(
                                         "username",
@@ -179,6 +181,8 @@ class ControllerSecurityTest {
                                         "password"
                                 )
                         ),
+//                        requestParameters(),
+//                        requestParts(),
                         responseFields(
                                 CommonTest.createResponseFields(
                                         "id",

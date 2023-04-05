@@ -1,43 +1,163 @@
 [[User]]
 == User
-This is just an example for CRUD.
+This is just an example for CRUD and file.
 
-=== Get all users
+=== Get All Users
+ GET /api/v1/user/information HTTP/1.1
 
-include::{snippets}/user/GetUserAll/http-request.adoc[]
-include::{snippets}/user/GetUserAll/curl-request.adoc[]
-include::{snippets}/user/GetUserAll/request-fields.adoc[]
-include::{snippets}/user/GetUserAll/http-response.adoc[]
+==== Request Headers
+include::{snippets}/user/GetUserAll/request-headers.adoc[]
+// ==== Path Parameters
+// include::{snippets}/user/GetUserAll/path-parameters.adoc[]
+// ==== Request Fields
+// include::{snippets}/user/GetUserAll/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/user/GetUserAll/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/user/GetUserAll/request-parts.adoc[]
+==== Response Fields
 include::{snippets}/user/GetUserAll/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/GetUserAll/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/GetUserAll/http-response.adoc[]
 
-=== Get one user
+=== Get User By Username
+ GET /api/v1/user/{username}/information HTTP/1.1
 
-include::{snippets}/user/GetUserByUsername/http-request.adoc[]
-include::{snippets}/user/GetUserByUsername/curl-request.adoc[]
-include::{snippets}/user/GetUserByUsername/request-fields.adoc[]
-include::{snippets}/user/GetUserByUsername/http-response.adoc[]
+==== Request Headers
+include::{snippets}/user/GetUserByUsername/request-headers.adoc[]
+==== Path Parameters
+include::{snippets}/user/GetUserByUsername/path-parameters.adoc[]
+// ==== Request Fields
+// include::{snippets}/user/GetUserByUsername/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/user/GetUserByUsername/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/user/GetUserByUsername/request-parts.adoc[]
+==== Response Fields
 include::{snippets}/user/GetUserByUsername/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/GetUserByUsername/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/GetUserByUsername/http-response.adoc[]
 
-=== Create one user
+=== Create User
+ POST /api/v1/user/information HTTP/1.1
 
-include::{snippets}/user/CreateUser/http-request.adoc[]
-include::{snippets}/user/CreateUser/curl-request.adoc[]
+==== Request Headers
+include::{snippets}/user/CreateUser/request-headers.adoc[]
+// ==== Path Parameters
+// include::{snippets}/user/CreateUser/path-parameters.adoc[]
+==== Request Fields
 include::{snippets}/user/CreateUser/request-fields.adoc[]
-include::{snippets}/user/CreateUser/http-response.adoc[]
+// ==== Request Parameters
+// include::{snippets}/user/CreateUser/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/user/CreateUser/request-parts.adoc[]
+==== Response Fields
 include::{snippets}/user/CreateUser/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/CreateUser/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/CreateUser/http-response.adoc[]
 
-=== Modify one user
+=== Put User
+ PUT /api/v1/user/{username}/information HTTP/1.1
 
-include::{snippets}/user/ModifyUser/http-request.adoc[]
-include::{snippets}/user/ModifyUser/curl-request.adoc[]
-include::{snippets}/user/ModifyUser/request-fields.adoc[]
-include::{snippets}/user/ModifyUser/http-response.adoc[]
-include::{snippets}/user/ModifyUser/response-fields.adoc[]
+==== Request Headers
+include::{snippets}/user/PutUser/request-headers.adoc[]
+==== Path Parameters
+include::{snippets}/user/PutUser/path-parameters.adoc[]
+==== Request Fields
+include::{snippets}/user/PutUser/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/user/PutUser/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/user/PutUser/request-parts.adoc[]
+==== Response Fields
+include::{snippets}/user/PutUser/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/PutUser/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/PutUser/http-response.adoc[]
 
-=== Remove one user
+=== Patch User
+ PATCH /api/v1/user/{username}/information HTTP/1.1
 
-include::{snippets}/user/RemoveUser/http-request.adoc[]
-include::{snippets}/user/RemoveUser/curl-request.adoc[]
-include::{snippets}/user/RemoveUser/request-fields.adoc[]
-include::{snippets}/user/RemoveUser/http-response.adoc[]
+==== Request Headers
+include::{snippets}/user/PatchUser/request-headers.adoc[]
+==== Path Parameters
+include::{snippets}/user/PatchUser/path-parameters.adoc[]
+==== Request Fields
+include::{snippets}/user/PatchUser/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/user/PatchUser/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/user/PatchUser/request-parts.adoc[]
+==== Response Fields
+include::{snippets}/user/PatchUser/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/PatchUser/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/PatchUser/http-response.adoc[]
+
+=== Remove user
+ DELETE /api/v1/user/{username}/information HTTP/1.1
+
+==== Request Headers
+include::{snippets}/user/RemoveUser/request-headers.adoc[]
+==== Path Parameters
+include::{snippets}/user/RemoveUser/path-parameters.adoc[]
+// ==== Request Fields
+// include::{snippets}/user/RemoveUser/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/user/RemoveUser/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/user/RemoveUser/request-parts.adoc[]
+==== Response Fields
 include::{snippets}/user/RemoveUser/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/RemoveUser/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/RemoveUser/http-response.adoc[]
+
+=== Download User Image
+ GET /api/v1/user/image/{filenameServer} HTTP/1.1
+
+==== Request Headers
+include::{snippets}/user/DownloadUserImage/request-headers.adoc[]
+==== Path Parameters
+include::{snippets}/user/DownloadUserImage/path-parameters.adoc[]
+// ==== Request Fields
+// include::{snippets}/user/DownloadUserImage/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/user/DownloadUserImage/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/user/DownloadUserImage/request-parts.adoc[]
+// ==== Response Fields
+// include::{snippets}/user/DownloadUserImage/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/DownloadUserImage/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/DownloadUserImage/http-response.adoc[]
+
+=== Upload User Image
+ POST /api/v1/user/image HTTP/1.1
+
+==== Request Headers
+include::{snippets}/user/UploadUserImage/request-headers.adoc[]
+// ==== Path Parameters
+// include::{snippets}/user/UploadUserImage/path-parameters.adoc[]
+// ==== Request Fields
+// include::{snippets}/user/UploadUserImage/request-fields.adoc[]
+==== Request Parameters
+include::{snippets}/user/UploadUserImage/request-parameters.adoc[]
+==== Request Parts
+include::{snippets}/user/UploadUserImage/request-parts.adoc[]
+==== Response Fields
+include::{snippets}/user/UploadUserImage/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/user/UploadUserImage/http-request.adoc[]
+==== Example of Response
+include::{snippets}/user/UploadUserImage/http-response.adoc[]
