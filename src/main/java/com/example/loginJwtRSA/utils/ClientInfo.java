@@ -9,12 +9,12 @@ public class ClientInfo {
     public static String getRemoteIP(HttpServletRequest request){
         String ip = request.getHeader("X-FORWARDED-FOR");
 
-        //proxy 서버일 경우
+        // Proxy server
         if (ip == null || ip.length() == 0) {
             ip = request.getHeader("Proxy-Client-IP");
         }
 
-        //웹로직 서버일 경우
+        // Web Logic server
         if (ip == null || ip.length() == 0) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }

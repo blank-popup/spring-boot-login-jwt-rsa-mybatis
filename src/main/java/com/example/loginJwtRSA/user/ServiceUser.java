@@ -1,13 +1,10 @@
 package com.example.loginJwtRSA.user;
 
+import com.example.loginJwtRSA.utils.OID;
 import com.example.loginJwtRSA.utils.ReturnValues;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,12 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -183,7 +178,7 @@ public class ServiceUser {
 
             int read = 0;
             byte[] buffer = new byte[4096];
-            while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
+            while ((read = fileInputStream.read(buffer)) != -1) {
                 out.write(buffer, 0, read);
             }
 
@@ -198,7 +193,7 @@ public class ServiceUser {
         String filenameClient = file.getOriginalFilename();
         log.info("file.getOriginalFilename() : {}", filenameClient);
 
-        String filenameServer = UUID.randomUUID().toString();
+        String filenameServer = OID.generateType1UUID().toString();
         log.info("filenameServer : {}", filenameServer);
 
         requestUserImage.setFilenameServer(filenameServer);

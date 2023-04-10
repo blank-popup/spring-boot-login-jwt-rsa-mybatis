@@ -84,11 +84,9 @@ public class ConfigSecurity {
         return (web) -> web
                 .ignoring()
                 .antMatchers(
-                        "/v2/api-docs",
-                        "/swagger-resources/**",
-                        "/swagger-ui.html",
-                        "/webjars/**",
-                        "/swagger/**"
+//                        "/swagger-resources/**",
+//                        "/swagger-ui.html",
+//                        "/swagger/**"
                 );
     }
 }

@@ -53,8 +53,8 @@ public class JwtTokenProvider implements InitializingBean {
         return Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
-                .setExpiration(new Date(now.getTime() + tokenValidMillisecond)) // 토큰 만료일 설정
-                .signWith(SignatureAlgorithm.HS256, secretKey) // 암호화
+                .setExpiration(new Date(now.getTime() + tokenValidMillisecond))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
 
