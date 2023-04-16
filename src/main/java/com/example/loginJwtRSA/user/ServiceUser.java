@@ -22,6 +22,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -32,38 +33,38 @@ public class ServiceUser {
     @Value("${directory.user.image}")
     private String directoryUserImage;
 
-    private boolean verifyNotEmptyUsernamePassword(RequestUser requestUser) {
-        if (requestUser.getUsername() == null || "".equals(requestUser.getUsername()) == true
-                || requestUser.getPassword() == null || "".equals(requestUser.getPassword()) == true) {
+    private boolean verifyNotEmptyUsernamePassword(RequestInformation requestInformation) {
+        if (requestInformation.getUsername() == null || "".equals(requestInformation.getUsername()) == true
+                || requestInformation.getPassword() == null || "".equals(requestInformation.getPassword()) == true) {
             return false;
         }
 
         return true;
     }
 
-    private boolean verifyUsernamePassword(RequestUser requestUser) {
-        if (requestUser.getUsername() == null || "".equals(requestUser.getUsername()) == true
-                || requestUser.getPassword() == null || "".equals(requestUser.getPassword()) == true) {
+    private boolean verifyUsernamePassword(RequestInformation requestInformation) {
+        if (requestInformation.getUsername() == null || "".equals(requestInformation.getUsername()) == true
+                || requestInformation.getPassword() == null || "".equals(requestInformation.getPassword()) == true) {
             return false;
         }
-        ResponseUser responseUser = mapperUser.getUserByUsername(requestUser.getUsername());
-        if (passwordEncoder.matches(requestUser.getPassword(), responseUser.getPassword()) == false) {
+        ResponseInformation responseInformation = mapperUser.getUserByUsername(requestInformation.getUsername());
+        if (passwordEncoder.matches(requestInformation.getPassword(), responseInformation.getPassword()) == false) {
             return false;
         }
 
         return true;
     }
 
-    private boolean verifyCurrentUser(RequestUser requestUser) {
-        if (requestUser.getUsername() == null || "".equals(requestUser.getUsername()) == true
-                || requestUser.getPassword() == null || "".equals(requestUser.getPassword()) == true) {
+    private boolean verifyCurrentUser(RequestInformation requestInformation) {
+        if (requestInformation.getUsername() == null || "".equals(requestInformation.getUsername()) == true
+                || requestInformation.getPassword() == null || "".equals(requestInformation.getPassword()) == true) {
             return false;
         }
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
         log.info("Current username: [{}] [{}]", userDetails.getUsername(), userDetails.getPassword());
-        if (requestUser.getUsername().equals(userDetails.getUsername()) == false
-                || passwordEncoder.matches(requestUser.getPassword(), userDetails.getPassword()) == false) {
+        if (requestInformation.getUsername().equals(userDetails.getUsername()) == false
+                || passwordEncoder.matches(requestInformation.getPassword(), userDetails.getPassword()) == false) {
             return false;
         }
 
@@ -71,73 +72,73 @@ public class ServiceUser {
     }
 
     public ResponseEntity<?> getUserAll() {
-        List<ResponseUser> responseUsers = mapperUser.getUserAll();
+        List<ResponseInformation> responseInformations = mapperUser.getUserAll();
         return ResponseEntity
-                .ok(ReturnValues.createReturnListCount(responseUsers));
+                .ok(ReturnValues.createReturnListCount(responseInformations));
     }
 
-    public ResponseEntity<?> getUserByUsername(RequestUser requestUser) {
-        ResponseUser responseUser = mapperUser.getUserByUsername(requestUser.getUsername());
+    public ResponseEntity<?> getUserByUsername(RequestInformation requestInformation) {
+        ResponseInformation responseInformation = mapperUser.getUserByUsername(requestInformation.getUsername());
         return ResponseEntity
-                .ok(responseUser);
+                .ok(responseInformation);
     }
 
     @Transactional
-    public ResponseEntity<?> createUser(RequestUser requestUser) {
-        if (verifyNotEmptyUsernamePassword(requestUser) == false) {
+    public ResponseEntity<?> createUser(RequestInformation requestInformation) {
+        if (verifyNotEmptyUsernamePassword(requestInformation) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
         }
 
-        requestUser.setPassword(passwordEncoder.encode(requestUser.getPassword()));
-        int count = mapperUser.createUser(requestUser);
+        requestInformation.setPassword(passwordEncoder.encode(requestInformation.getPassword()));
+        int count = mapperUser.createUser(requestInformation);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));
     }
 
     @Transactional
-    public ResponseEntity<?> putUser(RequestUser requestUser) {
-        if (verifyNotEmptyUsernamePassword(requestUser) == false) {
+    public ResponseEntity<?> putUser(RequestInformation requestInformation) {
+        if (verifyNotEmptyUsernamePassword(requestInformation) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
         }
-//        if (verifyCurrentUser(requestUser) == false) {
+//        if (verifyCurrentUser(requestInformation) == false) {
 //            return ResponseEntity
 //                    .status(HttpStatus.BAD_REQUEST)
 //                    .body(ReturnValues.createReturnMessage("Other cannot modify user information"));
 //        }
 
-        requestUser.setPassword(passwordEncoder.encode(requestUser.getPassword()));
-        int count = mapperUser.putUser(requestUser);
+        requestInformation.setPassword(passwordEncoder.encode(requestInformation.getPassword()));
+        int count = mapperUser.putUser(requestInformation);
         if (count > 0) {
             return ResponseEntity
                     .ok(ReturnValues.createReturnCount(count));
         }
 
-        count = mapperUser.createUser(requestUser);
+        count = mapperUser.createUser(requestInformation);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));
     }
 
     @Transactional
-    public ResponseEntity<?> patchUser(RequestUser requestUser) {
-        if (verifyNotEmptyUsernamePassword(requestUser) == false) {
+    public ResponseEntity<?> patchUser(RequestInformation requestInformation) {
+        if (verifyNotEmptyUsernamePassword(requestInformation) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
         }
-//        if (verifyCurrentUser(requestUser) == false) {
+//        if (verifyCurrentUser(requestInformation) == false) {
 //            return ResponseEntity
 //                    .status(HttpStatus.BAD_REQUEST)
 //                    .body(ReturnValues.createReturnMessage("Other cannot modify user information"));
 //        }
 
-        requestUser.setPassword(passwordEncoder.encode(requestUser.getPassword()));
-        int count = mapperUser.patchUser(requestUser);
+        requestInformation.setPassword(passwordEncoder.encode(requestInformation.getPassword()));
+        int count = mapperUser.patchUser(requestInformation);
         if (count > 0) {
             return ResponseEntity
                     .ok(ReturnValues.createReturnCount(count));
@@ -149,16 +150,16 @@ public class ServiceUser {
     }
 
     @Transactional
-    public ResponseEntity<?> removeUser(RequestUser requestUser) {
-        int count = mapperUser.removeUser(requestUser.getUsername());
+    public ResponseEntity<?> removeUser(RequestInformation requestInformation) {
+        int count = mapperUser.removeUser(requestInformation.getUsername());
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(ReturnValues.createReturnCount(count));
     }
 
-    public void downloadUserImage(HttpServletResponse response, RequestUserImage requestUserImage) {
+    public void downloadUserImage(HttpServletResponse response, RequestImage requestImage) {
         try {
-            String path = directoryUserImage + "/" + requestUserImage.getFilenameServer();
+            String path = directoryUserImage + "/" + requestImage.getFilenameServer();
 
             File file = new File(path);
             if (file.exists() == false || file.isDirectory() == true) {
@@ -166,7 +167,7 @@ public class ServiceUser {
                 return;
             }
 
-            String filenameClient = mapperUser.getFilenameClientByFilenameServer(requestUserImage.getFilenameServer());
+            String filenameClient = mapperUser.getFilenameClientByFilenameServer(requestImage.getFilenameServer());
             if (filenameClient == null) {
                 response.setStatus(HttpStatus.BAD_REQUEST.value());
                 return;
@@ -178,7 +179,7 @@ public class ServiceUser {
 
             int read = 0;
             byte[] buffer = new byte[4096];
-            while ((read = fileInputStream.read(buffer)) != -1) {
+            while ((read = fileInputStream.read(buffer)) != -1) { // 1024바이트씩 계속 읽으면서 outputStream에 저장, -1이 나오면 더이상 읽을 파일이 없음
                 out.write(buffer, 0, read);
             }
 
@@ -188,16 +189,16 @@ public class ServiceUser {
     }
 
     @Transactional
-    public ResponseEntity uploadUserImage(RequestUserImage requestUserImage, MultipartFile file) {
-        log.info("requestUserImage : {}", requestUserImage);
+    public ResponseEntity uploadUserImage(RequestImage requestImage, MultipartFile file) {
+        log.info("requestImage : {}", requestImage);
         String filenameClient = file.getOriginalFilename();
         log.info("file.getOriginalFilename() : {}", filenameClient);
 
         String filenameServer = OID.generateType1UUID().toString();
         log.info("filenameServer : {}", filenameServer);
 
-        requestUserImage.setFilenameServer(filenameServer);
-        requestUserImage.setFilenameClient(filenameClient);
+        requestImage.setFilenameServer(filenameServer);
+        requestImage.setFilenameClient(filenameClient);
 
         try {
             Path directoryUpdate = Paths.get(directoryUserImage);
@@ -211,7 +212,7 @@ public class ServiceUser {
                     .body(ReturnValues.createReturnMessage(e.getMessage()));
         }
 
-        int count = mapperUser.createUserImage(requestUserImage);
+        int count = mapperUser.createUserImage(requestImage);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));

@@ -28,13 +28,12 @@ import java.util.Date;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class JwtTokenProvider implements InitializingBean {
+public class JwtProvider implements InitializingBean {
     @Value("${jwt.secret}")
     private String secretKey;
     @Value("${jwt.token-validity-ms}")
     private long tokenValidMillisecond;
     private final UserDetailsService userDetailsService;
-    private String key;
 
     @Override
     public void afterPropertiesSet() {
@@ -60,6 +59,7 @@ public class JwtTokenProvider implements InitializingBean {
 
     public Authentication getAuthentication(String token) {
         String id = getId(token);
+        log.info("JWT authentication : ID : {}", id);
         UserDetails userDetails = userDetailsService.loadUserByUsername(id);
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
@@ -111,7 +111,7 @@ public class JwtTokenProvider implements InitializingBean {
 
             return true;
         } catch (SecurityException | MalformedJwtException | IllegalArgumentException exception) {
-            log.warn("Not available JWT");
+            log.warn("Invalid JWT");
         } catch (ExpiredJwtException exception) {
             log.warn("Expired JWT");
         } catch (UnsupportedJwtException exception) {

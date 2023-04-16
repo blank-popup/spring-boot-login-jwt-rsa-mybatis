@@ -19,7 +19,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class ConfigSecurity {
-    private final JwtTokenProvider jwtTokenProvider;
+    private final JwtProvider jwtProvider;
+    private final ApiKeyProvider apiKeyProvider;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -48,32 +49,32 @@ public class ConfigSecurity {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .httpBasic().disable()
+                .httpBasic().disable()
                 .cors().configurationSource(corsConfigurationSource())
 
-            .and()
+                .and()
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**").permitAll()
                 .antMatchers("/api/v1/user/**").hasAnyRole("ADMIN", "MANAGER")
                 .anyRequest().authenticated()
 
-            .and()
+                .and()
                 .exceptionHandling().accessDeniedHandler(
                         new AccessDeniedHandlerCustom()
                 )
-            .and()
+                .and()
                 .exceptionHandling().authenticationEntryPoint(
                         new AuthenticationEntryPointCustom()
                 )
 
-            .and()
+                .and()
                 .addFilterBefore(
-                        new JwtFilterBean(jwtTokenProvider),
+                        new AuthenticationFilterBean(jwtProvider, apiKeyProvider),
                         UsernamePasswordAuthenticationFilter.class
                 );
         return http.build();

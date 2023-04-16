@@ -18,14 +18,14 @@ public class ControllerSecurity {
     private final ServiceAuth serviceAuth;
 
     @PostMapping("/auth/signup")
-    public ResponseEntity signup(@RequestBody RequestAuthSignUp requestAuthSignUp) {
+    public ResponseEntity signup(@RequestBody RequestSignUp requestSignUp) {
         ResponseEntity responseEntity = null;
         try {
-            ResponseAuthSignUp responseAuthSignUp = serviceAuth.signup(requestAuthSignUp);
+            ResponseSignUp responseSignUp = serviceAuth.signup(requestSignUp);
 
             responseEntity = ResponseEntity
                     .status(HttpStatus.CREATED)
-                    .body(responseAuthSignUp);
+                    .body(responseSignUp);
         } catch (RuntimeException exception) {
             log.warn(exception.getMessage());
             Map<String, Object> response = ReturnValues
@@ -41,18 +41,18 @@ public class ControllerSecurity {
     }
 
     @PostMapping("/auth/signin")
-    public ResponseEntity signin(@RequestBody RequestAuthSignIn requestAuthSignIn) {
+    public ResponseEntity signin(@RequestBody RequestSignIn requestSignIn) {
         ResponseEntity responseEntity = null;
         try {
-            ResponseAuthSignIn responseAuthSignIn = serviceAuth.signin(requestAuthSignIn);
+            ResponseSignIn responseSignIn = serviceAuth.signin(requestSignIn);
 
             HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.add("Authorization", "Bearer " + responseAuthSignIn.getToken());
+            httpHeaders.add("Authorization", "Bearer " + responseSignIn.getToken());
 
             responseEntity = ResponseEntity
                     .status(HttpStatus.OK)
                     .headers(httpHeaders)
-                    .body(responseAuthSignIn);
+                    .body(responseSignIn);
         } catch (RuntimeException exception) {
             log.warn(exception.getMessage());
             Map<String, Object> response = ReturnValues
@@ -66,5 +66,20 @@ public class ControllerSecurity {
         }
 
         return responseEntity;
+    }
+
+    @PostMapping("/auth/apikey")
+    public ResponseEntity registerApiKey(@RequestBody RequestApiKey requestApiKey) {
+        ResponseApiKey responseApiKey = serviceAuth.createUserApiKey(requestApiKey);
+        if (responseApiKey != null) {
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(responseApiKey);
+        }
+
+        log.warn("Fail to register API Key of user {}", requestApiKey.getId());
+        return ResponseEntity
+                .status(HttpStatus.BAD_GATEWAY)
+                .body(ReturnValues.createReturnMessage("Fail to register API Key"));
     }
 }

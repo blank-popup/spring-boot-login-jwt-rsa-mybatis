@@ -1,6 +1,6 @@
 package com.example.loginJwtRSA.user;
 
-import com.example.loginJwtRSA.security.JwtTokenProvider;
+import com.example.loginJwtRSA.security.JwtProvider;
 import com.example.loginJwtRSA.utils.CommonTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.mock.web.MockPart;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
@@ -26,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.io.FileInputStream;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -47,14 +45,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ControllerUserTest {
     private MockMvc mockMvc;
     @Autowired
-    private JwtTokenProvider jwtTokenProvider;
+    private JwtProvider jwtProvider;
     private String keyAuthorization = "Authorization";
     private String valueAuthorization;
 
     @BeforeEach
     public void setUp(WebApplicationContext webApplicationContext,
                       RestDocumentationContextProvider restDocumentation) {
-        valueAuthorization = "Bearer " + jwtTokenProvider.createToken(
+        valueAuthorization = "Bearer " + jwtProvider.createToken(
                 1L,
                 null,
                 null
@@ -83,7 +81,7 @@ class ControllerUserTest {
 //        Map<String, Object> map = new LinkedHashMap<>();
 //        String content = mapper.writeValueAsString(map);
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.get("/api/v1/user/information")
+                        RestDocumentationRequestBuilders.get("/api/v1/userAll/information")
                                 .header(keyAuthorization, valueAuthorization)
                                 .contentType(MediaType.APPLICATION_JSON)
 //                                .content(content)
@@ -525,7 +523,7 @@ class ControllerUserTest {
     @DisplayName("Download User Image")
     void downloadUserImage() throws Exception {
         mockMvc.perform(
-                        RestDocumentationRequestBuilders.get("/api/v1/user/image/{filenameServer}", "6318d0ae-873b-4bd8-a2c5-868597e2bc2a")
+                        RestDocumentationRequestBuilders.get("/api/v1/user/image/{filenameServer}", "01eddb85-d63f-1eb8-87c9-04529c92ee69")
                                 .header(keyAuthorization, valueAuthorization)
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 )
@@ -541,7 +539,7 @@ class ControllerUserTest {
                                         "Filename in server storage",
                                         false,
                                         null,
-                                        "6318d0ae-873b-4bd8-a2c5-868597e2bc2a"
+                                        "01eddb85-d63f-1eb8-87c9-04529c92ee69"
                                 )
                         )
 //                        requestFields(),

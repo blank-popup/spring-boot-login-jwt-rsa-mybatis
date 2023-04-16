@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.loginJwtRSA.security.MapperAuth">
-    <select id="selectUserDetailsByUsername" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
+    <select id="selectUserDetailsByUsername" parameterType="String" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
         SELECT
             id,
             username,
@@ -11,7 +11,7 @@
         WHERE username = #{username}
     </select>
 
-    <select id="selectUserDetailsById" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
+    <select id="selectUserDetailsById" parameterType="Long" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
         SELECT
             id,
             username,
@@ -38,7 +38,7 @@
         )
     </insert>
 
-    <select id="selectRolesByUsername" resultType="String">
+    <select id="selectRolesByUsername" parameterType="String" resultType="String">
         SELECT
             ar.name
         FROM aha_user au
@@ -49,7 +49,7 @@
         WHERE au.username = #{username}
     </select>
 
-    <select id="selectRolesById" resultType="String">
+    <select id="selectRolesById" parameterType="Long" resultType="String">
         SELECT
             ar.name
         FROM aha_user_role aur
@@ -58,7 +58,7 @@
         WHERE aur.id_user = #{id}
     </select>
 
-    <insert id="insertUser" parameterType="com.example.loginJwtRSA.security.RequestAuthSignUp">
+    <insert id="insertUser" parameterType="com.example.loginJwtRSA.security.RequestSignUp">
         INSERT INTO aha_user (
             username,
             password
@@ -68,4 +68,28 @@
             #{password}
         )
     </insert>
+
+    <insert id="createUserApiKey" parameterType="com.example.loginJwtRSA.security.ModelApiKey">
+        INSERT aha_api_key (
+            id,
+            api_key,
+            expire_at
+        )
+        VALUES (
+            #{id},
+            #{apiKey},
+            #{expireAt}
+        )
+    </insert>
+
+    <select id="getApiKeyByApiKey" parameterType="String" resultType="com.example.loginJwtRSA.security.ModelApiKey">
+        SELECT
+            id,
+            api_key,
+            expire_at,
+            created_at,
+            updated_at
+        FROM aha_api_key aak
+        WHERE api_key = #{apiKey}
+    </select>
 </mapper>

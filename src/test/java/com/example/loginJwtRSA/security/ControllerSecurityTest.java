@@ -219,4 +219,74 @@ class ControllerSecurityTest {
                         )
                 ));
     }
+
+    @Test
+    @DisplayName("Register API Key")
+    @Order(3)
+    public void registerApiKey() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("id", 1);
+        map.put("terms", 86400000);
+        String content =  mapper.writeValueAsString(map);
+        mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/api/v1/auth/apikey")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content)
+                )
+                .andExpect(status().isOk())
+                .andDo(document("/auth/ApiKey",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        requestHeaders(CommonTest.createRequestHeadersWithoutAuthorization()),
+                        responseHeaders(),
+//                        pathParameters(),
+                        requestFields(
+                                CommonTest.createRequestFields(
+                                        "id",
+                                        JsonFieldType.NUMBER,
+                                        "ID to register API Key",
+                                        false,
+                                        "ID not existing already",
+                                        1
+                                ),
+                                CommonTest.createRequestFields(
+                                        "terms",
+                                        JsonFieldType.NUMBER,
+                                        "Terms in milli-second",
+                                        false,
+                                        null,
+                                        86400000
+                                )
+                        ),
+//                        requestParameters(),
+//                        requestParts(),
+                        responseFields(
+                                CommonTest.createResponseFields(
+                                        "id",
+                                        JsonFieldType.NUMBER,
+                                        "ID registered API Key",
+                                        false,
+                                        null,
+                                        1
+                                ),
+                                CommonTest.createResponseFields(
+                                        "apiKey",
+                                        JsonFieldType.STRING,
+                                        "API Key available to user",
+                                        false,
+                                        null,
+                                        "mqn6nH0/6hJkOOVrJlzuVL9p8bxGPNySp4gKdTwT5hjD+pIWmwGBS5FJJG0o1Vg02tXq1T2ak+mWu7B5M5t13tUxBWQNtTuHoD2/pIpLc2Q="
+                                ),
+                                CommonTest.createResponseFields(
+                                        "expireAt",
+                                        JsonFieldType.STRING,
+                                        "Datetime to be expired at",
+                                        false,
+                                        "Datetime format",
+                                        "2025-04-15T12:44:44.731"
+                                )
+                        )
+                ));
+    }
 }

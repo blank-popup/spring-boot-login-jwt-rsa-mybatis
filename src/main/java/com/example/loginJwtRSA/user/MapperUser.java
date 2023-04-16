@@ -6,12 +6,12 @@ import java.util.List;
 
 @Mapper
 public interface MapperUser {
-    List<ResponseUser> getUserAll();
-    ResponseUser getUserByUsername(String username);
-    int createUser(RequestUser requestUser);
-    int putUser(RequestUser requestUser);
-    int patchUser(RequestUser requestUser);
+    List<ResponseInformation> getUserAll();
+    ResponseInformation getUserByUsername(String username);
+    int createUser(RequestInformation requestInformation);
+    int putUser(RequestInformation requestInformation);
+    int patchUser(RequestInformation requestInformation);
     int removeUser(String username);
-    int createUserImage(RequestUserImage requestUserImage);
+    int createUserImage(RequestImage requestImage);
     String getFilenameClientByFilenameServer(String filenameServer);
 }

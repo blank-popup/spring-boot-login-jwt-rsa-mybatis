@@ -16,53 +16,54 @@ import javax.servlet.http.HttpServletResponse;
 public class ControllerUser {
     private final ServiceUser serviceUser;
 
-    @GetMapping("/user/information")
+    @GetMapping("/userAll/information")
     public ResponseEntity<?> getUserAll() {
         return serviceUser.getUserAll();
     }
 
     @GetMapping("/user/{username}/information")
     public ResponseEntity<?> getUserByUsername(@PathVariable(value="username") String username) {
-        RequestUser requestUser = new RequestUser();
-        requestUser.setUsername(username);
-        return  serviceUser.getUserByUsername(requestUser);
+        RequestInformation requestInformation = new RequestInformation();
+        requestInformation.setUsername(username);
+        return  serviceUser.getUserByUsername(requestInformation);
     }
 
     @PostMapping("/user/information")
-    public ResponseEntity<?> createUser(@RequestBody RequestUser requestUser) {
-        return  serviceUser.createUser(requestUser);
+    public ResponseEntity<?> createUser(@RequestBody RequestInformation requestInformation) {
+        return  serviceUser.createUser(requestInformation);
     }
 
     @PutMapping("/user/{username}/information")
-    public ResponseEntity<?>  putUser(@PathVariable(value="username") String username, @RequestBody RequestUser requestUser) {
-        requestUser.setUsername(username);
-        return  serviceUser.putUser(requestUser);
+    public ResponseEntity<?>  putUser(@PathVariable(value="username") String username, @RequestBody RequestInformation requestInformation) {
+        requestInformation.setUsername(username);
+        return  serviceUser.putUser(requestInformation);
     }
 
     @PatchMapping("/user/{username}/information")
-    public ResponseEntity<?>  patchUser(@PathVariable(value="username") String username, @RequestBody RequestUser requestUser) {
-        requestUser.setUsername(username);
-        return  serviceUser.patchUser(requestUser);
+    public ResponseEntity<?>  patchUser(@PathVariable(value="username") String username, @RequestBody RequestInformation requestInformation) {
+        requestInformation.setUsername(username);
+        return  serviceUser.patchUser(requestInformation);
     }
 
     @DeleteMapping("/user/{username}/information")
     public ResponseEntity<?> removeUser(@PathVariable(value="username") String username) {
-        RequestUser requestUser = new RequestUser();
-        requestUser.setUsername(username);
-        return  serviceUser.removeUser(requestUser);
+        RequestInformation requestInformation = new RequestInformation();
+        requestInformation.setUsername(username);
+        return  serviceUser.removeUser(requestInformation);
     }
 
     @Value("${directory.user.image}")
     private String directoryUserImage;
+
     @GetMapping(value="/user/image/{filenameServer}")
     public void downloadUserImage(HttpServletResponse response, @PathVariable(value="filenameServer") String filenameServer) {
-        RequestUserImage requestUserImage = new RequestUserImage();
-        requestUserImage.setFilenameServer(filenameServer);
-        serviceUser.downloadUserImage(response, requestUserImage);
+        RequestImage requestImage = new RequestImage();
+        requestImage.setFilenameServer(filenameServer);
+        serviceUser.downloadUserImage(response, requestImage);
     }
 
     @PostMapping("/user/image")
-    public ResponseEntity<?> uploadUserImage(RequestUserImage requestUserImage, @RequestPart(value = "userImage", required = true) MultipartFile file) {
-        return serviceUser.uploadUserImage(requestUserImage, file);
+    public ResponseEntity<?> uploadUserImage(RequestImage requestImage, @RequestPart(value = "userImage", required = true) MultipartFile file) {
+        return serviceUser.uploadUserImage(requestImage, file);
     }
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.loginJwtRSA.user.MapperUser">
-    <select id="getUserAll" resultType="com.example.loginJwtRSA.user.ResponseUser">
+    <select id="getUserAll" resultType="com.example.loginJwtRSA.user.ResponseInformation">
         SELECT
             id,
             username,
@@ -14,7 +14,7 @@
         FROM aha_user
     </select>
 
-    <select id="getUserByUsername" parameterType="String" resultType="com.example.loginJwtRSA.user.ResponseUser">
+    <select id="getUserByUsername" parameterType="String" resultType="com.example.loginJwtRSA.user.ResponseInformation">
         SELECT
             id,
             username,
@@ -27,7 +27,7 @@
         WHERE username = #{username}
     </select>
 
-    <insert id="createUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
+    <insert id="createUser" parameterType="com.example.loginJwtRSA.user.RequestInformation">
         INSERT INTO aha_user (
             username,
             password,
@@ -42,7 +42,7 @@
         )
     </insert>
 
-    <update id="putUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
+    <update id="putUser" parameterType="com.example.loginJwtRSA.user.RequestInformation">
         UPDATE aha_user
         SET
             password = #{password},
@@ -52,7 +52,7 @@
         WHERE username = #{username}
     </update>
 
-    <update id="patchUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
+    <update id="patchUser" parameterType="com.example.loginJwtRSA.user.RequestInformation">
         UPDATE aha_user
         SET
             password = IFNULL(#{password}, password),
@@ -62,13 +62,13 @@
         WHERE username = #{username}
     </update>
 
-    <delete id="removeUser" parameterType="com.example.loginJwtRSA.user.RequestUser">
+    <delete id="removeUser" parameterType="com.example.loginJwtRSA.user.RequestInformation">
         DELETE
         FROM aha_user
         WHERE username = #{username}
     </delete>
 
-    <insert id="createUserImage" parameterType="com.example.loginJwtRSA.user.RequestUserImage">
+    <insert id="createUserImage" parameterType="com.example.loginJwtRSA.user.RequestImage">
         INSERT aha_user_image (
             id_user,
             description,

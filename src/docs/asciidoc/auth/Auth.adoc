@@ -1,6 +1,6 @@
 [[Auth]]
 == Auth
-This API is used until user authentication.
+This API is used for user authentication.
 
 === Sign Up
  POST /api/v1/auth/signup HTTP/1.1
@@ -41,3 +41,23 @@ include::{snippets}/auth/SignIn/response-fields.adoc[]
 include::{snippets}/auth/SignIn/http-request.adoc[]
 ==== Example of Response
 include::{snippets}/auth/SignIn/http-response.adoc[]
+
+=== Register API Key
+ POST /api/v1/auth/apikey HTTP/1.1
+
+==== Request Headers
+include::{snippets}/auth/ApiKey/request-headers.adoc[]
+// ==== Path Parameters
+// include::{snippets}/auth/ApiKey/path-parameters.adoc[]
+==== Request Fields
+include::{snippets}/auth/ApiKey/request-fields.adoc[]
+// ==== Request Parameters
+// include::{snippets}/auth/ApiKey/request-parameters.adoc[]
+// ==== Request Parts
+// include::{snippets}/auth/ApiKey/request-parts.adoc[]
+==== Response Fields
+include::{snippets}/auth/ApiKey/response-fields.adoc[]
+==== Example of Request
+include::{snippets}/auth/ApiKey/http-request.adoc[]
+==== Example of Response
+include::{snippets}/auth/ApiKey/http-response.adoc[]
