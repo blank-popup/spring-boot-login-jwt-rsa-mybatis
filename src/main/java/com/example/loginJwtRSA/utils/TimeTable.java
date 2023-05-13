@@ -6,8 +6,7 @@ import java.time.ZoneId;
 import java.util.TimeZone;
 
 public class TimeTable {
-    public static long convertLocalTimeToUTC(long localDateTime)
-    {
+    public static long convertLocalTimeToUTC(long localDateTime) {
         TimeZone z = TimeZone.getDefault();
         // The offset not includes daylight savings time
         //int offset = z.getRawOffset();
@@ -18,8 +17,7 @@ public class TimeTable {
         return UTCTime;
     }
 
-    public static long convertUTCToLocalTime(long UTCDateTime)
-    {
+    public static long convertUTCToLocalTime(long UTCDateTime) {
         TimeZone z = TimeZone.getDefault();
         // The offset not includes daylight savings time
         //int offset = z.getRawOffset();

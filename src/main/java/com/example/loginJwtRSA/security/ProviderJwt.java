@@ -1,13 +1,7 @@
 package com.example.loginJwtRSA.security;
 
 import com.example.loginJwtRSA.utils.ClientInfo;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -28,7 +22,7 @@ import java.util.Date;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class JwtProvider implements InitializingBean {
+public class ProviderJwt implements InitializingBean {
     @Value("${jwt.secret}")
     private String secretKey;
     @Value("${jwt.token-validity-ms}")
@@ -40,7 +34,7 @@ public class JwtProvider implements InitializingBean {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(Long id, String ip, String userAgent) {
+    public String createJwt(Long id, String ip, String userAgent) {
         Claims claims = Jwts.claims().setSubject(Long.toString(id));
         claims.put("ip", ip);
         claims.put("userAgent", userAgent);
@@ -57,39 +51,30 @@ public class JwtProvider implements InitializingBean {
                 .compact();
     }
 
-    public Authentication getAuthentication(String token) {
-        String id = getId(token);
-        log.info("JWT authentication : ID : {}", id);
-        UserDetails userDetails = userDetailsService.loadUserByUsername(id);
+    public Authentication getAuthentication(Jws<Claims> information) {
+        log.info("JWT authentication : ID : {}", information.getBody().getSubject());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(information.getBody().getSubject());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getId(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody()
-                .getSubject();
-    }
+    public String resolveJwt(HttpServletRequest request) {
+        String valueAuthorization = request.getHeader("Authorization");
 
-    public String resolveToken(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
-            return token.substring(7);
+        if (StringUtils.hasText(valueAuthorization) && valueAuthorization.startsWith("Bearer ")) {
+            return valueAuthorization.substring(7);
         }
 
         return null;
     }
 
-    public boolean validateToken(String token) {
+    public Jws<Claims> getInformationOfJwt(String jwt) {
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
             String ipRemote = ClientInfo.getRemoteIP(request);
             String userAgentRemote = request.getHeader("User-Agent");
 
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt);
             String ipJwt = (String)claims.getBody().get("ip");
             String userAgentJwt = (String)claims.getBody().get("userAgent");
             log.debug("Validate Tocken ipRemote : [{}], ipJwt : [{}]", ipRemote, ipJwt);
@@ -97,20 +82,23 @@ public class JwtProvider implements InitializingBean {
 
             if (ipRemote != null && ipJwt != null) {
                 if (ipRemote.equals(ipJwt) == false) {
-                    return false;
+                    log.warn("API Key : Invalid remote IP");
+                    return null;
                 }
             }
             if (userAgentRemote != null && userAgentJwt != null) {
                 if (userAgentRemote.equals(userAgentJwt) == false) {
-                    return false;
+                    log.warn("API Key : Invalid User-Agent");
+                    return null;
                 }
             }
             if (claims.getBody().getExpiration().before(new Date()) == true) {
-                return false;
+                log.warn("API Key : Invalid terms");
+                return null;
             }
 
-            return true;
-        } catch (SecurityException | MalformedJwtException | IllegalArgumentException exception) {
+            return claims;
+        } catch (SignatureException | MalformedJwtException | IllegalArgumentException exception) {
             log.warn("Invalid JWT");
         } catch (ExpiredJwtException exception) {
             log.warn("Expired JWT");
@@ -118,6 +106,6 @@ public class JwtProvider implements InitializingBean {
             log.warn("Not supported JWT");
         }
 
-        return false;
+        return null;
     }
 }

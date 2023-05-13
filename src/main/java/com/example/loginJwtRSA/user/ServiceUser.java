@@ -1,5 +1,6 @@
 package com.example.loginJwtRSA.user;
 
+import com.example.loginJwtRSA.security.UserDetailsCustom;
 import com.example.loginJwtRSA.utils.OID;
 import com.example.loginJwtRSA.utils.ReturnValues;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,6 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,49 +32,43 @@ public class ServiceUser {
     @Value("${directory.user.image}")
     private String directoryUserImage;
 
-    private boolean verifyNotEmptyUsernamePassword(RequestInformation requestInformation) {
-        if (requestInformation.getUsername() == null || "".equals(requestInformation.getUsername()) == true
-                || requestInformation.getPassword() == null || "".equals(requestInformation.getPassword()) == true) {
+    private boolean verifyNotEmptyUsernamePassword(ModelInformation modelInformation) {
+        if (modelInformation.getUsername() == null || "".equals(modelInformation.getUsername()) == true
+                || modelInformation.getPassword() == null || "".equals(modelInformation.getPassword()) == true) {
             return false;
         }
 
         return true;
     }
 
-    private boolean verifyUsernamePassword(RequestInformation requestInformation) {
-        if (requestInformation.getUsername() == null || "".equals(requestInformation.getUsername()) == true
-                || requestInformation.getPassword() == null || "".equals(requestInformation.getPassword()) == true) {
-            return false;
-        }
-        ResponseInformation responseInformation = mapperUser.getUserByUsername(requestInformation.getUsername());
-        if (passwordEncoder.matches(requestInformation.getPassword(), responseInformation.getPassword()) == false) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean verifyCurrentUser(RequestInformation requestInformation) {
-        if (requestInformation.getUsername() == null || "".equals(requestInformation.getUsername()) == true
-                || requestInformation.getPassword() == null || "".equals(requestInformation.getPassword()) == true) {
-            return false;
-        }
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserDetails userDetails = (UserDetails)principal;
-        log.info("Current username: [{}] [{}]", userDetails.getUsername(), userDetails.getPassword());
-        if (requestInformation.getUsername().equals(userDetails.getUsername()) == false
-                || passwordEncoder.matches(requestInformation.getPassword(), userDetails.getPassword()) == false) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public ResponseEntity<?> getUserAll() {
-        List<ResponseInformation> responseInformations = mapperUser.getUserAll();
-        return ResponseEntity
-                .ok(ReturnValues.createReturnListCount(responseInformations));
-    }
+//    private boolean verifyUsernamePassword(RequestInformation requestInformation) {
+//        if (requestInformation.getUsername() == null || "".equals(requestInformation.getUsername()) == true
+//                || requestInformation.getPassword() == null || "".equals(requestInformation.getPassword()) == true) {
+//            return false;
+//        }
+//        ResponseInformation responseInformation = mapperUser.getUserByUsername(requestInformation.getUsername());
+//        if (passwordEncoder.matches(requestInformation.getPassword(), responseInformation.getPassword()) == false) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
+//
+//    private boolean verifyCurrentUser(ModelInformation modelInformation) {
+//        if (modelInformation.getUsername() == null || "".equals(modelInformation.getUsername()) == true
+//                || modelInformation.getPassword() == null || "".equals(modelInformation.getPassword()) == true) {
+//            return false;
+//        }
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        UserDetails userDetails = (UserDetails)principal;
+//        log.info("Current username: [{}] [{}]", userDetails.getUsername(), userDetails.getPassword());
+//        if (modelInformation.getUsername().equals(userDetails.getUsername()) == false
+//                || passwordEncoder.matches(modelInformation.getPassword(), userDetails.getPassword()) == false) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     public ResponseEntity<?> getUserByUsername(RequestInformation requestInformation) {
         ResponseInformation responseInformation = mapperUser.getUserByUsername(requestInformation.getUsername());
@@ -84,23 +77,23 @@ public class ServiceUser {
     }
 
     @Transactional
-    public ResponseEntity<?> createUser(RequestInformation requestInformation) {
-        if (verifyNotEmptyUsernamePassword(requestInformation) == false) {
+    public ResponseEntity<?> createUser(ModelInformation modelInformation) {
+        if (verifyNotEmptyUsernamePassword(modelInformation) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
         }
 
-        requestInformation.setPassword(passwordEncoder.encode(requestInformation.getPassword()));
-        int count = mapperUser.createUser(requestInformation);
+        modelInformation.setPassword(passwordEncoder.encode(modelInformation.getPassword()));
+        int count = mapperUser.createUser(modelInformation);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));
     }
 
     @Transactional
-    public ResponseEntity<?> putUser(RequestInformation requestInformation) {
-        if (verifyNotEmptyUsernamePassword(requestInformation) == false) {
+    public ResponseEntity<?> putUser(ModelInformation modelInformation) {
+        if (verifyNotEmptyUsernamePassword(modelInformation) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
@@ -111,22 +104,22 @@ public class ServiceUser {
 //                    .body(ReturnValues.createReturnMessage("Other cannot modify user information"));
 //        }
 
-        requestInformation.setPassword(passwordEncoder.encode(requestInformation.getPassword()));
-        int count = mapperUser.putUser(requestInformation);
+        modelInformation.setPassword(passwordEncoder.encode(modelInformation.getPassword()));
+        int count = mapperUser.putUser(modelInformation);
         if (count > 0) {
             return ResponseEntity
                     .ok(ReturnValues.createReturnCount(count));
         }
 
-        count = mapperUser.createUser(requestInformation);
+        count = mapperUser.createUser(modelInformation);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));
     }
 
     @Transactional
-    public ResponseEntity<?> patchUser(RequestInformation requestInformation) {
-        if (verifyNotEmptyUsernamePassword(requestInformation) == false) {
+    public ResponseEntity<?> patchUser(ModelInformation modelInformation) {
+        if (verifyNotEmptyUsernamePassword(modelInformation) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
@@ -137,8 +130,8 @@ public class ServiceUser {
 //                    .body(ReturnValues.createReturnMessage("Other cannot modify user information"));
 //        }
 
-        requestInformation.setPassword(passwordEncoder.encode(requestInformation.getPassword()));
-        int count = mapperUser.patchUser(requestInformation);
+        modelInformation.setPassword(passwordEncoder.encode(modelInformation.getPassword()));
+        int count = mapperUser.patchUser(modelInformation);
         if (count > 0) {
             return ResponseEntity
                     .ok(ReturnValues.createReturnCount(count));
@@ -150,8 +143,8 @@ public class ServiceUser {
     }
 
     @Transactional
-    public ResponseEntity<?> removeUser(RequestInformation requestInformation) {
-        int count = mapperUser.removeUser(requestInformation.getUsername());
+    public ResponseEntity<?> removeUser(ModelInformation modelInformation) {
+        int count = mapperUser.removeUser(modelInformation);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(ReturnValues.createReturnCount(count));
@@ -216,5 +209,17 @@ public class ServiceUser {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));
+    }
+    
+    public boolean validateMethodForSelf(String uriForAuthorization, String method, String uriWithoutContextPath, UserDetailsCustom userDetails) {
+        String username = userDetails.getUsername();
+        String[] uries = uriWithoutContextPath.split("/");
+        if (uries.length >= 6) {
+            if (username != null && username.equals(uries[5]) == true) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

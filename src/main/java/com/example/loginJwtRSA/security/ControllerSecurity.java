@@ -37,6 +37,7 @@ public class ControllerSecurity {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(response);
         }
+
         return responseEntity;
     }
 
@@ -70,14 +71,14 @@ public class ControllerSecurity {
 
     @PostMapping("/auth/apikey")
     public ResponseEntity registerApiKey(@RequestBody RequestApiKey requestApiKey) {
-        ResponseApiKey responseApiKey = serviceAuth.createUserApiKey(requestApiKey);
+        ResponseApiKey responseApiKey = serviceAuth.registerApiKey(requestApiKey);
         if (responseApiKey != null) {
             return ResponseEntity
                     .status(HttpStatus.OK)
                     .body(responseApiKey);
         }
 
-        log.warn("Fail to register API Key of user {}", requestApiKey.getId());
+        log.warn("Fail to register API Key of user {}", requestApiKey.getIdUser());
         return ResponseEntity
                 .status(HttpStatus.BAD_GATEWAY)
                 .body(ReturnValues.createReturnMessage("Fail to register API Key"));

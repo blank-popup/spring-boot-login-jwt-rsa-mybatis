@@ -226,7 +226,7 @@ class ControllerSecurityTest {
     public void registerApiKey() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("id", 1);
+        map.put("idUser", 1);
         map.put("terms", 86400000);
         String content =  mapper.writeValueAsString(map);
         mockMvc.perform(
@@ -243,7 +243,7 @@ class ControllerSecurityTest {
 //                        pathParameters(),
                         requestFields(
                                 CommonTest.createRequestFields(
-                                        "id",
+                                        "idUser",
                                         JsonFieldType.NUMBER,
                                         "ID to register API Key",
                                         false,
@@ -262,8 +262,16 @@ class ControllerSecurityTest {
 //                        requestParameters(),
 //                        requestParts(),
                         responseFields(
-                                CommonTest.createResponseFields(
+                                CommonTest.createRequestFields(
                                         "id",
+                                        JsonFieldType.NUMBER,
+                                        "The unique number of API Key",
+                                        false,
+                                        null,
+                                        1
+                                ),
+                                CommonTest.createResponseFields(
+                                        "idUser",
                                         JsonFieldType.NUMBER,
                                         "ID registered API Key",
                                         false,
@@ -284,7 +292,23 @@ class ControllerSecurityTest {
                                         "Datetime to be expired at",
                                         false,
                                         "Datetime format",
-                                        "2025-04-15T12:44:44.731"
+                                        "2025-04-02T12:44:44.731"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "createdAt",
+                                        JsonFieldType.STRING,
+                                        "Datetime created at",
+                                        false,
+                                        "Datetime format",
+                                        "2025-04-01T12:44:44.731"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "updatedAt",
+                                        JsonFieldType.STRING,
+                                        "Datetime updated at",
+                                        false,
+                                        "Datetime format",
+                                        "2025-04-01T12:44:44.731"
                                 )
                         )
                 ));

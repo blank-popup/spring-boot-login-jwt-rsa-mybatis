@@ -58,7 +58,7 @@
         WHERE aur.id_user = #{id}
     </select>
 
-    <insert id="insertUser" parameterType="com.example.loginJwtRSA.security.RequestSignUp">
+    <insert id="createUser" parameterType="com.example.loginJwtRSA.security.RequestSignUp">
         INSERT INTO aha_user (
             username,
             password
@@ -71,25 +71,41 @@
 
     <insert id="createUserApiKey" parameterType="com.example.loginJwtRSA.security.ModelApiKey">
         INSERT aha_api_key (
-            id,
+            id_user,
             api_key,
             expire_at
         )
         VALUES (
-            #{id},
+            #{idUser},
             #{apiKey},
             #{expireAt}
         )
     </insert>
 
-    <select id="getApiKeyByApiKey" parameterType="String" resultType="com.example.loginJwtRSA.security.ModelApiKey">
+    <select id="getApiKeyByApiKey" parameterType="String" resultType="com.example.loginJwtRSA.security.ResponseApiKey">
         SELECT
             id,
+            id_user,
             api_key,
             expire_at,
             created_at,
             updated_at
-        FROM aha_api_key aak
+        FROM aha_api_key
         WHERE api_key = #{apiKey}
+    </select>
+
+    <select id="getAuthorizations" parameterType="com.example.loginJwtRSA.security.RequestAuthorization" resultType="com.example.loginJwtRSA.security.ResponseAuthorization">
+        SELECT
+            id,
+            (SELECT name FROM aha_role WHERE id = aad.id_role) AS role,
+            (SELECT name FROM aha_http_method WHERE value = aad.value_method) AS method,
+            (SELECT name FROM aha_http_method WHERE value = aad.value_method_for_self) AS method_for_self,
+            (SELECT url FROM aha_authorization_url WHERE id = aad.id_authorization_url) AS url
+        FROM aha_authorization_dynamic aad
+        WHERE id_authorization_url = (SELECT id FROM aha_authorization_url WHERE url = #{url})
+        AND (
+            value_method = (SELECT value FROM aha_http_method WHERE name = #{method})
+            OR value_method_for_self = (SELECT value FROM aha_http_method WHERE name = #{method})
+        )
     </select>
 </mapper>

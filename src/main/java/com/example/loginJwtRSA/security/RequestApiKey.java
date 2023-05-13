@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class RequestApiKey {
-    private Long id;
+    private Long idUser;
     private Long terms;
+    private String apiKey;
 }

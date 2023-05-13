@@ -13,7 +13,8 @@ public interface MapperAuth {
     int insertUserRole(ModelUserRole modelUserRole);
     List<String> selectRolesByUsername(String username);
     List<String> selectRolesById(Long id);
-    int insertUser(RequestSignUp requestSignUp);
+    int createUser(RequestSignUp requestSignUp);
     int createUserApiKey(ModelApiKey modelApiKey);
-    ModelApiKey getApiKeyByApiKey(String apiKey);
+    ResponseApiKey getApiKeyByApiKey(RequestApiKey requestApiKey);
+    List<ResponseAuthorization> getAuthorizations(RequestAuthorization requestAuthorization);
 }

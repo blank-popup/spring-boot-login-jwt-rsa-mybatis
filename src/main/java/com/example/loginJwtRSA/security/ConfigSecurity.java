@@ -19,8 +19,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class ConfigSecurity {
-    private final JwtProvider jwtProvider;
-    private final ApiKeyProvider apiKeyProvider;
+    private final ProviderJwt providerJwt;
+    private final ProviderApiKey providerApiKey;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -35,8 +35,7 @@ public class ConfigSecurity {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
@@ -60,8 +59,9 @@ public class ConfigSecurity {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**").permitAll()
-                .antMatchers("/api/v1/user/**").hasAnyRole("ADMIN", "MANAGER")
-                .anyRequest().authenticated()
+//                .antMatchers("/api/v1/users/**").hasAnyRole("ADMIN", "MANAGER")
+//                .anyRequest().authenticated()
+                .anyRequest().access("@authorizationDynamic.check(request, authentication)")
 
                 .and()
                 .exceptionHandling().accessDeniedHandler(
@@ -74,7 +74,7 @@ public class ConfigSecurity {
 
                 .and()
                 .addFilterBefore(
-                        new AuthenticationFilterBean(jwtProvider, apiKeyProvider),
+                        new AuthenticationFilterBean(providerJwt, providerApiKey),
                         UsernamePasswordAuthenticationFilter.class
                 );
         return http.build();
@@ -85,7 +85,7 @@ public class ConfigSecurity {
         return (web) -> web
                 .ignoring()
                 .antMatchers(
-//                        "/swagger-resources/**",
+//                        "/swagger-resources/**",=
 //                        "/swagger-ui.html",
 //                        "/swagger/**"
                 );

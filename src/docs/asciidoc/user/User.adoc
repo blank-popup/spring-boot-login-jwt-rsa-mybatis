@@ -2,28 +2,8 @@
 == User
 This is just an example for CRUD and file.
 
-=== Get All Users
- GET /api/v1/user/information HTTP/1.1
-
-==== Request Headers
-include::{snippets}/user/GetUserAll/request-headers.adoc[]
-// ==== Path Parameters
-// include::{snippets}/user/GetUserAll/path-parameters.adoc[]
-// ==== Request Fields
-// include::{snippets}/user/GetUserAll/request-fields.adoc[]
-// ==== Request Parameters
-// include::{snippets}/user/GetUserAll/request-parameters.adoc[]
-// ==== Request Parts
-// include::{snippets}/user/GetUserAll/request-parts.adoc[]
-==== Response Fields
-include::{snippets}/user/GetUserAll/response-fields.adoc[]
-==== Example of Request
-include::{snippets}/user/GetUserAll/http-request.adoc[]
-==== Example of Response
-include::{snippets}/user/GetUserAll/http-response.adoc[]
-
 === Get User By Username
- GET /api/v1/user/{username}/information HTTP/1.1
+ GET /api/v1/users/base/{username} HTTP/1.1
 
 ==== Request Headers
 include::{snippets}/user/GetUserByUsername/request-headers.adoc[]
@@ -43,7 +23,7 @@ include::{snippets}/user/GetUserByUsername/http-request.adoc[]
 include::{snippets}/user/GetUserByUsername/http-response.adoc[]
 
 === Create User
- POST /api/v1/user/information HTTP/1.1
+ POST /api/v1/users/base HTTP/1.1
 
 ==== Request Headers
 include::{snippets}/user/CreateUser/request-headers.adoc[]
@@ -63,7 +43,7 @@ include::{snippets}/user/CreateUser/http-request.adoc[]
 include::{snippets}/user/CreateUser/http-response.adoc[]
 
 === Put User
- PUT /api/v1/user/{username}/information HTTP/1.1
+ PUT /api/v1/users/base/{username} HTTP/1.1
 
 ==== Request Headers
 include::{snippets}/user/PutUser/request-headers.adoc[]
@@ -83,7 +63,7 @@ include::{snippets}/user/PutUser/http-request.adoc[]
 include::{snippets}/user/PutUser/http-response.adoc[]
 
 === Patch User
- PATCH /api/v1/user/{username}/information HTTP/1.1
+ PATCH /api/v1/users/base/{username} HTTP/1.1
 
 ==== Request Headers
 include::{snippets}/user/PatchUser/request-headers.adoc[]
@@ -103,7 +83,7 @@ include::{snippets}/user/PatchUser/http-request.adoc[]
 include::{snippets}/user/PatchUser/http-response.adoc[]
 
 === Remove user
- DELETE /api/v1/user/{username}/information HTTP/1.1
+ DELETE /api/v1/users/base/{username} HTTP/1.1
 
 ==== Request Headers
 include::{snippets}/user/RemoveUser/request-headers.adoc[]
@@ -123,7 +103,7 @@ include::{snippets}/user/RemoveUser/http-request.adoc[]
 include::{snippets}/user/RemoveUser/http-response.adoc[]
 
 === Download User Image
- GET /api/v1/user/image/{filenameServer} HTTP/1.1
+ GET /api/v1/users/image/{filenameServer} HTTP/1.1
 
 ==== Request Headers
 include::{snippets}/user/DownloadUserImage/request-headers.adoc[]
@@ -143,7 +123,7 @@ include::{snippets}/user/DownloadUserImage/http-request.adoc[]
 include::{snippets}/user/DownloadUserImage/http-response.adoc[]
 
 === Upload User Image
- POST /api/v1/user/image HTTP/1.1
+ POST /api/v1/users/image HTTP/1.1
 
 ==== Request Headers
 include::{snippets}/user/UploadUserImage/request-headers.adoc[]

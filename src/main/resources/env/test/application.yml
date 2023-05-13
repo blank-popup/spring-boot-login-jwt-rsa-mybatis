@@ -1,12 +1,12 @@
 server:
-  port: 29999
+  port: 8081
   servlet:
     contextPath: /test
 
 spring:
   datasource:
-#    url: jdbc:log4jdbc:mariadb://192.168.200.159:3306/davebase_test?characterEncoding=UTF-8&allowMultiQueries=true
-    url: jdbc:log4jdbc:mariadb://192.168.45.245:3306/davebase_test?characterEncoding=UTF-8&allowMultiQueries=true
+    url: jdbc:log4jdbc:mariadb://192.168.200.159:3306/davebase_test?characterEncoding=UTF-8&allowMultiQueries=true
+#    url: jdbc:log4jdbc:mariadb://192.168.45.102:3306/davebase_test?characterEncoding=UTF-8&allowMultiQueries=true
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: base
     password: "0000"

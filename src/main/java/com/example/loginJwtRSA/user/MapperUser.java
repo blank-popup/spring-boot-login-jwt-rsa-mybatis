@@ -2,16 +2,13 @@ package com.example.loginJwtRSA.user;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.List;
-
 @Mapper
 public interface MapperUser {
-    List<ResponseInformation> getUserAll();
     ResponseInformation getUserByUsername(String username);
-    int createUser(RequestInformation requestInformation);
-    int putUser(RequestInformation requestInformation);
-    int patchUser(RequestInformation requestInformation);
-    int removeUser(String username);
+    int createUser(ModelInformation modelInformation);
+    int putUser(ModelInformation modelInformation);
+    int patchUser(ModelInformation modelInformation);
+    int removeUser(ModelInformation modelInformation);
     int createUserImage(RequestImage requestImage);
     String getFilenameClientByFilenameServer(String filenameServer);
 }

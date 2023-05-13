@@ -1,7 +1,6 @@
 package com.example.loginJwtRSA.security;
 
 import com.example.loginJwtRSA.utils.ClientInfo;
-import com.example.loginJwtRSA.utils.Crypto;
 import com.example.loginJwtRSA.utils.TimeTable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,8 @@ import java.util.List;
 //@Transactional(readOnly = true)
 public class ServiceAuth {
     private final MapperAuth mapperAuth;
-    private final JwtProvider jwtProvider;
+    private final ProviderJwt providerJwt;
+    private final ProviderApiKey providerApiKey;
     private final PasswordEncoder passwordEncoder;
     @Value("${apikey.secret}")
     private String secretKey;
@@ -41,7 +41,7 @@ public class ServiceAuth {
         }
 
         requestSignUp.setPassword(passwordEncoder.encode(requestSignUp.getPassword()));
-        mapperAuth.insertUser(requestSignUp);
+        mapperAuth.createUser(requestSignUp);
 
         UserDetailsCustom newUser = mapperAuth.selectUserDetailsByUsername(requestSignUp.getUsername()).get();
         List<ModelRole> modelRoles = mapperAuth.selectRole();
@@ -85,7 +85,7 @@ public class ServiceAuth {
         log.info("Client Information : IP Address : [{}]", ip);
         log.info("Client Information : User-Agent : [{}]", userAgent);
 
-        String token = jwtProvider.createToken(userDetailsCustom.getId(), ip, userAgent);
+        String token = providerJwt.createJwt(userDetailsCustom.getId(), ip, userAgent);
 
         ResponseSignIn responseSignIn = new ResponseSignIn();
         responseSignIn.setId(userDetailsCustom.getId());
@@ -96,34 +96,24 @@ public class ServiceAuth {
         return responseSignIn;
     }
 
-    public ResponseApiKey createUserApiKey(RequestApiKey requestApiKey) {
+    public ResponseApiKey registerApiKey(RequestApiKey requestApiKey) {
+        String apiKey = providerApiKey.createApiKey(requestApiKey.getIdUser(), requestApiKey.getTerms());
+
         ModelApiKey modelApiKey = new ModelApiKey();
-        modelApiKey.setId(requestApiKey.getId());
+        modelApiKey.setIdUser(requestApiKey.getIdUser());
+        modelApiKey.setApiKey(apiKey);
 
         Date now = new Date();
-        long nowMilliSeconds = now.getTime();
-        String id = Long.toString(requestApiKey.getId());
-        String hashId = Crypto.hashSHA256(id);
-        // Hash of Id : 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
-        log.debug("Hash of Id : {}", hashId);
-        String plainText = id + idHashDelimiter + hashId;
-        String encryptText = Crypto.encryptAES(plainText, secretKey, secretIv);
-        // API Key : mqn6nH0/6hJkOOVrJlzuVL9p8bxGPNySp4gKdTwT5hjD+pIWmwGBS5FJJG0o1Vg02tXq1T2ak+mWu7B5M5t13tUxBWQNtTuHoD2/pIpLc2Q=
-        log.debug("API Key : {}", encryptText);
-        modelApiKey.setApiKey(encryptText);
-
         LocalDateTime expireAt = TimeTable
                 .convertMilliSecondsToLocalDateTime(
-                        nowMilliSeconds + requestApiKey.getTerms()
+                        now.getTime() + requestApiKey.getTerms()
                 );
         modelApiKey.setExpireAt(expireAt);
 
         int count = mapperAuth.createUserApiKey(modelApiKey);
         if (count == 1) {
-            ResponseApiKey responseApiKey = new ResponseApiKey();
-            responseApiKey.setId(requestApiKey.getId());
-            responseApiKey.setApiKey(encryptText);
-            responseApiKey.setExpireAt(expireAt);
+            requestApiKey.setApiKey(modelApiKey.getApiKey());
+            ResponseApiKey responseApiKey = mapperAuth.getApiKeyByApiKey(requestApiKey);
             return responseApiKey;
         }
 
