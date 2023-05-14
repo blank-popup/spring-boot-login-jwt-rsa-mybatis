@@ -6,58 +6,58 @@ This API is used for user authentication.
  POST /api/v1/auth/signup HTTP/1.1
 
 ==== Request Headers
-include::{snippets}/auth/SignUp/request-headers.adoc[]
+include::{snippets}/SignUp/request-headers.adoc[]
 // ==== Path Parameters
 // include::{snippets}/auth/SignUp/path-parameters.adoc[]
 ==== Request Fields
-include::{snippets}/auth/SignUp/request-fields.adoc[]
+include::{snippets}/SignUp/request-fields.adoc[]
 // ==== Request Parameters
 // include::{snippets}/auth/SignUp/request-parameters.adoc[]
 // ==== Request Parts
 // include::{snippets}/auth/SignUp/request-parts.adoc[]
 ==== Response Fields
-include::{snippets}/auth/SignUp/response-fields.adoc[]
+include::{snippets}/SignUp/response-fields.adoc[]
 ==== Example of Request
-include::{snippets}/auth/SignUp/http-request.adoc[]
+include::{snippets}/SignUp/http-request.adoc[]
 ==== Example of Response
-include::{snippets}/auth/SignUp/http-response.adoc[]
+include::{snippets}/SignUp/http-response.adoc[]
 
 === Sign In
  POST /api/v1/auth/signin HTTP/1.1
 
 ==== Request Headers
-include::{snippets}/auth/SignIn/request-headers.adoc[]
+include::{snippets}/SignIn/request-headers.adoc[]
 // ==== Path Parameters
 // include::{snippets}/auth/SignIn/path-parameters.adoc[]
 ==== Request Fields
-include::{snippets}/auth/SignIn/request-fields.adoc[]
+include::{snippets}/SignIn/request-fields.adoc[]
 // ==== Request Parameters
 // include::{snippets}/auth/SignIn/request-parameters.adoc[]
 // ==== Request Parts
 // include::{snippets}/auth/SignIn/request-parts.adoc[]
 ==== Response Fields
-include::{snippets}/auth/SignIn/response-fields.adoc[]
+include::{snippets}/SignIn/response-fields.adoc[]
 ==== Example of Request
-include::{snippets}/auth/SignIn/http-request.adoc[]
+include::{snippets}/SignIn/http-request.adoc[]
 ==== Example of Response
-include::{snippets}/auth/SignIn/http-response.adoc[]
+include::{snippets}/SignIn/http-response.adoc[]
 
 === Register API Key
  POST /api/v1/auth/apikey HTTP/1.1
 
 ==== Request Headers
-include::{snippets}/auth/ApiKey/request-headers.adoc[]
+include::{snippets}/ApiKey/request-headers.adoc[]
 // ==== Path Parameters
 // include::{snippets}/auth/ApiKey/path-parameters.adoc[]
 ==== Request Fields
-include::{snippets}/auth/ApiKey/request-fields.adoc[]
+include::{snippets}/ApiKey/request-fields.adoc[]
 // ==== Request Parameters
 // include::{snippets}/auth/ApiKey/request-parameters.adoc[]
 // ==== Request Parts
 // include::{snippets}/auth/ApiKey/request-parts.adoc[]
 ==== Response Fields
-include::{snippets}/auth/ApiKey/response-fields.adoc[]
+include::{snippets}/ApiKey/response-fields.adoc[]
 ==== Example of Request
-include::{snippets}/auth/ApiKey/http-request.adoc[]
+include::{snippets}/ApiKey/http-request.adoc[]
 ==== Example of Response
-include::{snippets}/auth/ApiKey/http-response.adoc[]
+include::{snippets}/ApiKey/http-response.adoc[]

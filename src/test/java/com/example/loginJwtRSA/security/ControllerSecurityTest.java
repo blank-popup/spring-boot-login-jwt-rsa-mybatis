@@ -79,7 +79,7 @@ class ControllerSecurityTest {
                                 .content(content)
                 )
                 .andExpect(status().isCreated())
-                .andDo(document("/auth/SignUp",
+                .andDo(document("/SignUp",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersWithoutAuthorization()),
@@ -157,7 +157,7 @@ class ControllerSecurityTest {
                                 .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("/auth/SignIn",
+                .andDo(document("/SignIn",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersWithoutAuthorization()),
@@ -235,7 +235,7 @@ class ControllerSecurityTest {
                                 .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("/auth/ApiKey",
+                .andDo(document("/ApiKey",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersWithoutAuthorization()),
