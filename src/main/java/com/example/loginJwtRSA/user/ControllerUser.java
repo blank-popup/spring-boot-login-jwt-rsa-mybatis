@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,34 +18,34 @@ public class ControllerUser {
 
 //    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/base/{username}")
-    public ResponseEntity<?> getUserByUsername(@PathVariable(value="username") String username) {
-        RequestInformation requestInformation = new RequestInformation();
-        requestInformation.setUsername(username);
-        return serviceUser.getUserByUsername(requestInformation);
+    public ResponseEntity<?> getUser(@PathVariable(value="username") String username) {
+        RequestUserBase requestUserBase = new RequestUserBase();
+        requestUserBase.setUsername(username);
+        return serviceUser.getUser(requestUserBase);
     }
 
     @PostMapping("/base")
-    public ResponseEntity<?> createUser(@RequestBody ModelInformation modelInformation) {
-        return serviceUser.createUser(modelInformation);
+    public ResponseEntity<?> createUser(@RequestBody ModelUserBase modelUserBase) {
+        return serviceUser.createUser(modelUserBase);
     }
 
     @PutMapping("/base/{username}")
-    public ResponseEntity<?> putUser(@PathVariable(value="username") String username, @RequestBody ModelInformation modelInformation) {
-        modelInformation.setUsername(username);
-        return  serviceUser.putUser(modelInformation);
+    public ResponseEntity<?> putUser(@PathVariable(value="username") String username, @RequestBody ModelUserBase modelUserBase) {
+        modelUserBase.setUsername(username);
+        return  serviceUser.putUser(modelUserBase);
     }
 
     @PatchMapping("/base/{username}")
-    public ResponseEntity<?> patchUser(@PathVariable(value="username") String username, @RequestBody ModelInformation modelInformation) {
-        modelInformation.setUsername(username);
-        return serviceUser.patchUser(modelInformation);
+    public ResponseEntity<?> patchUser(@PathVariable(value="username") String username, @RequestBody ModelUserBase modelUserBase) {
+        modelUserBase.setUsername(username);
+        return serviceUser.patchUser(modelUserBase);
     }
 
     @DeleteMapping("/base/{username}")
     public ResponseEntity<?> removeUser(@PathVariable(value="username") String username) {
-        ModelInformation modelInformation = new ModelInformation();
-        modelInformation.setUsername(username);
-        return serviceUser.removeUser(modelInformation);
+        ModelUserBase modelUserBase = new ModelUserBase();
+        modelUserBase.setUsername(username);
+        return serviceUser.removeUser(modelUserBase);
     }
 
     @Value("${directory.user.image}")
@@ -54,13 +53,13 @@ public class ControllerUser {
 
     @GetMapping(value="/image/{filenameServer}")
     public void downloadUserImage(HttpServletResponse response, @PathVariable(value="filenameServer") String filenameServer) {
-        RequestImage requestImage = new RequestImage();
-        requestImage.setFilenameServer(filenameServer);
-        serviceUser.downloadUserImage(response, requestImage);
+        RequestUserImage requestUserImage = new RequestUserImage();
+        requestUserImage.setFilenameServer(filenameServer);
+        serviceUser.downloadUserImage(response, requestUserImage);
     }
 
     @PostMapping("/image")
-    public ResponseEntity<?> uploadUserImage(RequestImage requestImage, @RequestPart(value = "userImage", required = true) MultipartFile file) {
-        return serviceUser.uploadUserImage(requestImage, file);
+    public ResponseEntity<?> uploadUserImage(RequestUserImage requestUserImage, @RequestPart(value = "userImage", required = true) MultipartFile file) {
+        return serviceUser.uploadUserImage(requestUserImage, file);
     }
 }

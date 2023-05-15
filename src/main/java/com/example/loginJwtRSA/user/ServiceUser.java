@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,9 +30,9 @@ public class ServiceUser {
     @Value("${directory.user.image}")
     private String directoryUserImage;
 
-    private boolean verifyNotEmptyUsernamePassword(ModelInformation modelInformation) {
-        if (modelInformation.getUsername() == null || "".equals(modelInformation.getUsername()) == true
-                || modelInformation.getPassword() == null || "".equals(modelInformation.getPassword()) == true) {
+    private boolean verifyNotEmptyUsernamePassword(ModelUserBase modelUserBase) {
+        if (modelUserBase.getUsername() == null || "".equals(modelUserBase.getUsername()) == true
+                || modelUserBase.getPassword() == null || "".equals(modelUserBase.getPassword()) == true) {
             return false;
         }
 
@@ -70,30 +68,30 @@ public class ServiceUser {
 //        return true;
 //    }
 
-    public ResponseEntity<?> getUserByUsername(RequestInformation requestInformation) {
-        ResponseInformation responseInformation = mapperUser.getUserByUsername(requestInformation.getUsername());
+    public ResponseEntity<?> getUser(RequestUserBase requestUserBase) {
+        ResponseUserBase responseUserBase = mapperUser.getUser(requestUserBase.getUsername());
         return ResponseEntity
-                .ok(responseInformation);
+                .ok(responseUserBase);
     }
 
     @Transactional
-    public ResponseEntity<?> createUser(ModelInformation modelInformation) {
-        if (verifyNotEmptyUsernamePassword(modelInformation) == false) {
+    public ResponseEntity<?> createUser(ModelUserBase modelUserBase) {
+        if (verifyNotEmptyUsernamePassword(modelUserBase) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
         }
 
-        modelInformation.setPassword(passwordEncoder.encode(modelInformation.getPassword()));
-        int count = mapperUser.createUser(modelInformation);
+        modelUserBase.setPassword(passwordEncoder.encode(modelUserBase.getPassword()));
+        int count = mapperUser.createUser(modelUserBase);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));
     }
 
     @Transactional
-    public ResponseEntity<?> putUser(ModelInformation modelInformation) {
-        if (verifyNotEmptyUsernamePassword(modelInformation) == false) {
+    public ResponseEntity<?> putUser(ModelUserBase modelUserBase) {
+        if (verifyNotEmptyUsernamePassword(modelUserBase) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
@@ -104,22 +102,22 @@ public class ServiceUser {
 //                    .body(ReturnValues.createReturnMessage("Other cannot modify user information"));
 //        }
 
-        modelInformation.setPassword(passwordEncoder.encode(modelInformation.getPassword()));
-        int count = mapperUser.putUser(modelInformation);
+        modelUserBase.setPassword(passwordEncoder.encode(modelUserBase.getPassword()));
+        int count = mapperUser.putUser(modelUserBase);
         if (count > 0) {
             return ResponseEntity
                     .ok(ReturnValues.createReturnCount(count));
         }
 
-        count = mapperUser.createUser(modelInformation);
+        count = mapperUser.createUser(modelUserBase);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));
     }
 
     @Transactional
-    public ResponseEntity<?> patchUser(ModelInformation modelInformation) {
-        if (verifyNotEmptyUsernamePassword(modelInformation) == false) {
+    public ResponseEntity<?> patchUser(ModelUserBase modelUserBase) {
+        if (verifyNotEmptyUsernamePassword(modelUserBase) == false) {
             return ResponseEntity
                     .status(HttpStatus.BAD_REQUEST)
                     .body(ReturnValues.createReturnMessage("Invalid username or password"));
@@ -130,8 +128,8 @@ public class ServiceUser {
 //                    .body(ReturnValues.createReturnMessage("Other cannot modify user information"));
 //        }
 
-        modelInformation.setPassword(passwordEncoder.encode(modelInformation.getPassword()));
-        int count = mapperUser.patchUser(modelInformation);
+        modelUserBase.setPassword(passwordEncoder.encode(modelUserBase.getPassword()));
+        int count = mapperUser.patchUser(modelUserBase);
         if (count > 0) {
             return ResponseEntity
                     .ok(ReturnValues.createReturnCount(count));
@@ -143,16 +141,16 @@ public class ServiceUser {
     }
 
     @Transactional
-    public ResponseEntity<?> removeUser(ModelInformation modelInformation) {
-        int count = mapperUser.removeUser(modelInformation);
+    public ResponseEntity<?> removeUser(ModelUserBase modelUserBase) {
+        int count = mapperUser.removeUser(modelUserBase);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
                 .body(ReturnValues.createReturnCount(count));
     }
 
-    public void downloadUserImage(HttpServletResponse response, RequestImage requestImage) {
+    public void downloadUserImage(HttpServletResponse response, RequestUserImage requestUserImage) {
         try {
-            String path = directoryUserImage + "/" + requestImage.getFilenameServer();
+            String path = directoryUserImage + "/" + requestUserImage.getFilenameServer();
 
             File file = new File(path);
             if (file.exists() == false || file.isDirectory() == true) {
@@ -160,7 +158,7 @@ public class ServiceUser {
                 return;
             }
 
-            String filenameClient = mapperUser.getFilenameClientByFilenameServer(requestImage.getFilenameServer());
+            String filenameClient = mapperUser.getFilenameClientByFilenameServer(requestUserImage.getFilenameServer());
             if (filenameClient == null) {
                 response.setStatus(HttpStatus.BAD_REQUEST.value());
                 return;
@@ -182,16 +180,16 @@ public class ServiceUser {
     }
 
     @Transactional
-    public ResponseEntity uploadUserImage(RequestImage requestImage, MultipartFile file) {
-        log.info("requestImage : {}", requestImage);
+    public ResponseEntity uploadUserImage(RequestUserImage requestUserImage, MultipartFile file) {
+        log.info("requestImage : {}", requestUserImage);
         String filenameClient = file.getOriginalFilename();
         log.info("file.getOriginalFilename() : {}", filenameClient);
 
         String filenameServer = OID.generateType1UUID().toString();
         log.info("filenameServer : {}", filenameServer);
 
-        requestImage.setFilenameServer(filenameServer);
-        requestImage.setFilenameClient(filenameClient);
+        requestUserImage.setFilenameServer(filenameServer);
+        requestUserImage.setFilenameClient(filenameClient);
 
         try {
             Path directoryUpdate = Paths.get(directoryUserImage);
@@ -205,7 +203,7 @@ public class ServiceUser {
                     .body(ReturnValues.createReturnMessage(e.getMessage()));
         }
 
-        int count = mapperUser.createUserImage(requestImage);
+        int count = mapperUser.createUserImage(requestUserImage);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ReturnValues.createReturnCount(count));

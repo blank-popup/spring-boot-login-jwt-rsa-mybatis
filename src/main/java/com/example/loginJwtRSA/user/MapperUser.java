@@ -4,11 +4,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MapperUser {
-    ResponseInformation getUserByUsername(String username);
-    int createUser(ModelInformation modelInformation);
-    int putUser(ModelInformation modelInformation);
-    int patchUser(ModelInformation modelInformation);
-    int removeUser(ModelInformation modelInformation);
-    int createUserImage(RequestImage requestImage);
+    ResponseUserBase getUser(String username);
+    int createUser(ModelUserBase modelUserBase);
+    int putUser(ModelUserBase modelUserBase);
+    int patchUser(ModelUserBase modelUserBase);
+    int removeUser(ModelUserBase modelUserBase);
     String getFilenameClientByFilenameServer(String filenameServer);
+    int createUserImage(RequestUserImage requestUserImage);
 }

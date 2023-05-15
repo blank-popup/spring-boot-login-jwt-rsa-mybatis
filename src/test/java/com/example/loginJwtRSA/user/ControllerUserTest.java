@@ -87,7 +87,7 @@ class ControllerUserTest {
 //                                .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("/user/GetUserByUsername",
+                .andDo(document("user/GetUserByUsername",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
@@ -180,7 +180,7 @@ class ControllerUserTest {
                                 .content(content)
                 )
                 .andExpect(status().isCreated())
-                .andDo(document("/user/CreateUser",
+                .andDo(document("user/CreateUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
@@ -251,7 +251,7 @@ class ControllerUserTest {
                                 .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("/user/PutUser",
+                .andDo(document("user/PutUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
@@ -322,7 +322,7 @@ class ControllerUserTest {
                                 .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("/user/PatchUser",
+                .andDo(document("user/PatchUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
@@ -429,7 +429,7 @@ class ControllerUserTest {
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("/user/DownloadUserImage",
+                .andDo(document("user/DownloadUserImage",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
@@ -474,7 +474,7 @@ class ControllerUserTest {
                                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                 )
                 .andExpect(status().isCreated())
-                .andDo(document("/user/UploadUserImage",
+                .andDo(document("user/UploadUserImage",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
