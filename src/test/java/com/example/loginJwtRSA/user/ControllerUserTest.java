@@ -390,7 +390,7 @@ class ControllerUserTest {
 //                                .content(content)
                 )
                 .andExpect(status().isNoContent())
-                .andDo(document("/user/RemoveUser",
+                .andDo(document("user/RemoveUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),
