@@ -22,17 +22,18 @@ apikey:
 
 directory:
   user:
-    image: /home/dave/server-aa/api/testdata/user/image
+    image: D:/SPRING_DATA/user/image
+#    image: /home/dave/server-aa/api/testdata/user/image
 
 logging:
   pattern:
     file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
-    rolling-file-name: "/home/dave/server-aa/api/log/loginRSA-test.%d{yyyy-MM-dd}.%i.log"
-#    rolling-file-name: "D:/WorkSpace/log/test/loginRSA-test.%d{yyyy-MM-dd}.%i.log"
+    rolling-file-name: "D:/WorkSpace/log/test/loginRSA-test.%d{yyyy-MM-dd}.%i.log"
+#    rolling-file-name: "/home/dave/server-aa/api/log/loginRSA-test.%d{yyyy-MM-dd}.%i.log"
     console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
   file:
-    name: /home/dave/server-aa/api/log/loginRSA-test.log
-#    name: D:/WorkSpace/log/test/loginRSA-test.log
+    name: D:/WorkSpace/log/test/loginRSA-test.log
+#    name: /home/dave/server-aa/api/log/loginRSA-test.log
     max-history: 30
   level:
     org:

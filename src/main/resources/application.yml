@@ -8,6 +8,15 @@ mybatis:
 spring:
   config:
     activate:
+      on-profile: "develop"
+    import:
+      - classpath:/env/develop/application.yml
+
+---
+
+spring:
+  config:
+    activate:
       on-profile: "local"
     import:
       - classpath:/env/local/application.yml
