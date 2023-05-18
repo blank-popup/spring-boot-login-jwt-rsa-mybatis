@@ -96,6 +96,9 @@ wget https://pkg.jenkins.io/debian-stable/binary/jenkins_2.346.3_all.deb
 sudo dpkg -i jenkins_2.346.3_all.deb
 sudo apt install git
 
+$WORKSPACE
+    /var/lib/jenkins/workspace/ProjectName
+
 sudo vi /usr/lib/systemd/system/jenkins.service
 search "PORT"
     /PORT
@@ -137,8 +140,17 @@ Freestyle Project
                 sleep 1
 
                 sudo /home/dave/server-aa/api/execute/start.sh
+                sleep 1
+
+                sudo rm -rf /home/dave/server-aa/api/jwt-rsa-help/*
+                sleep 1
+
+                sudo cp -r $WORKSPACE/src/main/resources/static/docs/* /home/dave/server-aa/api/jwt-rsa-help/.
+                sleep 1
+
 
                 # sudo /home/dave/server-aa/api/execute/deploy.sh $WORKSPACE/build/libs/loginJwtRSA-0.0.1-SNAPSHOT.jar
+
 
 vi /home/dave/server-aa/api/execute/stop.sh
 ------------------
@@ -246,6 +258,12 @@ server {
         try_files $uri $uri/ =404;
     }
 
+    location /jwt-rsa-help {
+        root /home/dave/server-aa/api;
+        #autoindex on;
+        #index index.html;
+    }
+
     location /jwt-rsa {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
@@ -253,6 +271,7 @@ server {
         proxy_pass http://jwt-rsa;
     }
 }
+
 
 upstream jwt-rsa {
     server localhost:18010;

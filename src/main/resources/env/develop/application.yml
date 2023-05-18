@@ -22,15 +22,15 @@ apikey:
 
 directory:
   user:
-    image: /home/dave/loginRSA/data/user/image
+    image: /home/dave/server-aa/api/data/user/image
 
 logging:
   pattern:
-    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
-    rolling-file-name: "/home/dave/loginRSA/log/loginRSA-develop.%d{yyyy-MM-dd}.%i.log"
-    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    rolling-file-name: "/home/dave/server-aa/api/log/loginRSA-develop.%d{yyyy-MM-dd}.%i.log"
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
   file:
-    name: /home/dave/loginRSA/log/loginRSA-develop.log
+    name: /home/dave/server-aa/api/log/loginRSA-develop.log
     max-history: 30
   level:
     org:

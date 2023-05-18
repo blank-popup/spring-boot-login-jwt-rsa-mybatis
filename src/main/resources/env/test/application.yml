@@ -27,10 +27,10 @@ directory:
 
 logging:
   pattern:
-    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
 #    rolling-file-name: "D:/WorkSpace/log/test/loginRSA-test.%d{yyyy-MM-dd}.%i.log"
     rolling-file-name: "/home/dave/server-aa/api/log/loginRSA-test.%d{yyyy-MM-dd}.%i.log"
-    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
   file:
 #    name: D:/WorkSpace/log/test/loginRSA-test.log
     name: /home/dave/server-aa/api/log/loginRSA-test.log

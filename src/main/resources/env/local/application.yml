@@ -26,9 +26,9 @@ directory:
 
 logging:
   pattern:
-    file: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    file: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
     rolling-file-name: "D:/WorkSpace/log/test/loginRSA-local.%d{yyyy-MM-dd}.%i.log"
-    console: "[%d{HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
+    console: "[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][%logger.%method:%line] - %msg%n"
   file:
     name: D:/WorkSpace/log/test/loginRSA-local.log
     max-history: 30
