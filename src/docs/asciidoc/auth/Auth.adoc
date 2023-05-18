@@ -46,18 +46,18 @@ include::{snippets}/auth/SignIn/http-response.adoc[]
  POST /api/v1/auth/apikey HTTP/1.1
 
 ==== Request Headers
-include::{snippets}/auth/ApiKey/request-headers.adoc[]
+include::{snippets}/auth/RegisterApiKey/request-headers.adoc[]
 // ==== Path Parameters
-// include::{snippets}/auth/ApiKey/path-parameters.adoc[]
+// include::{snippets}/auth/RegisterApiKey/path-parameters.adoc[]
 ==== Request Fields
-include::{snippets}/auth/ApiKey/request-fields.adoc[]
+include::{snippets}/auth/RegisterApiKey/request-fields.adoc[]
 // ==== Request Parameters
-// include::{snippets}/auth/ApiKey/request-parameters.adoc[]
+// include::{snippets}/auth/RegisterApiKey/request-parameters.adoc[]
 // ==== Request Parts
-// include::{snippets}/auth/ApiKey/request-parts.adoc[]
+// include::{snippets}/auth/RegisterApiKey/request-parts.adoc[]
 ==== Response Fields
-include::{snippets}/auth/ApiKey/response-fields.adoc[]
+include::{snippets}/auth/RegisterApiKey/response-fields.adoc[]
 ==== Example of Request
-include::{snippets}/auth/ApiKey/http-request.adoc[]
+include::{snippets}/auth/RegisterApiKey/http-request.adoc[]
 ==== Example of Response
-include::{snippets}/auth/ApiKey/http-response.adoc[]
+include::{snippets}/auth/RegisterApiKey/http-response.adoc[]

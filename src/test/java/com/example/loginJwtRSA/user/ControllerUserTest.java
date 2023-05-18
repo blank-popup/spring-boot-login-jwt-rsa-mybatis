@@ -75,7 +75,7 @@ class ControllerUserTest {
     }
 
     @Test
-    @DisplayName("Get User By Username")
+    @DisplayName("Get User")
     void getUserByUsername() throws Exception {
 //        ObjectMapper mapper = new ObjectMapper();
 //        Map<String, Object> map = new LinkedHashMap<>();
@@ -87,7 +87,7 @@ class ControllerUserTest {
 //                                .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("user/GetUserByUsername",
+                .andDo(document("user/GetUser",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersCommon()),

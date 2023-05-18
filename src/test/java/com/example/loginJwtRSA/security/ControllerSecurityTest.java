@@ -235,7 +235,7 @@ class ControllerSecurityTest {
                                 .content(content)
                 )
                 .andExpect(status().isOk())
-                .andDo(document("auth/ApiKey",
+                .andDo(document("auth/RegisterApiKey",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
                         requestHeaders(CommonTest.createRequestHeadersWithoutAuthorization()),

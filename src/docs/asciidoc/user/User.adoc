@@ -2,25 +2,25 @@
 == User
 This is just an example for CRUD and file.
 
-=== Get User By Username
+=== Get User
  GET /api/v1/users/base/{username} HTTP/1.1
 
 ==== Request Headers
-include::{snippets}/user/GetUserByUsername/request-headers.adoc[]
+include::{snippets}/user/GetUser/request-headers.adoc[]
 ==== Path Parameters
-include::{snippets}/user/GetUserByUsername/path-parameters.adoc[]
+include::{snippets}/user/GetUser/path-parameters.adoc[]
 // ==== Request Fields
-// include::{snippets}/user/GetUserByUsername/request-fields.adoc[]
+// include::{snippets}/user/GetUser/request-fields.adoc[]
 // ==== Request Parameters
-// include::{snippets}/user/GetUserByUsername/request-parameters.adoc[]
+// include::{snippets}/user/GetUser/request-parameters.adoc[]
 // ==== Request Parts
-// include::{snippets}/user/GetUserByUsername/request-parts.adoc[]
+// include::{snippets}/user/GetUser/request-parts.adoc[]
 ==== Response Fields
-include::{snippets}/user/GetUserByUsername/response-fields.adoc[]
+include::{snippets}/user/GetUser/response-fields.adoc[]
 ==== Example of Request
-include::{snippets}/user/GetUserByUsername/http-request.adoc[]
+include::{snippets}/user/GetUser/http-request.adoc[]
 ==== Example of Response
-include::{snippets}/user/GetUserByUsername/http-response.adoc[]
+include::{snippets}/user/GetUser/http-response.adoc[]
 
 === Create User
  POST /api/v1/users/base HTTP/1.1
