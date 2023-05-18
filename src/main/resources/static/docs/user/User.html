@@ -447,7 +447,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>This is just an example for CRUD and file.</p>
 </div>
 <div class="sect2">
-<h3 id="_get_user_by_username">Get User By Username</h3>
+<h3 id="_get_user">Get User</h3>
 <div class="literalblock">
 <div class="content">
 <pre>GET /api/v1/users/base/{username} HTTP/1.1</pre>
@@ -607,7 +607,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/v1/users/base/nonuser HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0MTY3MTY0LCJleHAiOjE2ODQyNTM1NjR9.NYwulUlR_YLh745Ri8JcwEJDM32-UQW9xC3wgDJ6NQU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0NDIwMzgwLCJleHAiOjE2ODQ1MDY3ODB9.yf7FmhKnP41vP_BexGLFho-Ery7ZDm5wSM2p12ZqweQ
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -782,7 +782,7 @@ Content-Length: 241
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/v1/users/base HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0MTY3MTY1LCJleHAiOjE2ODQyNTM1NjV9.ASmvtrJMIvU6_PwjXUMDwP4hsFrJIN902K60jJTwTis
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0NDIwMzgyLCJleHAiOjE2ODQ1MDY3ODJ9._qT_79TliCPak-zHYpK5JQYlhciVhicj_uVS9oFXfUo
 Content-Length: 57
 Host: localhost:8080
 
@@ -979,7 +979,7 @@ Content-Length: 19
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PUT /api/v1/users/base/nonuser HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0MTY3MTY1LCJleHAiOjE2ODQyNTM1NjV9.ASmvtrJMIvU6_PwjXUMDwP4hsFrJIN902K60jJTwTis
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0NDIwMzgyLCJleHAiOjE2ODQ1MDY3ODJ9._qT_79TliCPak-zHYpK5JQYlhciVhicj_uVS9oFXfUo
 Content-Length: 98
 Host: localhost:8080
 
@@ -1177,7 +1177,7 @@ Content-Length: 19
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">PATCH /api/v1/users/base/nonuser HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0MTY3MTY1LCJleHAiOjE2ODQyNTM1NjV9.ASmvtrJMIvU6_PwjXUMDwP4hsFrJIN902K60jJTwTis
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0NDIwMzgxLCJleHAiOjE2ODQ1MDY3ODF9.w5Ymp4irWEUUDQ85K8lu5co2sf-6DN5L7wuQE4HycA8
 Content-Length: 98
 Host: localhost:8080
 
@@ -1326,7 +1326,7 @@ Content-Length: 19
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">DELETE /api/v1/users/base/nonuser HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0MTY3MTY1LCJleHAiOjE2ODQyNTM1NjV9.ASmvtrJMIvU6_PwjXUMDwP4hsFrJIN902K60jJTwTis
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0NDIwMzgyLCJleHAiOjE2ODQ1MDY3ODJ9._qT_79TliCPak-zHYpK5JQYlhciVhicj_uVS9oFXfUo
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1435,7 +1435,7 @@ Content-Length: 19
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">GET /api/v1/users/image/01eddb85-d63f-1eb8-87c9-04529c92ee69 HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0MTY3MTY2LCJleHAiOjE2ODQyNTM1NjZ9.oz0KnYuvfSYopcStYB649jgLDA5JvMvpPdxtgL3BJG4
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0NDIwMzgyLCJleHAiOjE2ODQ1MDY3ODJ9._qT_79TliCPak-zHYpK5JQYlhciVhicj_uVS9oFXfUo
 Host: localhost:8080</code></pre>
 </div>
 </div>
@@ -1612,7 +1612,7 @@ Content-Length: 20
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/v1/users/image HTTP/1.1
 Content-Type: multipart/form-data;charset=UTF-8; boundary=6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0MTY3MTY1LCJleHAiOjE2ODQyNTM1NjV9.ASmvtrJMIvU6_PwjXUMDwP4hsFrJIN902K60jJTwTis
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjg0NDIwMzgyLCJleHAiOjE2ODQ1MDY3ODJ9._qT_79TliCPak-zHYpK5JQYlhciVhicj_uVS9oFXfUo
 Host: localhost:8080
 
 --6o2knFse3p53ty9dmcQvWAIx1zInP11uCfbm
@@ -1662,7 +1662,7 @@ Content-Length: 19
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-04-27 19:39:14 +0900
+Last updated 2023-05-18 22:52:21 +0900
 </div>
 </div>
 </body>
