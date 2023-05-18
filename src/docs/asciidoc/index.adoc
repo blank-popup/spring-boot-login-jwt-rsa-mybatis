@@ -11,5 +11,8 @@
 :sectlinks:
 :sectanchors:
 
+== Context Path
+This API starts with context path. It is '/jwt-rsa'.
+
 include::auth/Auth.adoc[]
 include::user/User.adoc[]
