@@ -59,7 +59,7 @@ public class ConfigSecurity {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/**").permitAll()
-                // http://localhost:8081/local/docs/index.html
+                // http://localhost:18010/local/docs/index.html
                 .antMatchers("/docs/**").permitAll()
 //                .antMatchers("/api/v1/users/**").hasAnyRole("ADMIN", "MANAGER")
 //                .anyRequest().authenticated()

@@ -1,12 +1,12 @@
 server:
-  port: 8081
+  port: 18010
   servlet:
     contextPath: /local
 
 spring:
   datasource:
-    url: jdbc:log4jdbc:mariadb://192.168.200.159:3306/davebase?characterEncoding=UTF-8&allowMultiQueries=true
-#    url: jdbc:log4jdbc:mariadb://192.168.45.67:3306/davebase?characterEncoding=UTF-8&allowMultiQueries=true
+    url: jdbc:log4jdbc:mariadb://192.168.200.159:18020/davebase?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+#    url: jdbc:log4jdbc:mariadb://192.168.45.67:18020/davebase?characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowMultiQueries=true
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: base
     password: "0000"

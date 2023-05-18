@@ -1,6 +1,5 @@
-# @BaseURL = http://localhost:8080
-@BaseURL = http://localhost:8081/local/api/v1
-# @BaseURL = http://localhost:8081/test/api/v1
+# @BaseURL = http://localhost:18010/local/api/v1
+@BaseURL = http://192.168.200.159:18010/jwt-rsa/api/v1
 
 ### SignUp
 POST {{BaseURL}}/auth/signup HTTP/1.1

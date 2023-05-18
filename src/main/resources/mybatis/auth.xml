@@ -27,7 +27,7 @@
         FROM aha_role
     </select>
 
-    <insert id="insertUserRole" parameterType="com.example.loginJwtRSA.security.ModelUserRole">
+    <insert id="insertUserRole" parameterType="com.example.loginJwtRSA.security.ModelUserRole" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO aha_user_role (
             id_user,
             id_role
@@ -69,7 +69,7 @@
         )
     </insert>
 
-    <insert id="createUserApiKey" parameterType="com.example.loginJwtRSA.security.ModelApiKey">
+    <insert id="createUserApiKey" parameterType="com.example.loginJwtRSA.security.ModelApiKey" useGeneratedKeys="true" keyProperty="id">
         INSERT aha_api_key (
             id_user,
             api_key,
