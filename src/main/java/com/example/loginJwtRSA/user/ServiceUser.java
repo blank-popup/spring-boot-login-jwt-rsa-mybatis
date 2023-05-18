@@ -193,13 +193,10 @@ public class ServiceUser {
 
         try {
             Path directoryUpdate = Paths.get(directoryUserImage);
-            log.error("$$$$$ directoryUpdate : {}", directoryUpdate);
             Files.createDirectories(directoryUpdate);
-            log.error("$$$$$ created directory : {}", directoryUpdate);
             Path targetPath = directoryUpdate.resolve(filenameServer).normalize();
-            log.error("$$$$$ targetPath : {}", targetPath);
+            log.info("targetPath : {}", targetPath);
             file.transferTo(targetPath);
-            log.error("$$$$$ transfered");
         } catch (Exception e) {
             log.warn("Exception uploadUserImage: {}", e.getMessage());
             return ResponseEntity
