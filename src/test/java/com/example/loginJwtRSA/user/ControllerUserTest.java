@@ -76,7 +76,7 @@ class ControllerUserTest {
 
     @Test
     @DisplayName("Get User")
-    void getUserByUsername() throws Exception {
+    void getUser() throws Exception {
 //        ObjectMapper mapper = new ObjectMapper();
 //        Map<String, Object> map = new LinkedHashMap<>();
 //        String content = mapper.writeValueAsString(map);
