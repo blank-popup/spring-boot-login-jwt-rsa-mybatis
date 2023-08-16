@@ -27,11 +27,12 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static org.springframework.restdocs.headers.HeaderDocumentation.*;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.headers.HeaderDocumentation.responseHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.*;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
@@ -148,7 +149,7 @@ class ControllerSecurityTest {
     public void signin() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> map = new LinkedHashMap<>();
-        map.put("username", "nonuser");
+        map.put("username", "uuser");
         map.put("password", "0000");
         String content =  mapper.writeValueAsString(map);
         mockMvc.perform(
@@ -214,7 +215,23 @@ class ControllerSecurityTest {
                                         "The array of role",
                                         false,
                                         "ROLE_ADMIN, ROLE_MANAGER, ROLE_USER",
-                                        "[ROLE_USER]"
+                                        "[\"id\": 3, \"name\": \"ROLE_USER\"]"
+                                ),
+                                CommonTest.createResponseFields(
+                                        "roles[].id",
+                                        JsonFieldType.NUMBER,
+                                        "The ID of role",
+                                        true,
+                                        null,
+                                        7
+                                ),
+                                CommonTest.createResponseFields(
+                                        "roles[].name",
+                                        JsonFieldType.STRING,
+                                        "The name of role",
+                                        true,
+                                        "ROLE_ADMIN, ROLE_MANAGER, ROLE_USER",
+                                        "ROLE_USER"
                                 )
                         )
                 ));

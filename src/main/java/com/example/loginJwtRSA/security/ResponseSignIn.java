@@ -9,5 +9,5 @@ public class ResponseSignIn {
     private Long id;
     private String username;
     private String token;
-    private List<String> roles;
+    private List<ModelRole> roles;
 }

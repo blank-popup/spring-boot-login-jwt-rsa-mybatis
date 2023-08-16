@@ -19,8 +19,8 @@ public class UserDetailsServiceCustom implements UserDetailsService {
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
         return mapperAuth.selectUserDetailsById(Long.parseLong(id))
                 .map(user -> {
-                    List<String> roles = mapperAuth.selectRolesById(Long.parseLong(id));
-                    user.setRoles(roles);
+                    List<ModelRole> modelRoles = mapperAuth.selectRolesById(Long.parseLong(id));
+                    user.setModelRoles(modelRoles);
                     return user;
                 })
                 .orElseThrow(() -> new RuntimeException("Cannot find such username[" +  id + "]"));

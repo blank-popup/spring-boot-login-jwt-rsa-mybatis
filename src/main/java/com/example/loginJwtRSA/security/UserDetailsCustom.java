@@ -20,13 +20,14 @@ public class UserDetailsCustom implements UserDetails {
     private String username;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    private List<String> roles;
+    private List<ModelRole> modelRoles;
+    private int isActivate;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (String role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role));
+        for (ModelRole modelRole : modelRoles) {
+            authorities.add(new SimpleGrantedAuthority(modelRole.getName()));
         }
         return authorities;
     }
@@ -62,6 +63,14 @@ public class UserDetailsCustom implements UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public boolean isEnabled() {
-        return true;
+        if (isActivate == 1) {
+            return true;
+        }
+        else if (isActivate == 0){
+            return false;
+        }
+        else {
+            return false;
+        }
     }
 }

@@ -44,7 +44,7 @@ public class AuthorizationDynamic {
         UserDetailsCustom userDetails = (UserDetailsCustom)principal;
         log.debug("userDedatails : {}", userDetails.toString());
 
-        List<String> roles = userDetails.getRoles();
+        List<ModelRole> modelRoles = userDetails.getModelRoles();
 
         RequestAuthorization requestAuthorization = new RequestAuthorization();
         requestAuthorization.setMethod(method);
@@ -53,12 +53,12 @@ public class AuthorizationDynamic {
         for (int ii = 0; ii < authorizations.size(); ++ii) {
             log.debug("Response Authorization Dynamic : {}", authorizations.get(ii).toString());
             if (method.equals(authorizations.get(ii).getMethod())) {
-                if (roles.indexOf(authorizations.get(ii).getRole()) >= 0) {
+                if (modelRoles.indexOf(authorizations.get(ii).getRole()) >= 0) {
                     return true;
                 }
             }
             else if (method.equals(authorizations.get(ii).getMethodForSelf())) {
-                if (roles.indexOf(authorizations.get(ii).getRole()) >= 0) {
+                if (modelRoles.indexOf(authorizations.get(ii).getRole()) >= 0) {
                     if (validateMethodForSelf(uriForAuthorization, method, uriWithoutContextPath, userDetails) == true) {
                         return true;
                     }

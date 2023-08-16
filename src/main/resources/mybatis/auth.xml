@@ -9,6 +9,7 @@
             password
         FROM aha_user
         WHERE username = #{username}
+        AND is_active = 1
     </select>
 
     <select id="selectUserDetailsById" parameterType="Long" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
@@ -18,6 +19,7 @@
             password
         FROM aha_user
         WHERE id = #{id}
+        AND is_active = 1
     </select>
 
     <select id="selectRole" resultType="com.example.loginJwtRSA.security.ModelRole">
@@ -38,8 +40,9 @@
         )
     </insert>
 
-    <select id="selectRolesByUsername" parameterType="String" resultType="String">
+    <select id="selectRolesByUsername" parameterType="String" resultType="com.example.loginJwtRSA.security.ModelRole">
         SELECT
+            ar.id,
             ar.name
         FROM aha_user au
         JOIN aha_user_role aur
@@ -49,8 +52,9 @@
         WHERE au.username = #{username}
     </select>
 
-    <select id="selectRolesById" parameterType="Long" resultType="String">
+    <select id="selectRolesById" parameterType="Long" resultType="com.example.loginJwtRSA.security.ModelRole">
         SELECT
+            ar.id,
             ar.name
         FROM aha_user_role aur
         JOIN aha_role ar

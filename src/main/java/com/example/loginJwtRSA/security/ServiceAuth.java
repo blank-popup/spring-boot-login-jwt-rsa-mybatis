@@ -76,8 +76,8 @@ public class ServiceAuth {
             throw new RuntimeException("Invalid username or password");
         }
 
-        List<String> roles = mapperAuth.selectRolesByUsername(requestSignIn.getUsername());
-        userDetailsCustom.setRoles(roles);
+        List<ModelRole> modelRoles = mapperAuth.selectRolesByUsername(requestSignIn.getUsername());
+        userDetailsCustom.setModelRoles(modelRoles);
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
         String ip = ClientInfo.getRemoteIP(request);
@@ -90,8 +90,8 @@ public class ServiceAuth {
         ResponseSignIn responseSignIn = new ResponseSignIn();
         responseSignIn.setId(userDetailsCustom.getId());
         responseSignIn.setUsername(userDetailsCustom.getUsername());
-        responseSignIn.setRoles(userDetailsCustom.getRoles());
         responseSignIn.setToken(token);
+        responseSignIn.setRoles(userDetailsCustom.getModelRoles());
 
         return responseSignIn;
     }

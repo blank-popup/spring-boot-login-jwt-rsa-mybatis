@@ -11,8 +11,8 @@ public interface MapperAuth {
     Optional<UserDetailsCustom> selectUserDetailsById(Long id);
     List<ModelRole> selectRole();
     int insertUserRole(ModelUserRole modelUserRole);
-    List<String> selectRolesByUsername(String username);
-    List<String> selectRolesById(Long id);
+    List<ModelRole> selectRolesByUsername(String username);
+    List<ModelRole> selectRolesById(Long id);
     int createUser(RequestSignUp requestSignUp);
     int createUserApiKey(ModelApiKey modelApiKey);
     ResponseApiKey getApiKeyByApiKey(RequestApiKey requestApiKey);
