@@ -16,7 +16,7 @@ public class AspectLog {
     @Before("controller()")
     public void beforeRequest(JoinPoint joinPoint) {
         log.info("##### Start request : {}", joinPoint.getSignature().toShortString());
-        log.info("Parameter request : {}", joinPoint.getArgs());
+        log.info("Parameter : {}", joinPoint.getArgs());
     }
 
     @AfterReturning(pointcut = "controller()", returning = "returnValue")
@@ -33,6 +33,6 @@ public class AspectLog {
     @AfterThrowing(pointcut = "controller()", throwing = "e")
     public void afterThrowingLogging(JoinPoint joinPoint, Exception e) {
         log.error("##### Occured error in request : {}", joinPoint.getSignature().toShortString());
-        log.error("Message : {}", e.getMessage());
+        log.error("##### Error Message : {}", e.getMessage());
     }
 }
