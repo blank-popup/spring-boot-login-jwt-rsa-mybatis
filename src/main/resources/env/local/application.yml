@@ -1,7 +1,7 @@
 server:
-  port: 18010
+  port: 19000
   servlet:
-    contextPath: /local
+    contextPath: /jwt-rsa
 
 spring:
   datasource:
@@ -10,6 +10,13 @@ spring:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: base
     password: "0000"
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
 
 jwt:
   secret: ImPossible$$

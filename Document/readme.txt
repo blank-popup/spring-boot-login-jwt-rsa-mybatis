@@ -1,7 +1,7 @@
 SSH         18000
-HTTP        18010
-DB          18020
-JENKINS     18990
+JENKINS     18010
+MariaDB     18020
+HTTP        19000
 
 == SSH
 sudo apt install net-tools
@@ -103,9 +103,11 @@ sudo vi /usr/lib/systemd/system/jenkins.service
 search "PORT"
     /PORT
 ------------------
-Environment="JENKINS_PORT=18990"
+Environment="JENKINS_PORT=18010"
 ------------------
 
+Forgetting Account
+    sudo vi /var/lib/jenkins/config.xml
 
 Freestyle Project
     Git
@@ -274,6 +276,6 @@ server {
 
 
 upstream jwt-rsa {
-    server localhost:18010;
+    server localhost:19000;
 }
 ------------------
