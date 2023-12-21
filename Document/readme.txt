@@ -334,6 +334,8 @@ Dashboard > Manage Jenkins > System >
 Forgetting Account
     sudo vi /var/lib/jenkins/config.xml
 
+
+
 Freestyle Project
     Git
         Repositories
@@ -359,6 +361,52 @@ Freestyle Project
                 set BUILD_ID=dontKillMe
 
                 sudo bash /home/nova/template/api/bash/deploy.sh ${WORKSPACE}
+
+
+Pipeline Project
+    Pipeline
+        Definition
+            SELECT : Pipeline script
+            Script
+                pipeline{
+                    agent any
+
+                    stages{
+                        stage('Clone'){
+                            steps{
+                                git 'https://github.com/blank-popup/spring-boot-login-jwt-rsa-mybatis.git'
+                            }
+                        }
+                //        stage('Change application.yml'){
+                //            steps{
+                //                sh 'rm ./src/main/resources/application.properties'
+                //                sh 'cp /home/env/application.properties /var/lib/jenkins/workspace/pipeline/src/main/resources'
+                //            }
+                //        }
+                        stage('Gradle Build'){
+                            steps{
+                                sh 'bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor'
+                            }
+                        }
+                        stage('Deploy'){
+                            steps{
+                                sh 'sudo bash /home/nova/template/api/bash/deploy.sh ${WORKSPACE}'
+                            }
+                        }
+                //        stage('Send JAR File To Deploy Server'){
+                //            steps{
+                //                sh 'scp -P [포트번호] -i /var/lib/jenkins/.ssh/id_rsa.pem ./build/libs/mongo-log-0.0.1-SNAPSHOT.jar [계정명]@[ip주소]:/var/www/mongo-log/mongo-log-0.0.1-SNAPSHOT.jar'
+                //            }
+                //        }
+                //        stage('Deploy Using systemd'){
+                //            steps{
+                //                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa.pem [계정명]@[ip주소] "sudo systemctl restart mongo-log.service"'
+                //            }
+                //        }
+                    }
+                }
+            CHECK : Use Groovy Sandbox
+
 
 vi /home/nova/template/api/bash/deploy.sh
 ------------------
@@ -412,7 +460,8 @@ jenkins ALL=(ALL) NOPASSWD: ALL
 ------------------
 
 
-== Nginx
+
+### Nginx
 sudo apt install nginx
 
 sudo vi /etc/nginx/sites-available/default
@@ -432,13 +481,13 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location /jwt-rsa-help {
+    location /template-help {
         root /home/dave/server-aa/api;
         #autoindex on;
         #index index.html;
     }
 
-    location /jwt-rsa {
+    location /template {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $host;
