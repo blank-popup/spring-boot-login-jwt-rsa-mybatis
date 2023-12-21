@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.loginJwtRSA.security.MapperAuth">
-    <select id="selectUserDetailsByUsername" parameterType="String" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
+<mapper namespace="com.example.loginJwtRSA.setting.security.MapperAuth">
+    <select id="selectUserDetailsByUsername" resultType="com.example.loginJwtRSA.setting.security.UserDetailsCustom" parameterType="String">
         SELECT
             id,
             username,
@@ -12,7 +12,7 @@
         AND is_active = 1
     </select>
 
-    <select id="selectUserDetailsById" parameterType="Long" resultType="com.example.loginJwtRSA.security.UserDetailsCustom">
+    <select id="selectUserDetailsById" resultType="com.example.loginJwtRSA.setting.security.UserDetailsCustom" parameterType="Long">
         SELECT
             id,
             username,
@@ -22,14 +22,14 @@
         AND is_active = 1
     </select>
 
-    <select id="selectRole" resultType="com.example.loginJwtRSA.security.ModelRole">
+    <select id="selectRole" resultType="com.example.loginJwtRSA.setting.security.Sign$Role">
         SELECT
             id,
             name
         FROM aha_role
     </select>
 
-    <insert id="insertUserRole" parameterType="com.example.loginJwtRSA.security.ModelUserRole" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertUserRole" parameterType="com.example.loginJwtRSA.setting.security.Sign$UserRole" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO aha_user_role (
             id_user,
             id_role
@@ -40,7 +40,7 @@
         )
     </insert>
 
-    <select id="selectRolesByUsername" parameterType="String" resultType="com.example.loginJwtRSA.security.ModelRole">
+    <select id="selectRolesByUsername" resultType="com.example.loginJwtRSA.setting.security.Sign$Role" parameterType="String">
         SELECT
             ar.id,
             ar.name
@@ -52,7 +52,7 @@
         WHERE au.username = #{username}
     </select>
 
-    <select id="selectRolesById" parameterType="Long" resultType="com.example.loginJwtRSA.security.ModelRole">
+    <select id="selectRolesById" resultType="com.example.loginJwtRSA.setting.security.Sign$Role" parameterType="Long">
         SELECT
             ar.id,
             ar.name
@@ -62,7 +62,7 @@
         WHERE aur.id_user = #{id}
     </select>
 
-    <insert id="createUser" parameterType="com.example.loginJwtRSA.security.RequestSignUp">
+    <insert id="createUser" parameterType="com.example.loginJwtRSA.setting.security.Sign$SigningUp">
         INSERT INTO aha_user (
             username,
             password
@@ -73,7 +73,7 @@
         )
     </insert>
 
-    <insert id="createUserApiKey" parameterType="com.example.loginJwtRSA.security.ModelApiKey" useGeneratedKeys="true" keyProperty="id">
+    <insert id="createUserApiKey" parameterType="com.example.loginJwtRSA.setting.security.Sign$ApiKey" useGeneratedKeys="true" keyProperty="id">
         INSERT aha_api_key (
             id_user,
             api_key,
@@ -86,7 +86,7 @@
         )
     </insert>
 
-    <select id="getApiKeyByApiKey" parameterType="String" resultType="com.example.loginJwtRSA.security.ResponseApiKey">
+    <select id="getApiKeyByApiKey" resultType="com.example.loginJwtRSA.setting.security.Sign$RegisteredApiKey" parameterType="String">
         SELECT
             id,
             id_user,
@@ -98,7 +98,7 @@
         WHERE api_key = #{apiKey}
     </select>
 
-    <select id="getAuthorizations" parameterType="com.example.loginJwtRSA.security.RequestAuthorization" resultType="com.example.loginJwtRSA.security.ResponseAuthorization">
+    <!-- <select id="getAuthorizations" resultType="com.example.loginJwtRSA.setting.security.ResponseAuthorization" parameterType="com.example.loginJwtRSA.setting.security.RequestAuthorization">
         SELECT
             id,
             (SELECT name FROM aha_role WHERE id = aad.id_role) AS role,
@@ -111,5 +111,5 @@
             value_method = (SELECT value FROM aha_http_method WHERE name = #{method})
             OR value_method_for_self = (SELECT value FROM aha_http_method WHERE name = #{method})
         )
-    </select>
+    </select> -->
 </mapper>

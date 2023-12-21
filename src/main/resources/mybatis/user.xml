@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.loginJwtRSA.user.MapperUser">
-    <select id="getUser" parameterType="String" resultType="com.example.loginJwtRSA.user.ResponseUserBase">
+<mapper namespace="com.example.loginJwtRSA.faculty.user.MapperUser">
+    <select id="getUser" resultType="com.example.loginJwtRSA.faculty.user.User$Gotten" parameterType="com.example.loginJwtRSA.faculty.user.User$Getting">
         SELECT
             id,
             username,
@@ -15,7 +15,7 @@
         WHERE username = #{username}
     </select>
 
-    <insert id="createUser" parameterType="com.example.loginJwtRSA.user.ModelUserBase">
+    <insert id="createUser" parameterType="com.example.loginJwtRSA.faculty.user.User$Creating">
         INSERT INTO aha_user (
             username,
             password,
@@ -30,17 +30,35 @@
         )
     </insert>
 
-    <update id="putUser" parameterType="com.example.loginJwtRSA.user.ModelUserBase">
-        UPDATE aha_user
+    <update id="putUser" parameterType="com.example.loginJwtRSA.faculty.user.User$Putting">
+        INSERT INTO aha_user (
+            username,
+            password,
+            email,
+            phone,
+            updated_at
+        ) VALUES (
+            #{username},
+            #{password},
+            #{email},
+            #{phone},
+            NOW()
+        )
+        ON DUPLICATE KEY UPDATE
+            password = #{password},
+            email = #{email},
+            phone = #{phone},
+            updated_at = NOW()
+        <!-- UPDATE aha_user
         SET
             password = #{password},
             email = #{email},
             phone = #{phone},
             updated_at = NOW()
-        WHERE username = #{username}
+        WHERE username = #{username} -->
     </update>
 
-    <update id="patchUser" parameterType="com.example.loginJwtRSA.user.ModelUserBase">
+    <update id="patchUser" parameterType="com.example.loginJwtRSA.faculty.user.User$Patching">
         UPDATE aha_user
         SET
             password = IFNULL(#{password}, password),
@@ -50,20 +68,21 @@
         WHERE username = #{username}
     </update>
 
-    <delete id="removeUser" parameterType="com.example.loginJwtRSA.user.ModelUserBase">
+    <delete id="removeUser" parameterType="com.example.loginJwtRSA.faculty.user.User$Removing">
         DELETE
         FROM aha_user
         WHERE username = #{username}
     </delete>
 
-    <select id="getFilenameClientByFilenameServer" parameterType="String" resultType="String">
+    <select id="getFileDownload" resultType="com.example.loginJwtRSA.faculty.user.UserImage$Downloaded" parameterType="com.example.loginJwtRSA.faculty.user.UserImage$Downloading">
         SELECT
+            filename_server,
             filename_client
         FROM aha_user_image
         WHERE filename_server = #{filenameServer}
     </select>
 
-    <insert id="createUserImage" parameterType="com.example.loginJwtRSA.user.RequestUserImage">
+    <insert id="createUserImage" parameterType="com.example.loginJwtRSA.faculty.user.UserImage$Uploading">
         INSERT aha_user_image (
             id_user,
             description,

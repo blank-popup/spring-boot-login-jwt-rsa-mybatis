@@ -1,13 +1,13 @@
-@BaseURL = http://localhost:18010/local/api/v1
-# @BaseURL = http://192.168.200.159:18010/jwt-rsa/api/v1
+@BaseURL = http://localhost:18020/template/api/v1
+# @BaseURL = http://192.168.200.159:18020/template/api/v1
 
 ### SignUp
 POST {{BaseURL}}/auth/signup HTTP/1.1
 content-Type: application/json
 
 {
-    "username": "newuser2",
-    "password": "newpass2",
+    "username": "newuser",
+    "password": "0000",
     "roles": ["ROLE_ADMIN", "ROLE_MANAGER"]
 }
 
@@ -17,39 +17,42 @@ POST {{BaseURL}}/auth/signin HTTP/1.1
 content-Type: application/json
 
 {
-    "username": "uuser",
+    "username": "nonuser",
     "password": "0000"
 }
 
 @token = {{signIn.response.body.token}}
 
 ### Register API Key
+# @name registerApiKey
 POST {{BaseURL}}/auth/apikey HTTP/1.1
 content-Type: application/json
 
 {
-    "idUser": 4,
+    "idUser": 11,
     "terms": 86400000
 }
 
+@apiKey = {{registerApiKey.response.body.apiKey}}
+
 ### Get User By Username
-GET {{BaseURL}}/users/base/nonuser HTTP/1.1
+GET {{BaseURL}}/user/nonuser HTTP/1.1
 content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Get User By Username
-GET {{BaseURL}}/users/base/nonuser HTTP/1.1
+GET {{BaseURL}}/user/nonuser HTTP/1.1
 content-Type: application/json
-X-API-KEY: 7FvkHaMug2Lugel2ImBefBrPipaZRM4TXlLX2LzMqi5PvMN81ijD/mt64lF6+IZ0qz6lwgJ7v3pQVGb3yoPlerAGM/RBIwp5ceOaIMn63mk=
+X-API-KEY: {{apiKey}}
 
 ### Create User
-POST {{BaseURL}}/users/base HTTP/1.1
+POST {{BaseURL}}/user HTTP/1.1
 content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
     "username": "newuser3",
-    "password": "newpass3",
+    "password": "0000",
     "email": "ert@yui.op"
 }
 

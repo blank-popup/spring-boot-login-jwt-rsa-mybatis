@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LoginJwtRsaApplication<loginJwtRSA>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.loginJwtRSA.LoginJwtRsaApplication",
+            "projectName": "loginJwtRSA",
+            "args": "--spring.profiles.active=local",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

@@ -1,7 +1,44 @@
+server:
+  port: 18020
+  servlet:
+    contextPath: /template
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+
 mybatis:
   mapper-locations: classpath:/mybatis/**/*.xml
   configuration:
     map-underscore-to-camel-case: true
+
+definition: 
+  db:
+    # url-jdbc: jdbc:log4jdbc:mariadb://192.168.200.112:19000
+    url-jdbc: jdbc:log4jdbc:mariadb://192.168.45.67.112:19000
+    option-jdbc: characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowMultiQueries=true
+
+# logging:
+#   config: classpath:logback-spring.xml
+
+# logging:
+#   level:
+#     org:
+#       springframework: INFO
+#     com:
+#       example:
+#         loginJwtRSA: TRACE
+#     log4jdbc:
+#       log4j2: ERROR
+#    jdbc:
+#      sqlonly: TRACE
+#      sqltiming: TRACE
+#      resultsettable: TRACE
+#      audit: TRACE
+#      resultset: TRACE
+#      connection: TRACE
 
 ---
 
@@ -26,6 +63,15 @@ spring:
 spring:
   config:
     activate:
-      on-profile: "test"
+      on-profile: "test_develop"
     import:
-      - classpath:/env/test/application.yml
+      - classpath:/env/test_develop/application.yml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "test_local"
+    import:
+      - classpath:/env/test_local/application.yml

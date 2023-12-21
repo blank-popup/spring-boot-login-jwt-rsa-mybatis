@@ -1,10 +1,7 @@
 package com.example.loginJwtRSA.utils;
 
-import lombok.extern.slf4j.Slf4j;
-
 import javax.servlet.http.HttpServletRequest;
 
-@Slf4j
 public class ClientInfo {
     public static String getRemoteIP(HttpServletRequest request){
         String ip = request.getHeader("X-FORWARDED-FOR");

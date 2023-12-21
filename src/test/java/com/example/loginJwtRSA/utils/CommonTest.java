@@ -6,7 +6,6 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.restdocs.request.ParameterDescriptor;
 import org.springframework.restdocs.request.RequestPartDescriptor;
-import org.springframework.stereotype.Component;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.removeHeaders;
@@ -15,7 +14,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.snippet.Attributes.key;
 
-@Component
 public class CommonTest {
     public static OperationPreprocessor removeHeadersRequest() {
         return removeHeaders(

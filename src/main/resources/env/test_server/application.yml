@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${definition.db.url-jdbc}/develop_dbdave?${definition.db.option-jdbc}
+    url: ${definition.db.url-jdbc}/test_dbdave?${definition.db.option-jdbc}
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     username: dave
     password: "0000"
@@ -10,7 +10,7 @@ spring:
 
 jwt:
   secret: ImPossible$$
-  token-validity-ms: 3600000
+  token-validity-ms: 86400000
 
 apikey:
   secret: ImPossible$$$$$$ImPossible$$$$$$
@@ -19,4 +19,4 @@ apikey:
 
 directory:
   user:
-    image: /home/nova/template/data/develop/user/image
+    image: /home/nova/template/data/test/user/image
