@@ -1,11 +1,12 @@
 #!/bin/sh
 
-DIRECTORY="/home/deploy/template/api/"
+DIRECTORY="/home/nova/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
 PROFILE="develop"
 
 java -version
 
+echo USER : ${whoami}
 echo WORKSPACE : ${WORKSPACE}
 echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
