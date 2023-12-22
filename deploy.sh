@@ -1,15 +1,12 @@
 #!/bin/sh
 
-echo WORKSPACE from Environment: ${WORKSPACE}
-
-WORKSPACE=$1
 DIRECTORY="/opt/deploy/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
 PROFILE="develop"
 
 java -version
 
-echo WORKSPACE from Parameter : ${WORKSPACE}
+echo WORKSPACE : ${WORKSPACE}
 echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
 echo PROFILE : ${PROFILE}
@@ -33,7 +30,7 @@ echo copy template file
 
 FILEPATH=${DIRECTORY}${FILENAME}
 rm -rf ${FILEPATH}
-cp -r $1/build/libs/${FILENAME} ${FILEPATH}
+cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
 
 sleep 1
 
