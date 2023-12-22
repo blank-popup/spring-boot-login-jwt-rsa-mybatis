@@ -71,6 +71,9 @@ public class HandlerException implements RequestBodyAdvice {
                 log.error("$$$$$ Cookie Path, Secure, Version : {}, {}, {}", cookies[ii].getPath(), cookies[ii].getSecure(), cookies[ii].getVersion());
             }
         }
+        else {
+            log.error("$$$$$ Cookie is null");
+        }
         Enumeration<String> headerNames =  httpServletRequest.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String nameHeader = headerNames.nextElement();
