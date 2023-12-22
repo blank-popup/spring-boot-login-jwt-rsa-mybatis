@@ -1,8 +1,8 @@
 -- MySQL dump 10.13  Distrib 8.0.19, for Win64 (x86_64)
 --
--- Host: 192.168.200.159    Database: davebase
+-- Host: 192.168.200.108    Database: test_dbdave
 -- ------------------------------------------------------
--- Server version	5.5.5-10.3.38-MariaDB-0ubuntu0.20.04.1
+-- Server version	5.5.5-10.6.12-MariaDB-0ubuntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -41,83 +41,6 @@ CREATE TABLE `aha_api_key` (
 LOCK TABLES `aha_api_key` WRITE;
 /*!40000 ALTER TABLE `aha_api_key` DISABLE KEYS */;
 /*!40000 ALTER TABLE `aha_api_key` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `aha_authorization_dynamic`
---
-
-DROP TABLE IF EXISTS `aha_authorization_dynamic`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `aha_authorization_dynamic` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_role` int(11) DEFAULT 0,
-  `value_method` int(11) DEFAULT 0,
-  `value_method_for_self` int(11) DEFAULT 0,
-  `id_authorization_url` int(11) DEFAULT 0,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `aha_authorization_dynamic`
---
-
-LOCK TABLES `aha_authorization_dynamic` WRITE;
-/*!40000 ALTER TABLE `aha_authorization_dynamic` DISABLE KEYS */;
-INSERT INTO `aha_authorization_dynamic` VALUES (1,1,1,0,1),(2,1,2,0,1),(3,1,4,0,1),(4,1,8,0,1),(5,1,16,0,1),(6,2,1,0,1),(7,2,2,0,1),(8,2,4,0,1),(9,2,8,0,1),(10,2,16,0,1),(11,3,1,0,1),(12,3,2,0,1),(13,3,0,4,1),(14,3,0,8,1),(15,3,0,16,1);
-/*!40000 ALTER TABLE `aha_authorization_dynamic` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `aha_authorization_url`
---
-
-DROP TABLE IF EXISTS `aha_authorization_url`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `aha_authorization_url` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `url` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `aha_authorization_url`
---
-
-LOCK TABLES `aha_authorization_url` WRITE;
-/*!40000 ALTER TABLE `aha_authorization_url` DISABLE KEYS */;
-INSERT INTO `aha_authorization_url` VALUES (1,'/api/v1/users');
-/*!40000 ALTER TABLE `aha_authorization_url` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `aha_http_method`
---
-
-DROP TABLE IF EXISTS `aha_http_method`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `aha_http_method` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) DEFAULT NULL,
-  `value` int(11) DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `aha_http_method_UN` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `aha_http_method`
---
-
-LOCK TABLES `aha_http_method` WRITE;
-/*!40000 ALTER TABLE `aha_http_method` DISABLE KEYS */;
-INSERT INTO `aha_http_method` VALUES (1,'GET',1),(2,'POST',2),(3,'PUT',4),(4,'PATCH',8),(5,'DELETE',16);
-/*!40000 ALTER TABLE `aha_http_method` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -172,7 +95,7 @@ CREATE TABLE `aha_user` (
 
 LOCK TABLES `aha_user` WRITE;
 /*!40000 ALTER TABLE `aha_user` DISABLE KEYS */;
-INSERT INTO `aha_user` VALUES (1,'amuuser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(2,'amuser','$2a$10$.NmrsY0Koyw0iNa/poOC7.TMcPCPN6drgP/tNcVM27prCspp4Vi96',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(3,'auuser','$2a$10$.57pfX.fHZBU0VuNfCyhfuSamzAhE8zGUFAqqwqQlJRGcaosU0T7C',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 02:26:14'),(4,'muuser','$2a$10$/5Yb9DTdtPk0WZqbeBjjbu6ygSk70XO4VjMw6IlJV6ct6flvEepEC',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(5,'auser','$2a$10$mLTt.S/rOQ5s6HG1aj0myOAtliNmFwohvd20gYITGipDuTxLdi40i',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(6,'muser','$2a$10$XgCCOsaOBmEDZZHksm/Sm..L8/uBW7G4IwtIKoxGIiJQMdhZon/nm',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(7,'uuser','$2a$10$l7aWrk1xFoT0Wrh0475LzO3xnAvF31780HtkDDEi4hU8MGxAFC082',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(8,'nonuser','$2a$10$ieKR2IiozV2KLfs5bp3JOe2tkjmYmHGDP8jlwXjO2fYrirO.Zd9YW',NULL,NULL,NULL,'2023-03-24 00:47:29','2023-03-24 00:47:29');
+INSERT INTO `aha_user` VALUES (1,'amuuser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(2,'amuser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(3,'auuser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(4,'muuser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(5,'auser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(6,'muser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(7,'uuser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29'),(8,'nonuser','$2a$10$a3YRWTyVDMqCB0hBVpegruNVcZ8lAtbTbrcaRy7/qRybg5BNfnS7S',NULL,NULL,1,'2023-03-24 00:47:29','2023-03-24 00:47:29');
 /*!40000 ALTER TABLE `aha_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,36 +153,7 @@ INSERT INTO `aha_user_role` VALUES (1,1,1),(2,1,2),(3,1,3),(4,2,1),(5,2,2),(6,3,
 UNLOCK TABLES;
 
 --
--- Table structure for table `hibernate_sequence`
---
-
-DROP TABLE IF EXISTS `hibernate_sequence`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `hibernate_sequence` (
-  `next_not_cached_value` bigint(21) NOT NULL,
-  `minimum_value` bigint(21) NOT NULL,
-  `maximum_value` bigint(21) NOT NULL,
-  `start_value` bigint(21) NOT NULL COMMENT 'start value when sequences is created or value if RESTART is used',
-  `increment` bigint(21) NOT NULL COMMENT 'increment value',
-  `cache_size` bigint(21) unsigned NOT NULL,
-  `cycle_option` tinyint(1) unsigned NOT NULL COMMENT '0 if no cycles are allowed, 1 if the sequence should begin a new cycle when maximum_value is passed',
-  `cycle_count` bigint(21) NOT NULL COMMENT 'How many cycles have been done'
-) ENGINE=InnoDB SEQUENCE=1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `hibernate_sequence`
---
-
-LOCK TABLES `hibernate_sequence` WRITE;
-/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (3001,1,9223372036854775806,1,1,1000,0,0);
-/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping routines for database 'davebase'
+-- Dumping routines for database 'test_dbdave'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -271,4 +165,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-16 19:12:15
+-- Dump completed on 2023-12-22 11:09:41
