@@ -3,7 +3,7 @@
 echo WORKSPACE : ${WORKSPACE}
 
 WORKSPACE=$1
-DIRECTORY="/home/nova/template/api/"
+DIRECTORY="/opt/deploy/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
 PROFILE="develop"
 

@@ -3,9 +3,9 @@
     <property name="PATH_LOG_WINDOW_DEVELOP" value="D:/WorkSpace/template/log/develop/" />
     <property name="PATH_LOG_WINDOW_SERVICE" value="D:/WorkSpace/template/log/service/" />
     <property name="PATH_LOG_WINDOW_TEST" value="D:/WorkSpace/template/log/test/" />
-    <property name="PATH_LOG_LINUX_DEVELOP" value="/home/nova/template/log/develop/" />
-    <property name="PATH_LOG_LINUX_SERVICE" value="/home/nova/template/log/service/" />
-    <property name="PATH_LOG_LINUX_TEST" value="/home/nova/template/log/test/" />
+    <property name="PATH_LOG_LINUX_DEVELOP" value="/opt/deploy/template/log/develop/" />
+    <property name="PATH_LOG_LINUX_SERVICE" value="/opt/deploy/template/log/service/" />
+    <property name="PATH_LOG_LINUX_TEST" value="/opt/deploy/template/log/test/" />
     <property name="FILENAME_CURRENT" value="current.log" />
     <property name="FILENAME_CURRENT_ABOVE_WARN" value="current_above_warn.log" />
     <property name="FILENAME_ROLLING" value="%d{yyyy-MM-dd}.%i.log" />
