@@ -1,10 +1,13 @@
 #!/bin/sh
 
+WORKSPACE=$1
 DIRECTORY="/home/nova/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
 PROFILE="develop"
 
-echo WORKSPACE : $1
+java -version
+
+echo WORKSPACE : ${WORKSPACE}
 echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
 echo PROFILE : ${PROFILE}

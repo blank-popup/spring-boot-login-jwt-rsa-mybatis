@@ -1,5 +1,7 @@
 #!/bin/sh
 
+java -version
+
 #
 # Copyright © 2015-2021 the original authors.
 #
