@@ -6,7 +6,7 @@ PROFILE="develop"
 
 java -version
 
-echo USER : ${whoami}
+echo USER : $USER
 echo WORKSPACE : ${WORKSPACE}
 echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
@@ -30,8 +30,8 @@ sleep 1
 echo copy template file
 
 FILEPATH=${DIRECTORY}${FILENAME}
-rm -rf ${FILEPATH}
-cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
+sudo rm -rf ${FILEPATH}
+sudo cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
 
 sleep 1
 
