@@ -44,5 +44,5 @@ echo Starting ${NAME_PROJECT} process
 
 OPT="-Dspring.profiles.active=${PROFILE}"
 echo java -jar ${OPT} "${FILEPATH}" "&"
-java -jar ${OPT} "${FILEPATH}" &
+sudo java -jar ${OPT} "${FILEPATH}" &
 echo Started ${NAME_PROJECT} process
