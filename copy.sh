@@ -6,6 +6,7 @@ DIRECTORY=$3
 FILENAME=$4
 FILEPATH=${DIRECTORY}${FILENAME}
 PROFILE=$5
+OPTION="-Dspring.profiles.active=${PROFILE}"
 
 echo ========== copying ${NAME_PROJECT} file ==========
 
@@ -18,6 +19,7 @@ echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
 echo FILEPATH : ${FILEPATH}
 echo PROFILE : ${PROFILE}
+echo OPTION : ${OPTION}
 
 rm -rf ${FILEPATH}
 echo removed previous ${NAME_PROJECT} file

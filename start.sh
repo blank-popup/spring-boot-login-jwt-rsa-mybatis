@@ -4,6 +4,7 @@ DIRECTORY=$3
 FILENAME=$4
 FILEPATH=${DIRECTORY}${FILENAME}
 PROFILE=$5
+OPTION="-Dspring.profiles.active=${PROFILE}"
 
 echo ========== Starting ${NAME_PROJECT} process ==========
 
@@ -16,8 +17,8 @@ echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
 echo FILEPATH : ${FILEPATH}
 echo PROFILE : ${PROFILE}
+echo OPTION : ${OPTION}
 
-OPTION="-Dspring.profiles.active=${PROFILE}"
 java -jar ${OPTION} "${FILEPATH}" &
 
 echo ========== Started ${NAME_PROJECT} process ==========
