@@ -317,6 +317,20 @@ search "PORT"
 Environment="JENKINS_PORT=18010"
 ------------------
 
+
+Dashboard > Manage Jenkins > Tools
+    JDK installations
+        JDK
+            Name : openjdk8
+            JAVA_HOME : /usr/lib/jvm/java-8-openjdk-amd64
+        JDK
+            Name : openjdk11
+            JAVA_HOME : /usr/lib/jvm/java-11-openjdk-amd64
+        JDK
+            Name : openjdk17
+            JAVA_HOME : /usr/lib/jvm/java-17-openjdk-amd64
+
+
 $ sudo systemctl daemon-reload
 $ sudo systemctl restart jenkins
 
