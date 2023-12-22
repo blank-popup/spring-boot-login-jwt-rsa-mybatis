@@ -63,11 +63,13 @@ public class HandlerException implements RequestBodyAdvice {
         log.error("$$$$$ RemoteUser : {}", httpServletRequest.getRemoteUser());
         log.error("$$$$$ Auth Type : {}", httpServletRequest.getAuthType());
         Cookie[] cookies = httpServletRequest.getCookies();
-        for (int ii = 0; ii < cookies.length; ++ii) {
-            log.error("$$$$$ Cookie : {}", cookies[ii].toString());
-            log.error("$$$$$ Cookie : {} : {}", cookies[ii].getName(), cookies[ii].getValue());
-            log.error("$$$$$ Cookie Comment, Domain, MaxAge : {} : {} : {}", cookies[ii].getComment(), cookies[ii].getDomain(), cookies[ii].getMaxAge());
-            log.error("$$$$$ Cookie Path, Secure, Version : {}, {}, {}", cookies[ii].getPath(), cookies[ii].getSecure(), cookies[ii].getVersion());
+        if (cookies != null) {
+            for (int ii = 0; ii < cookies.length; ++ii) {
+                log.error("$$$$$ Cookie : {}", cookies[ii].toString());
+                log.error("$$$$$ Cookie : {} : {}", cookies[ii].getName(), cookies[ii].getValue());
+                log.error("$$$$$ Cookie Comment, Domain, MaxAge : {} : {} : {}", cookies[ii].getComment(), cookies[ii].getDomain(), cookies[ii].getMaxAge());
+                log.error("$$$$$ Cookie Path, Secure, Version : {}, {}, {}", cookies[ii].getPath(), cookies[ii].getSecure(), cookies[ii].getVersion());
+            }
         }
         Enumeration<String> headerNames =  httpServletRequest.getHeaderNames();
         while (headerNames.hasMoreElements()) {
