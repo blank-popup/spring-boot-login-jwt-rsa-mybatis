@@ -39,4 +39,4 @@ echo Start template process
 
 OPT="-Dspring.profiles.active=${PROFILE}"
 
-java -jar ${OPT} "${FILEPATH}" &
+sudo java -jar ${OPT} "${FILEPATH}" &
