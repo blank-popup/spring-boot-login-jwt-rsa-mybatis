@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo WORKSPACE : ${WORKSPACE}
-
 WORKSPACE=$1
 DIRECTORY="/home/nova/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
@@ -31,14 +29,14 @@ sleep 1
 
 echo copy template file
 
-FILEPATH=${DIRECTORY}${FILENAME}
-rm -rf ${FILEPATH}
-cp -r $1/build/libs/${FILENAME} ${FILEPATH}
+rm -rf ${DIRECTORY}bin/${FILENAME}
+cp -r $1/build/libs/${FILENAME} ${DIRECTORY}bin/${FILENAME}
 
 sleep 1
 
 echo Start template process
 
+BIN=${DIRECTORY}bin/${FILENAME}
 OPT="-Dspring.profiles.active=${PROFILE}"
 
-java -jar ${OPT} "${FILEPATH}" &
+java -jar ${OPT} "${BIN}" &
