@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DIRECTORY="/opt/deploy/template/api/"
+DIRECTORY="/home/deploy/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
 PROFILE="develop"
 
