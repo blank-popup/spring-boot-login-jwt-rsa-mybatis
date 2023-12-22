@@ -43,12 +43,15 @@ public class ProviderJwt implements InitializingBean {
         }
         Date now = new Date();
 
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
                 .setExpiration(new Date(now.getTime() + tokenValidMillisecond))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
+        log.info("Token : {}", token);
+
+        return token;
     }
 
     public Authentication getAuthentication(Jws<Claims> information) {
