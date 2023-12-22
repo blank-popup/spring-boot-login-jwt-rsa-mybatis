@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo WORKSPACE : ${WORKSPACE}
+echo WORKSPACE from Environment: ${WORKSPACE}
 
 WORKSPACE=$1
 DIRECTORY="/opt/deploy/template/api/"
@@ -9,7 +9,7 @@ PROFILE="develop"
 
 java -version
 
-echo WORKSPACE : ${WORKSPACE}
+echo WORKSPACE from Parameter : ${WORKSPACE}
 echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
 echo PROFILE : ${PROFILE}
