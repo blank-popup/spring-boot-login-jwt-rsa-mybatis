@@ -385,6 +385,7 @@ Freestyle Project
                 sudo bash ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
 
             Command
+                java -version
                 JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
                 if [[ ${JAVA_HOME} == *"jre" ]]; then
                     JAVA_HOME=$(dirname ${JAVA_HOME})
@@ -404,6 +405,9 @@ Freestyle Project
                 sudo bash ./bash_deploy/start.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
                 sleep 1
 
+### Process leaked file descriptors. See https://www.jenkins.io/redirect/troubleshooting/process-leaked-file-descriptors for more information
+
+### warning: unknown enum constant javax.annotation.meta.When.MAYBE
 
 
 Pipeline Project

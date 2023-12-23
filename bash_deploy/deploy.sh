@@ -9,7 +9,7 @@ FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
 VALUE_PROFILE="develop"
 FILEPATH=${DIRECTORY}${FILENAME}
 KEY_PROFILE="spring.profiles.active"
-OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE} -Dhudson.util.ProcessTree.disable=true"
+OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 
 ${COMMAND_JAVA} -version
 
