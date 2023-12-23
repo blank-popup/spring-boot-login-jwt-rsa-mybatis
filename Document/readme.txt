@@ -336,7 +336,9 @@ Dashboard > Manage Jenkins > System >
     Locale
         Default Language : en
         Check : Ignore browser preference and force this language to all users
-
+Dashboard > Manage Jenkins > System >
+    Shell
+        Shell executable : /usr/bin/bash
 
 $ sudo systemctl daemon-reload
 $ sudo systemctl restart jenkins
@@ -372,16 +374,23 @@ Freestyle Project
         Execute shell
             Command
                 java -version
+                JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+                if [[ ${JAVA_HOME} == *"jre" ]]; then
+                    JAVA_HOME=$(dirname ${JAVA_HOME})
+                fi
                 echo JAVA_HOME : ${JAVA_HOME}
-                COMMAND_JAVA=$(which java)
+                COMMAND_JAVA=$(readlink -f $(which java))
                 echo COMMAND_JAVA : ${COMMAND_JAVA}
 
                 sudo bash ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
 
             Command
-                java -version
+                JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))
+                if [[ ${JAVA_HOME} == *"jre" ]]; then
+                    JAVA_HOME=$(dirname ${JAVA_HOME})
+                fi
                 echo JAVA_HOME : ${JAVA_HOME}
-                COMMAND_JAVA=$(which java)
+                COMMAND_JAVA=$(readlink -f $(which java))
                 echo COMMAND_JAVA : ${COMMAND_JAVA}
                 NAME_PROJECT="template"
                 DIRECTORY="/home/JENKINS/template/api/"

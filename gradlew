@@ -237,4 +237,5 @@ eval "set -- $(
         tr '\n' ' '
     )" '"$@"'
 
+${JAVACMD} -version
 exec "$JAVACMD" "$@"
