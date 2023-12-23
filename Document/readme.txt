@@ -330,12 +330,6 @@ Dashboard > Manage Jenkins > Tools
             Name : openjdk17
             JAVA_HOME : /usr/lib/jvm/java-17-openjdk-amd64
 
-
-$ sudo systemctl daemon-reload
-$ sudo systemctl restart jenkins
-
-$ sudo vi /var/lib/jenkins/secrets/initialAdminPassword
-
 Dashboard > Manage Jenkins > Plugins
     Install Locale
 Dashboard > Manage Jenkins > System >
@@ -343,6 +337,11 @@ Dashboard > Manage Jenkins > System >
         Default Language : en
         Check : Ignore browser preference and force this language to all users
 
+
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart jenkins
+
+$ sudo vi /var/lib/jenkins/secrets/initialAdminPassword
 
 
 Forgetting Account
@@ -372,9 +371,30 @@ Freestyle Project
 
         Execute shell
             Command
-                set BUILD_ID=dontKillMe
+                java -version
+                echo JAVA_HOME : ${JAVA_HOME}
+                COMMAND_JAVA=$(which java)
+                echo COMMAND_JAVA : ${COMMAND_JAVA}
 
-                sudo bash /home/nova/template/api/bash/deploy.sh ${WORKSPACE}
+                sudo bash ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
+
+            Command
+                java -version
+                echo JAVA_HOME : ${JAVA_HOME}
+                COMMAND_JAVA=$(which java)
+                echo COMMAND_JAVA : ${COMMAND_JAVA}
+                NAME_PROJECT="template"
+                DIRECTORY="/home/JENKINS/template/api/"
+                FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
+                PROFILE="develop"
+
+                sudo bash ./bash_deploy/stop.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                sleep 1
+                sudo bash ./bash_deploy/copy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                sleep 1
+                sudo bash ./bash_deploy/start.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                sleep 1
+
 
 
 Pipeline Project
@@ -382,29 +402,62 @@ Pipeline Project
         Definition
             SELECT : Pipeline script
             Script
-                pipeline{
+                pipeline {
                     agent any
 
-                    stages{
-                        stage('Clone'){
-                            steps{
+                    stages {
+                        stage('Clone') {
+                            steps {
                                 git 'https://github.com/blank-popup/spring-boot-login-jwt-rsa-mybatis.git'
                             }
                         }
-                //        stage('Change application.yml'){
+                //        stage('Change application.yml') {
                 //            steps{
                 //                sh 'rm ./src/main/resources/application.properties'
                 //                sh 'cp /home/env/application.properties /var/lib/jenkins/workspace/pipeline/src/main/resources'
                 //            }
                 //        }
-                        stage('Gradle Build'){
-                            steps{
-                                sh 'bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor'
+                        stage('Gradle Build') {
+                            tools {
+                                jdk("openjdk8")
+                            }
+                            steps {
+                                sh '''
+                                    java -version
+                                    bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor
+                                '''
                             }
                         }
-                        stage('Deploy'){
-                            steps{
-                                sh 'sudo bash /home/nova/template/api/bash/deploy.sh ${WORKSPACE}'
+                        stage('Deploy') {
+                            tools {
+                                jdk("openjdk8")
+                            }
+                            steps {
+                                sh '''
+                                    java -version
+                                    echo JAVA_HOME : ${JAVA_HOME}
+                                    COMMAND_JAVA=$(which java)
+                                    echo COMMAND_JAVA : ${COMMAND_JAVA}
+
+                                    sudo bash ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
+                                '''
+                //                sh '''
+                //                     java -version
+                //                     echo JAVA_HOME : ${JAVA_HOME}
+                //                     COMMAND_JAVA=$(which java)
+                //                     echo COMMAND_JAVA : ${COMMAND_JAVA}
+                //                     NAME_PROJECT="template"
+                //                     DIRECTORY="/home/JENKINS/template/api/"
+                //                     FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
+                //                     PROFILE="develop"
+                //
+                //                     sudo bash ./bash_deploy/stop.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                     sleep 1
+                //                     sudo bash ./bash_deploy/copy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                     sleep 1
+                //                     sudo bash ./bash_deploy/start.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                     sleep 1
+                //                '''
                             }
                         }
                 //        stage('Send JAR File To Deploy Server'){
@@ -419,50 +472,179 @@ Pipeline Project
                 //        }
                     }
                 }
+
             CHECK : Use Groovy Sandbox
 
 
-vi /home/nova/template/api/bash/deploy.sh
+vi ./bash_deployh/deploy.sh
 ------------------
 #!/bin/sh
 
-DIRECTORY="/home/nova/template/api/"
+WORKSPACE=$1
+NAME_PROJECT="template"
+DIRECTORY="/home/JENKINS/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
-PROFILE="develop"
+VALUE_PROFILE="develop"
+FILEPATH=${DIRECTORY}${FILENAME}
+KEY_PROFILE="spring.profiles.active"
+OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 
-echo WORKSPACE : $1
+java -version
+
+echo USER : $USER
+echo WORKSPACE : ${WORKSPACE}
+echo NAME_PROJECT : ${NAME_PROJECT}
 echo DIRECTORY : ${DIRECTORY}
 echo FILENAME : ${FILENAME}
-echo PROFILE : ${PROFILE}
+echo VALUE_PROFILE : ${VALUE_PROFILE}
+echo FILEPATH : ${FILEPATH}
+echo KEY_PROFILE : ${KEY_PROFILE}
+echo OPTION : ${OPTION}
 
-echo Terminate template process
+echo ========== Terminating ${NAME_PROJECT} process ==========
 
-PID=`ps -ef | grep ${FILENAME} | grep -v grep | awk '{print $2}'`
+PID=`ps -ef | grep ${FILEPATH} | grep ${KEY_PROFILE}=${VALUE_PROFILE} | grep -v grep | awk '{print $2}'`
 echo PID : ${PID}
 
 if [ -n "${PID}" ]
 then
-    result1=$(kill -9 ${PID})
+    kill -9 ${PID}
     echo process is killed.
 else
     echo running process not found.
 fi
 
-sleep 1
-
-echo copy template file
-
-rm -rf ${DIRECTORY}bin/${FILENAME}
-cp -r $1/build/libs/${FILENAME} ${DIRECTORY}bin/${FILENAME}
+echo ========== Terminated ${NAME_PROJECT} process ==========
 
 sleep 1
 
-echo Start template process
+echo ========== copying ${NAME_PROJECT} file ==========
 
-BIN=${DIRECTORY}bin/${FILENAME}
-OPT="-Dspring.profiles.active=${PROFILE}"
+rm -rf ${FILEPATH}
+echo removed previous ${NAME_PROJECT} file
+cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
+echo copied new ${NAME_PROJECT} file
 
-java -jar ${OPT} "${BIN}" &
+echo ========== copied ${NAME_PROJECT} file ==========
+
+sleep 1
+
+echo ========== Starting ${NAME_PROJECT} process ==========
+
+java -jar ${OPTION} "${FILEPATH}" &
+
+echo ========== Started ${NAME_PROJECT} process ==========
+------------------
+
+
+vi ./bash_deployh/stop.sh
+------------------
+#!/bin/sh
+
+WORKSPACE=$1
+NAME_PROJECT=$2
+DIRECTORY=$3
+FILENAME=$4
+VALUE_PROFILE=$5
+FILEPATH=${DIRECTORY}${FILENAME}
+KEY_PROFILE="spring.profiles.active"
+OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
+
+echo ========== Terminating ${NAME_PROJECT} process ==========
+
+java -version
+
+echo USER : $USER
+echo WORKSPACE : ${WORKSPACE}
+echo NAME_PROJECT : ${NAME_PROJECT}
+echo DIRECTORY : ${DIRECTORY}
+echo FILENAME : ${FILENAME}
+echo VALUE_PROFILE : ${VALUE_PROFILE}
+echo FILEPATH : ${FILEPATH}
+echo KEY_PROFILE : ${KEY_PROFILE}
+echo OPTION : ${OPTION}
+
+PID=`ps -ef | grep ${FILEPATH} | grep ${KEY_PROFILE}=${VALUE_PROFILE} | grep -v grep | awk '{print $2}'`
+echo PID : ${PID}
+
+if [ -n "${PID}" ]
+then
+    kill -9 ${PID}
+    echo process is killed.
+else
+    echo running process not found.
+fi
+
+echo ========== Terminated ${NAME_PROJECT} process ==========
+------------------
+
+
+vi ./bash_deployh/copy.sh
+------------------
+#!/bin/sh
+
+WORKSPACE=$1
+NAME_PROJECT=$2
+DIRECTORY=$3
+FILENAME=$4
+VALUE_PROFILE=$5
+FILEPATH=${DIRECTORY}${FILENAME}
+KEY_PROFILE="spring.profiles.active"
+OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
+
+echo ========== copying ${NAME_PROJECT} file ==========
+
+java -version
+
+echo USER : $USER
+echo WORKSPACE : ${WORKSPACE}
+echo NAME_PROJECT : ${NAME_PROJECT}
+echo DIRECTORY : ${DIRECTORY}
+echo FILENAME : ${FILENAME}
+echo VALUE_PROFILE : ${VALUE_PROFILE}
+echo FILEPATH : ${FILEPATH}
+echo KEY_PROFILE : ${KEY_PROFILE}
+echo OPTION : ${OPTION}
+
+rm -rf ${FILEPATH}
+echo removed previous ${NAME_PROJECT} file
+cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
+echo copied new ${NAME_PROJECT} file
+
+echo ========== copied ${NAME_PROJECT} file ==========
+------------------
+
+
+vi ./bash_deployh/start.sh
+------------------
+#!/bin/sh
+
+WORKSPACE=$1
+NAME_PROJECT=$2
+DIRECTORY=$3
+FILENAME=$4
+VALUE_PROFILE=$5
+FILEPATH=${DIRECTORY}${FILENAME}
+KEY_PROFILE="spring.profiles.active"
+OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
+
+echo ========== Starting ${NAME_PROJECT} process ==========
+
+java -version
+
+echo USER : $USER
+echo WORKSPACE : ${WORKSPACE}
+echo NAME_PROJECT : ${NAME_PROJECT}
+echo DIRECTORY : ${DIRECTORY}
+echo FILENAME : ${FILENAME}
+echo VALUE_PROFILE : ${VALUE_PROFILE}
+echo FILEPATH : ${FILEPATH}
+echo KEY_PROFILE : ${KEY_PROFILE}
+echo OPTION : ${OPTION}
+
+java -jar ${OPTION} "${FILEPATH}" &
+
+echo ========== Started ${NAME_PROJECT} process ==========
 ------------------
 
 
