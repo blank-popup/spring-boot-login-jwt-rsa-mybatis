@@ -9,7 +9,7 @@ FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
 VALUE_PROFILE="develop"
 FILEPATH=${DIRECTORY}${FILENAME}
 KEY_PROFILE="spring.profiles.active"
-OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
+OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE} -Dhudson.util.ProcessTree.disable=true"
 
 ${COMMAND_JAVA} -version
 
@@ -55,6 +55,6 @@ sleep 1
 
 echo ========== Starting ${NAME_PROJECT} process ==========
 
-BUILD_ID=dontKillMe ${COMMAND_JAVA} -jar ${OPTION} "${FILEPATH}" &
+${COMMAND_JAVA} -jar ${OPTION} "${FILEPATH}" &
 
 echo ========== Started ${NAME_PROJECT} process ==========
