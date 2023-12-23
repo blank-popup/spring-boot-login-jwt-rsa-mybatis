@@ -11,7 +11,7 @@ FILEPATH=${DIRECTORY}${FILENAME}
 KEY_PROFILE="spring.profiles.active"
 OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 
-java -version
+${COMMAND_JAVA} -version
 
 echo USER : $USER
 echo JAVA_HOME : ${JAVA_HOME}
