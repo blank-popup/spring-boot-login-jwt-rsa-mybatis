@@ -55,6 +55,6 @@ sleep 1
 
 echo ========== Starting ${NAME_PROJECT} process ==========
 
-${COMMAND_JAVA} -jar ${OPTION} "${FILEPATH}" &
+BUILD_ID=dontKillMe ${COMMAND_JAVA} -jar ${OPTION} "${FILEPATH}" &
 
 echo ========== Started ${NAME_PROJECT} process ==========
