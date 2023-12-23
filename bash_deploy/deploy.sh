@@ -1,6 +1,8 @@
 #!/bin/sh
 
-WORKSPACE=$1
+JAVA_HOME=$1
+COMMAND_JAVA=$2
+WORKSPACE=$3
 NAME_PROJECT="template"
 DIRECTORY="/home/JENKINS/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
@@ -12,6 +14,8 @@ OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 java -version
 
 echo USER : $USER
+echo JAVA_HOME : ${JAVA_HOME}
+echo COMMAND_JAVA : ${COMMAND_JAVA}
 echo WORKSPACE : ${WORKSPACE}
 echo NAME_PROJECT : ${NAME_PROJECT}
 echo DIRECTORY : ${DIRECTORY}
@@ -51,6 +55,6 @@ sleep 1
 
 echo ========== Starting ${NAME_PROJECT} process ==========
 
-java -jar ${OPTION} "${FILEPATH}" &
+${COMMAND_JAVA} -jar ${OPTION} "${FILEPATH}" &
 
 echo ========== Started ${NAME_PROJECT} process ==========
