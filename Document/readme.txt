@@ -259,7 +259,7 @@ $ sudo usermod -aG docker $USER
 sudo apt install git
 
 git config --global credential.helper store
-
+.
 
 ### Java JDK
 $ sudo apt install openjdk-8-jdk
