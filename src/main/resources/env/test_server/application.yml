@@ -19,4 +19,4 @@ apikey:
 
 directory:
   user:
-    image: /home/nova/template/data/test/user/image
+    image: /home/JENKINS/template/test/data/user/image

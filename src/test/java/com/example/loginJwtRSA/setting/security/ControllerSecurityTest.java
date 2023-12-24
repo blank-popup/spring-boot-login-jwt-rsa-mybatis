@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles="test_local")
+@ActiveProfiles(profiles="test_server")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Transactional
 class ControllerSecurityTest {

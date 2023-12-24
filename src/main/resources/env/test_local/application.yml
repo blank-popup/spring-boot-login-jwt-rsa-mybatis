@@ -19,4 +19,4 @@ apikey:
 
 directory:
   user:
-    image: D:/WorkSpace/template/data/test/user/image
+    image: D:/WorkSpace/template/test/data/user/image

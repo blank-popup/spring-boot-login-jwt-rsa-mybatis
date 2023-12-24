@@ -2,11 +2,11 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-LoginJwtRsaApplication<loginJwtRSA>",
+            "name": "Spring Boot-LoginJwtRsaApplication<spring-boot-login-jwt-rsa-mybatis>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "mainClass": "com.example.loginJwtRSA.LoginJwtRsaApplication",
-            "projectName": "loginJwtRSA",
+            "projectName": "spring-boot-login-jwt-rsa-mybatis",
             "args": "--spring.profiles.active=local",
             "envFile": "${workspaceFolder}/.env"
         }

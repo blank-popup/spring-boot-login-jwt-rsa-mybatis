@@ -711,8 +711,9 @@ upstream jwt-rsa {
 ------------------
 
 
-
-
+### .vscode/launch.json
+    Add value of args
+        "args": "--spring.profiles.active=local"
 
 
 
