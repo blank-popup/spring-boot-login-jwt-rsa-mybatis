@@ -63,9 +63,9 @@ spring:
 spring:
   config:
     activate:
-      on-profile: "test_develop"
+      on-profile: "service"
     import:
-      - classpath:/env/test_develop/application.yml
+      - classpath:/env/service/application.yml
 
 ---
 
@@ -73,5 +73,14 @@ spring:
   config:
     activate:
       on-profile: "test_local"
+    import:
+      - classpath:/env/test_local/application.yml
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: "test_server"
     import:
       - classpath:/env/test_local/application.yml
