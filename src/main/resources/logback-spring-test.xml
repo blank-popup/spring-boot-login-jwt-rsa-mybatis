@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- %black", "%red", "%green", "%yellow", "%blue", "%magenta", "%cyan", "%white", "%gray", -->
+    <!-- "%boldRed", "%boldGreen", "%boldYellow", "%boldBlue", "%boldMagenta", "%boldCyan", "%boldWhite", -->
+    <!-- "%highlight" -->
+    <property name="PATTERN_FILE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%5level] [%thread] [%logger.%method:%line] - %msg%n" />
+
+    <appender name="CONSOLE_LINUX" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${PATTERN_FILE}</pattern>
+        </encoder>
+    </appender>
+
+    <springProfile name="test_server">
+        <logger name="com.example.loginJwtRSA" level="DEBUG" />
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_LINUX" />
+        </root>
+    </springProfile>
+</configuration>
