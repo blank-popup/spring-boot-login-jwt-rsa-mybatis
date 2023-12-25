@@ -613,10 +613,10 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 91
+Content-Length: 90
 
 {
-  "id" : 175,
+  "id" : 30,
   "username" : "newuser",
   "roles" : [ "ROLE_USER", "ROLE_MANAGER" ]
 }</code></pre>
@@ -754,7 +754,23 @@ Content-Length: 91
 <td class="tableblock halign-left valign-top"><p class="tableblock">The array of role</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ROLE_ADMIN, ROLE_MANAGER, ROLE_USER</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">[ROLE_USER]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[{"id": 3, "name": "ROLE_USER"}]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles[].id</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles[].name</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of role</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ROLE_ADMIN, ROLE_MANAGER, ROLE_USER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ROLE_USER</p></td>
 </tr>
 </tbody>
 </table>
@@ -765,11 +781,11 @@ Content-Length: 91
 <div class="content">
 <pre class="highlight nowrap"><code class="language-http" data-lang="http">POST /api/v1/auth/signin HTTP/1.1
 Content-Type: application/json;charset=UTF-8
-Content-Length: 54
+Content-Length: 52
 Host: localhost:8080
 
 {
-  "username" : "nonuser",
+  "username" : "uuser",
   "password" : "0000"
 }</code></pre>
 </div>
@@ -783,7 +799,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE2ODQ0MjAzODUsImV4cCI6MTY4NDUwNjc4NX0.m_tOmgzdlU7_eaQ5WvReXvB5N8gbjN9JwC_erpys2qA
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE3MDM0Mzk1NDUsImV4cCI6MTcwMzUyNTk0NX0.IFMBi7dvYdrf7BPb46rf3ZcRvQ4u0lU3jPMTw9wTL6Y
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
@@ -791,13 +807,16 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 226
+Content-Length: 272
 
 {
-  "id" : 8,
-  "username" : "nonuser",
-  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE2ODQ0MjAzODUsImV4cCI6MTY4NDUwNjc4NX0.m_tOmgzdlU7_eaQ5WvReXvB5N8gbjN9JwC_erpys2qA",
-  "roles" : [ ]
+  "id" : 7,
+  "username" : "uuser",
+  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE3MDM0Mzk1NDUsImV4cCI6MTcwMzUyNTk0NX0.IFMBi7dvYdrf7BPb46rf3ZcRvQ4u0lU3jPMTw9wTL6Y",
+  "roles" : [ {
+    "id" : 3,
+    "name" : "ROLE_USER"
+  } ]
 }</code></pre>
 </div>
 </div>
@@ -906,7 +925,7 @@ Content-Length: 226
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of API Key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of API Key registered</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
@@ -914,7 +933,7 @@ Content-Length: 226
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>idUser</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ID registered API Key</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of user registered API Key</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
@@ -985,15 +1004,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 299
+Content-Length: 298
 
 {
-  "id" : 83,
+  "id" : 8,
   "idUser" : 1,
-  "apiKey" : "+tVOb7i0+U/Rv6TjeUblh5J5OFk1jNOthODd6aQp5vXumSemqxO0y8MXmf4S2uayH0bvVCfzbwVbr0ulkLAh1k1jsfRvUwL4IT/LQwwyFoYgxRveNVkazLI/nAvEBmY1",
-  "expireAt" : "2023-05-19T23:33:05",
-  "createdAt" : "2023-05-18T23:28:10",
-  "updatedAt" : "2023-05-18T23:28:10"
+  "apiKey" : "zEsmXomesbH8t1hkPRNF6j4DOoNUzUsQIa32gHn50zDM4Y+8GE0w+7YhuWwpDqxkNP+WcWsurUaOV5cswGkyrDcYK+OYLdY9PVYkWc6N2r8R0oakLc32dM2EhAQFDmkI",
+  "expireAt" : "2023-12-26T02:39:05",
+  "createdAt" : "2023-12-25T02:39:05",
+  "updatedAt" : "2023-12-25T02:39:05"
 }</code></pre>
 </div>
 </div>
@@ -1005,7 +1024,7 @@ Content-Length: 299
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2023-05-18 22:55:26 +0900
+Last updated 2023-12-23 02:55:01 +0900
 </div>
 </div>
 </body>

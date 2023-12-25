@@ -371,6 +371,8 @@ Freestyle Project
             clean
             build
             -Ptarget=develop
+            -x test
+            -x asciidoctor
             --info
 
         Execute shell
@@ -426,6 +428,12 @@ Pipeline Project
                                 git 'https://github.com/blank-popup/spring-boot-login-jwt-rsa-mybatis.git'
                             }
                         }
+                        stage('Configure') {
+                            steps{
+                                sh 'rm /var/lib/jenkins/workspace/pipeline/src/main/resources/logback-spring.xml'
+                                sh 'cp /var/lib/jenkins/workspace/pipeline/src/main/resources/logback-spring-linux.xml /var/lib/jenkins/workspace/pipeline/src/main/resources/logback-spring.xml'
+                            }
+                        }
                 //        stage('Change application.yml') {
                 //            steps{
                 //                sh 'rm ./src/main/resources/application.properties'
@@ -440,6 +448,7 @@ Pipeline Project
                                 sh '''
                                     java -version
                                     bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor
+                                    // bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor --debug
                                 '''
                             }
                         }
@@ -450,16 +459,22 @@ Pipeline Project
                             steps {
                                 sh '''
                                     java -version
+                                    if [[ ${JAVA_HOME} == *"jre" ]]; then
+                                        JAVA_HOME=$(dirname ${JAVA_HOME})
+                                    fi
                                     echo JAVA_HOME : ${JAVA_HOME}
-                                    COMMAND_JAVA=$(which java)
+                                    COMMAND_JAVA=$(readlink -f $(which java))
                                     echo COMMAND_JAVA : ${COMMAND_JAVA}
 
                                     sudo bash ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
                                 '''
                 //                sh '''
                 //                     java -version
+                //                     if [[ ${JAVA_HOME} == *"jre" ]]; then
+                //                         JAVA_HOME=$(dirname ${JAVA_HOME})
+                //                     fi
                 //                     echo JAVA_HOME : ${JAVA_HOME}
-                //                     COMMAND_JAVA=$(which java)
+                //                     COMMAND_JAVA=$(readlink -f $(which java))
                 //                     echo COMMAND_JAVA : ${COMMAND_JAVA}
                 //                     NAME_PROJECT="template"
                 //                     DIRECTORY="/home/JENKINS/template/api/"
