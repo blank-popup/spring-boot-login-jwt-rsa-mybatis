@@ -1,5 +1,6 @@
 # @BaseURL = http://localhost:18020/template/api/v1
 @BaseURL = http://192.168.200.108:18020/template/api/v1
+# @BaseURL = http://192.168.45.150:18020/template/api/v1
 
 ### SignUp
 POST {{BaseURL}}/auth/signup HTTP/1.1
@@ -83,12 +84,12 @@ content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Download Image File
-GET {{BaseURL}}/users/image/01eddb85-d63f-1eb8-87c9-04529c92ee69 HTTP/1.1
+GET {{BaseURL}}/user-image/01eddb85-d63f-1eb8-87c9-04529c92ee69 HTTP/1.1
 content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### Upload Image File - Form Data
-POST {{BaseURL}}/users/image HTTP/1.1
+POST {{BaseURL}}/user-image HTTP/1.1
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 Authorization: Bearer {{token}}
 
