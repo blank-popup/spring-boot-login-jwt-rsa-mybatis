@@ -12,7 +12,7 @@
 :sectanchors:
 
 == Context Path
-This API starts with context path. It is '/jwt-rsa'.
+This API starts with context path. It is '/template'.
 
 include::auth/Auth.adoc[]
 include::user/User.adoc[]

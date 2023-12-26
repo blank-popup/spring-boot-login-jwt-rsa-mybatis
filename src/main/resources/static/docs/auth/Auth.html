@@ -536,19 +536,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h4 id="_response_fields">Response Fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.667%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Field</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
 <th class="tableblock halign-left valign-top">Constraints</th>
 <th class="tableblock halign-left valign-top">Example</th>
 </tr>
@@ -558,7 +556,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of user signed up</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 </tr>
@@ -566,7 +563,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ID signed up</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">newuser</p></td>
 </tr>
@@ -574,7 +570,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The array of role</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ROLE_ADMIN, ROLE_MANAGER, ROLE_USER</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[ROLE_USER]</p></td>
 </tr>
@@ -616,7 +611,7 @@ X-Frame-Options: DENY
 Content-Length: 90
 
 {
-  "id" : 30,
+  "id" : 69,
   "username" : "newuser",
   "roles" : [ "ROLE_USER", "ROLE_MANAGER" ]
 }</code></pre>
@@ -706,19 +701,17 @@ Content-Length: 90
 <h4 id="_response_fields_2">Response Fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.667%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Field</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
 <th class="tableblock halign-left valign-top">Constraints</th>
 <th class="tableblock halign-left valign-top">Example</th>
 </tr>
@@ -728,7 +721,6 @@ Content-Length: 90
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of user signed in</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 </tr>
@@ -736,7 +728,6 @@ Content-Length: 90
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ID signed in</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
 </tr>
@@ -744,7 +735,6 @@ Content-Length: 90
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>token</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Json Web Token to use until being expired</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Bearer (Base64 Code).(Base64 Code).(Base64 Code)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNjc4NjIyODMzLCJleHAiOjE2Nzg3MDkyMzN9.CmiZeCJn1cZBehZ8SRcFNgovhvwgLuXjeS61i2RFdYc</p></td>
 </tr>
@@ -752,7 +742,6 @@ Content-Length: 90
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The array of role</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ROLE_ADMIN, ROLE_MANAGER, ROLE_USER</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">[{"id": 3, "name": "ROLE_USER"}]</p></td>
 </tr>
@@ -761,14 +750,12 @@ Content-Length: 90
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of role</p></td>
 <td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>roles[].name</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The name of role</p></td>
-<td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ROLE_ADMIN, ROLE_MANAGER, ROLE_USER</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">ROLE_USER</p></td>
 </tr>
@@ -799,7 +786,7 @@ Host: localhost:8080
 Vary: Origin
 Vary: Access-Control-Request-Method
 Vary: Access-Control-Request-Headers
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE3MDM0Mzk1NDUsImV4cCI6MTcwMzUyNTk0NX0.IFMBi7dvYdrf7BPb46rf3ZcRvQ4u0lU3jPMTw9wTL6Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE3MDM1NTY5MTQsImV4cCI6MTcwMzY0MzMxNH0.XG1cubQxsjQY1SXDxXNqUVE84Z73JINa3VOSZAPQSoY
 Content-Type: application/json;charset=UTF-8
 X-Content-Type-Options: nosniff
 X-XSS-Protection: 1; mode=block
@@ -812,7 +799,7 @@ Content-Length: 272
 {
   "id" : 7,
   "username" : "uuser",
-  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE3MDM0Mzk1NDUsImV4cCI6MTcwMzUyNTk0NX0.IFMBi7dvYdrf7BPb46rf3ZcRvQ4u0lU3jPMTw9wTL6Y",
+  "token" : "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI3IiwiaXAiOiIxMjcuMC4wLjEiLCJpYXQiOjE3MDM1NTY5MTQsImV4cCI6MTcwMzY0MzMxNH0.XG1cubQxsjQY1SXDxXNqUVE84Z73JINa3VOSZAPQSoY",
   "roles" : [ {
     "id" : 3,
     "name" : "ROLE_USER"
@@ -904,19 +891,17 @@ Content-Length: 272
 <h4 id="_response_fields_3">Response Fields</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.6666%;">
-<col style="width: 16.667%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Field</th>
 <th class="tableblock halign-left valign-top">Type</th>
 <th class="tableblock halign-left valign-top">Description</th>
-<th class="tableblock halign-left valign-top">Required</th>
 <th class="tableblock halign-left valign-top">Constraints</th>
 <th class="tableblock halign-left valign-top">Example</th>
 </tr>
@@ -926,7 +911,6 @@ Content-Length: 272
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>id</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of API Key registered</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 </tr>
@@ -934,7 +918,6 @@ Content-Length: 272
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>idUser</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>Number</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The unique number of user registered API Key</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 </tr>
@@ -942,7 +925,6 @@ Content-Length: 272
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>apiKey</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">API Key available to user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">mqn6nH0/6hJkOOVrJlzuVL9p8bxGPNySp4gKdTwT5hjD+pIWmwGBS5FJJG0o1Vg02tXq1T2ak+mWu7B5M5t13tUxBWQNtTuHoD2/pIpLc2Q=</p></td>
 </tr>
@@ -950,7 +932,6 @@ Content-Length: 272
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>expireAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Datetime to be expired at</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Datetime format</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2025-04-02T12:44:44.731</p></td>
 </tr>
@@ -958,7 +939,6 @@ Content-Length: 272
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>createdAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Datetime created at</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Datetime format</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2025-04-01T12:44:44.731</p></td>
 </tr>
@@ -966,7 +946,6 @@ Content-Length: 272
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>updatedAt</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Datetime updated at</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">TRUE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Datetime format</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2025-04-01T12:44:44.731</p></td>
 </tr>
@@ -1004,15 +983,15 @@ Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 Pragma: no-cache
 Expires: 0
 X-Frame-Options: DENY
-Content-Length: 298
+Content-Length: 299
 
 {
-  "id" : 8,
+  "id" : 21,
   "idUser" : 1,
-  "apiKey" : "zEsmXomesbH8t1hkPRNF6j4DOoNUzUsQIa32gHn50zDM4Y+8GE0w+7YhuWwpDqxkNP+WcWsurUaOV5cswGkyrDcYK+OYLdY9PVYkWc6N2r8R0oakLc32dM2EhAQFDmkI",
-  "expireAt" : "2023-12-26T02:39:05",
-  "createdAt" : "2023-12-25T02:39:05",
-  "updatedAt" : "2023-12-25T02:39:05"
+  "apiKey" : "/s4bQpeayxT9BbMNyrJBEmJfVdRsgSbKBVLaWAyFwvctR7mMh4d31KI6ZOu/j3ssJrSz5M2oScYb6vXJLCwl4QLxpFch5NkB0XGP10QG+a5o1rfv3vGot8sxXDErUSS+",
+  "expireAt" : "2023-12-27T11:15:15",
+  "createdAt" : "2023-12-26T11:15:15",
+  "updatedAt" : "2023-12-26T11:15:15"
 }</code></pre>
 </div>
 </div>

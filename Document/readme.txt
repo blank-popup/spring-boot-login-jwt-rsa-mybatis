@@ -412,6 +412,10 @@ Freestyle Project
 ### Process leaked file descriptors. See https://www.jenkins.io/redirect/troubleshooting/process-leaked-file-descriptors for more information
 
 ### warning: unknown enum constant javax.annotation.meta.When.MAYBE
+add in file build.gradle
+    dependencies {
+        implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    }
 
 
 Pipeline Project
@@ -430,8 +434,8 @@ Pipeline Project
                         }
                         stage('Configure') {
                             steps{
-                                sh 'rm /var/lib/jenkins/workspace/pipeline/src/main/resources/logback-spring.xml'
-                                sh 'cp /var/lib/jenkins/workspace/pipeline/src/main/resources/logback-spring-linux.xml /var/lib/jenkins/workspace/pipeline/src/main/resources/logback-spring.xml'
+                                sh 'rm /var/lib/jenkins/workspace/TemplatePipeline/src/main/resources/logback-spring.xml'
+                                sh 'cp /var/lib/jenkins/workspace/TemplatePipeline/src/main/resources/logback-spring-linux.xml /var/lib/jenkins/workspace/TemplatePipeline/src/main/resources/logback-spring.xml'
                             }
                         }
                 //        stage('Change application.yml') {
@@ -448,8 +452,11 @@ Pipeline Project
                                 sh '''
                                     java -version
                                     bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor
-                                    // bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor --debug
                                 '''
+                //                sh '''
+                //                    java -version
+                //                    bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor --debug
+                //                '''
                             }
                         }
                         stage('Deploy') {
@@ -469,35 +476,35 @@ Pipeline Project
                                     sudo bash ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
                                 '''
                 //                sh '''
-                //                     java -version
-                //                     if [[ ${JAVA_HOME} == *"jre" ]]; then
-                //                         JAVA_HOME=$(dirname ${JAVA_HOME})
-                //                     fi
-                //                     echo JAVA_HOME : ${JAVA_HOME}
-                //                     COMMAND_JAVA=$(readlink -f $(which java))
-                //                     echo COMMAND_JAVA : ${COMMAND_JAVA}
-                //                     NAME_PROJECT="template"
-                //                     DIRECTORY="/home/JENKINS/template/api/"
-                //                     FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
-                //                     PROFILE="develop"
+                //                    java -version
+                //                    if [[ ${JAVA_HOME} == *"jre" ]]; then
+                //                        JAVA_HOME=$(dirname ${JAVA_HOME})
+                //                    fi
+                //                    echo JAVA_HOME : ${JAVA_HOME}
+                //                    COMMAND_JAVA=$(readlink -f $(which java))
+                //                    echo COMMAND_JAVA : ${COMMAND_JAVA}
+                //                    NAME_PROJECT="template"
+                //                    DIRECTORY="/home/JENKINS/template/api/"
+                //                    FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
+                //                    PROFILE="develop"
                 //
-                //                     sudo bash ./bash_deploy/stop.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
-                //                     sleep 1
-                //                     sudo bash ./bash_deploy/copy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
-                //                     sleep 1
-                //                     sudo bash ./bash_deploy/start.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
-                //                     sleep 1
+                //                    sudo bash ./bash_deploy/stop.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                    sleep 1
+                //                    sudo bash ./bash_deploy/copy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                    sleep 1
+                //                    sudo bash ./bash_deploy/start.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                    sleep 1
                 //                '''
                             }
                         }
                 //        stage('Send JAR File To Deploy Server'){
                 //            steps{
-                //                sh 'scp -P [포트번호] -i /var/lib/jenkins/.ssh/id_rsa.pem ./build/libs/mongo-log-0.0.1-SNAPSHOT.jar [계정명]@[ip주소]:/var/www/mongo-log/mongo-log-0.0.1-SNAPSHOT.jar'
+                //                sh 'scp -P 00000 -i /var/lib/jenkins/.ssh/id_rsa.pem ./build/libs/mongo-log-0.0.1-SNAPSHOT.jar username@example.com:/var/www/mongo-log/mongo-log-0.0.1-SNAPSHOT.jar'
                 //            }
                 //        }
                 //        stage('Deploy Using systemd'){
                 //            steps{
-                //                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa.pem [계정명]@[ip주소] "sudo systemctl restart mongo-log.service"'
+                //                sh 'ssh -i /var/lib/jenkins/.ssh/id_rsa.pem username@example.com "sudo systemctl restart mongo-log.service"'
                 //            }
                 //        }
                     }
@@ -707,23 +714,17 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location /template-help {
-        root /home/dave/server-aa/api;
-        #autoindex on;
-        #index index.html;
-    }
-
     location /template {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header Host $host;
-        proxy_pass http://jwt-rsa;
+        proxy_pass http://template;
     }
 }
 
 
-upstream jwt-rsa {
-    server localhost:19000;
+upstream template {
+    server localhost:18020;
 }
 ------------------
 
