@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/bash
 
 JAVA_HOME=$1
 COMMAND_JAVA=$2
