@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles="test_server")
+@ActiveProfiles(profiles="test_gradle")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Transactional
 class ControllerUserTest {

@@ -58,6 +58,7 @@ public class ConfigSecurity {
                         // http://localhost:18010/local/docs/index.html
                         .antMatchers(HttpMethod.GET, "/docs/**").permitAll()
                         .antMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                        .antMatchers("/error/**").permitAll()
                         // .antMatchers("/api/vi/**").permitAll()
                         // .antMatchers("/api/v1/user/**").hasAnyRole("USER")
                         // .antMatchers("/api/v1/user/**").hasAnyRole("ADMIN", "MANAGER")

@@ -1,6 +1,6 @@
-# @BaseURL = http://localhost:18020/template/api/v1
-@BaseURL = http://192.168.200.108:18020/template/api/v1
-# @BaseURL = http://192.168.45.150:18020/template/api/v1
+@BaseURL = http://localhost:18020/template/api/v1
+# @BaseURL = http://192.168.200.108:18020/template/api/v1
+# @BaseURL = http://192.168.45.100:18020/template/api/v1
 
 ### SignUp
 POST {{BaseURL}}/auth/signup HTTP/1.1
@@ -18,7 +18,7 @@ POST {{BaseURL}}/auth/signin HTTP/1.1
 content-Type: application/json
 
 {
-    "username": "nonuser",
+    "username": "uuser",
     "password": "0000"
 }
 
