@@ -12,7 +12,7 @@
 :sectanchors:
 
 == Context Path
-This API starts with context path. It is '/template'.
+This API starts with context path('/template').
 
 include::auth/Auth.adoc[]
 include::user/User.adoc[]
