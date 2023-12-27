@@ -72,6 +72,15 @@ spring:
 spring:
   config:
     activate:
+      on-profile: "test_gradle"
+    import:
+      - classpath:/env/test_gradle/application.yml
+
+---
+
+spring:
+  config:
+    activate:
       on-profile: "test_local"
     import:
       - classpath:/env/test_local/application.yml
