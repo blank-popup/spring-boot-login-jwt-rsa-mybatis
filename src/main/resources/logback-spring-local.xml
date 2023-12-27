@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="PATH_LOG_WINDOW_DEVELOP" value="D:/WorkSpace/template/environment/develop/log/" />
-    <property name="PATH_LOG_WINDOW_SERVICE" value="D:/WorkSpace/template/environment/service/log/" />
-    <property name="PATH_LOG_WINDOW_TEST" value="D:/WorkSpace/template/environment/test/log/" />
+    <property name="PATH_LOG_WINDOW_DEVELOP" value="D:/WorkSpace/template_local/log/" />
     <property name="FILENAME_CURRENT" value="current.log" />
     <property name="FILENAME_CURRENT_ABOVE_WARN" value="current_above_warn.log" />
     <property name="FILENAME_ROLLING" value="%d{yyyy-MM-dd}.%i.log" />
@@ -48,45 +46,6 @@
             <maxHistory>${MAX_HISTORY}</maxHistory>
         </rollingPolicy>
     </appender>
-    <appender name="FILE_WINDOW_SERVICE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <charset>UTF8</charset>
-            <pattern>${PATTERN_FILE}</pattern>
-        </encoder>
-        <file>${PATH_LOG_WINDOW_SERVICE}${FILENAME_CURRENT}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${PATH_LOG_WINDOW_SERVICE}${FILENAME_ROLLING}</fileNamePattern>
-            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
-            <maxHistory>${MAX_HISTORY}</maxHistory>
-        </rollingPolicy>
-    </appender>
-    <appender name="FILE_WINDOW_SERVICE_WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>WARN</level>
-        </filter>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <charset>UTF8</charset>
-            <pattern>${PATTERN_FILE}</pattern>
-        </encoder>
-        <file>${PATH_LOG_WINDOW_SERVICE}${FILENAME_CURRENT_ABOVE_WARN}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${PATH_LOG_WINDOW_SERVICE}${FILENAME_ROLLING_ABOVE_WARN}</fileNamePattern>
-            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
-            <maxHistory>${MAX_HISTORY}</maxHistory>
-        </rollingPolicy>
-    </appender>
-    <appender name="FILE_WINDOW_TEST" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <charset>UTF8</charset>
-            <pattern>${PATTERN_FILE}</pattern>
-        </encoder>
-        <file>${PATH_LOG_WINDOW_TEST}${FILENAME_CURRENT}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${PATH_LOG_WINDOW_TEST}${FILENAME_ROLLING}</fileNamePattern>
-            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
-            <maxHistory>${MAX_HISTORY}</maxHistory>
-        </rollingPolicy>
-    </appender>
 
     <springProfile name="local">
         <logger name="com.example.loginJwtRSA" level="DEBUG" />
@@ -94,13 +53,6 @@
             <appender-ref ref="CONSOLE_WINDOW" />
             <appender-ref ref="FILE_WINDOW_DEVELOP" />
             <appender-ref ref="FILE_WINDOW_DEVELOP_WARN" />
-        </root>
-    </springProfile>
-    <springProfile name="test_local">
-        <logger name="com.example.loginJwtRSA" level="DEBUG" />
-        <root level="INFO">
-            <appender-ref ref="CONSOLE_WINDOW" />
-            <appender-ref ref="FILE_WINDOW_TEST" />
         </root>
     </springProfile>
 </configuration>

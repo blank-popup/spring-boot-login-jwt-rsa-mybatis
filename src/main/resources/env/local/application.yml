@@ -19,7 +19,7 @@ apikey:
 
 directory:
   user:
-    image: D:/WorkSpace/template/environment/develop/data/user/image
+    image: D:/WorkSpace/template_local/data/user/image
 
 logging:
-  config: classpath:logback-spring-windows.xml
+  config: classpath:logback-spring-local.xml
