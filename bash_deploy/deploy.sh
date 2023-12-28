@@ -44,8 +44,11 @@ sleep 1
 
 echo ========== copying ${NAME_PROJECT} file ==========
 
-rm -rf ${FILEPATH}
-echo removed previous ${NAME_PROJECT} file
+if [ -e ${FILEPATH} ]; then
+    rm -rf ${FILEPATH}
+    echo removed previous ${NAME_PROJECT} ${FILEPATH} file
+fi
+
 cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
 echo copied new ${NAME_PROJECT} file
 
