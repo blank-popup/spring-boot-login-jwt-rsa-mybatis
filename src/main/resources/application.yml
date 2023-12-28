@@ -16,8 +16,8 @@ mybatis:
 
 definition: 
   db:
-    # url-jdbc: jdbc:log4jdbc:mariadb://192.168.200.108:19000
-    url-jdbc: jdbc:log4jdbc:mariadb://192.168.45.100:19000
+    url-jdbc: jdbc:log4jdbc:mariadb://192.168.200.108:19000
+    # url-jdbc: jdbc:log4jdbc:mariadb://192.168.45.100:19000
     option-jdbc: characterEncoding=UTF-8&serverTimezone=Asia/Seoul&allowMultiQueries=true
 
 # logging:
