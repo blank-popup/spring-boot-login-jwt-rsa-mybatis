@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="PATH_LOG_LINUX_DEVELOP" value="/home/JENKINS/template_develop/log/" />
+    <property name="PATH_LOG_LINUX_DEVELOP" value="/home/JENKINS/template/develop/log/" />
     <property name="FILENAME_CURRENT" value="current.log" />
     <property name="FILENAME_CURRENT_ABOVE_WARN" value="current_above_warn.log" />
     <property name="FILENAME_ROLLING" value="%d{yyyy-MM-dd}.%i.log" />

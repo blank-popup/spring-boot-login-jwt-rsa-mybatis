@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="PATH_LOG_LINUX_GRADLE" value="/home/JENKINS/template_test_gradle/log/" />
+    <property name="PATH_LOG_LINUX_GRADLE" value="/home/JENKINS/template/test_gradle/log/" />
     <property name="FILENAME_CURRENT" value="current.log" />
     <property name="FILENAME_ROLLING" value="%d{yyyy-MM-dd}.%i.log" />
     <property name="MAX_FILE_SIZE" value="10MB" />

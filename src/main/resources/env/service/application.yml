@@ -19,7 +19,7 @@ apikey:
 
 directory:
   user:
-    image: /home/JENKINS/template_service/data/user/image
+    image: /home/JENKINS/template/service/data/user/image
 
 logging:
   config: classpath:logback-spring-service.xml

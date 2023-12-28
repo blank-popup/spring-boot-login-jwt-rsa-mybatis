@@ -19,7 +19,7 @@ apikey:
 
 directory:
   user:
-    image: /home/JENKINS/template_test_server/data/user/image
+    image: /home/JENKINS/template/test_server/data/user/image
 
 logging:
   config: classpath:logback-spring-test-server.xml

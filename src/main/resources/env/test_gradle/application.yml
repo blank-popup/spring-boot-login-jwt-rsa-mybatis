@@ -19,7 +19,7 @@ apikey:
 
 directory:
   user:
-    image: /home/JENKINS/template_test_gradle/data/user/image
+    image: /home/JENKINS/template/test_gradle/data/user/image
 
 logging:
   config: classpath:logback-spring-test-gradle.xml
