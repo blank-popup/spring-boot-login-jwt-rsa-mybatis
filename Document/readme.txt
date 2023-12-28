@@ -370,7 +370,6 @@ Freestyle Project
         Tasks
             clean
             build
-            -Ptarget=develop
             -x test
             -x asciidoctor
             --info
@@ -434,8 +433,10 @@ Pipeline Project
                         }
                         stage('Configure') {
                             steps{
-                                sh 'rm /var/lib/jenkins/workspace/TemplatePipeline/src/main/resources/logback-spring.xml'
-                                sh 'cp /var/lib/jenkins/workspace/TemplatePipeline/src/main/resources/logback-spring-linux.xml /var/lib/jenkins/workspace/TemplatePipeline/src/main/resources/logback-spring.xml'
+                                sh 'chmod +x ./gradlew'
+                                sh 'chmod +x ./bash_deploy/*'
+                                // sh 'rm ./src/main/resources/logback-spring.xml'
+                                // sh 'cp ./src/main/resources/logback-spring-gradle.xml ./src/main/resources/logback-spring.xml'
                             }
                         }
                 //        stage('Change application.yml') {
@@ -451,7 +452,7 @@ Pipeline Project
                             steps {
                                 sh '''
                                     java -version
-                                    bash ./gradlew clean build -Ptarget=develop -x test -x asciidoctor
+                                    ./gradlew clean build --warning-mode all
                                 '''
                 //                sh '''
                 //                    java -version
@@ -465,6 +466,8 @@ Pipeline Project
                             }
                             steps {
                                 sh '''
+                                    export JENKINS_NODE_COOKIE=dontKillMe
+
                                     java -version
                                     if [[ ${JAVA_HOME} == *"jre" ]]; then
                                         JAVA_HOME=$(dirname ${JAVA_HOME})
@@ -473,7 +476,7 @@ Pipeline Project
                                     COMMAND_JAVA=$(readlink -f $(which java))
                                     echo COMMAND_JAVA : ${COMMAND_JAVA}
 
-                                    sudo bash ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
+                                    sudo -u nova ./bash_deploy/deploy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE}
                                 '''
                 //                sh '''
                 //                    java -version
@@ -488,11 +491,11 @@ Pipeline Project
                 //                    FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
                 //                    PROFILE="develop"
                 //
-                //                    sudo bash ./bash_deploy/stop.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                    sudo -u nova ./bash_deploy/stop.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
                 //                    sleep 1
-                //                    sudo bash ./bash_deploy/copy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                    sudo -u nova ./bash_deploy/copy.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
                 //                    sleep 1
-                //                    sudo bash ./bash_deploy/start.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
+                //                    sudo -u nova ./bash_deploy/start.sh ${JAVA_HOME} ${COMMAND_JAVA} ${WORKSPACE} ${NAME_PROJECT} ${DIRECTORY} ${FILENAME} ${PROFILE}
                 //                    sleep 1
                 //                '''
                             }
@@ -515,9 +518,11 @@ Pipeline Project
 
 vi ./bash_deployh/deploy.sh
 ------------------
-#!/bin/sh
+#!/usr/bin/bash
 
-WORKSPACE=$1
+JAVA_HOME=$1
+COMMAND_JAVA=$2
+WORKSPACE=$3
 NAME_PROJECT="template"
 DIRECTORY="/home/JENKINS/template/api/"
 FILENAME="loginJwtRSA-0.0.1-SNAPSHOT.jar"
@@ -526,9 +531,11 @@ FILEPATH=${DIRECTORY}${FILENAME}
 KEY_PROFILE="spring.profiles.active"
 OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 
-java -version
+${COMMAND_JAVA} -version
 
 echo USER : $USER
+echo JAVA_HOME : ${JAVA_HOME}
+echo COMMAND_JAVA : ${COMMAND_JAVA}
 echo WORKSPACE : ${WORKSPACE}
 echo NAME_PROJECT : ${NAME_PROJECT}
 echo DIRECTORY : ${DIRECTORY}
@@ -557,8 +564,11 @@ sleep 1
 
 echo ========== copying ${NAME_PROJECT} file ==========
 
-rm -rf ${FILEPATH}
-echo removed previous ${NAME_PROJECT} file
+if [ -e ${FILEPATH} ]; then
+    rm -rf ${FILEPATH}
+    echo removed previous ${NAME_PROJECT} ${FILEPATH} file
+fi
+
 cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
 echo copied new ${NAME_PROJECT} file
 
@@ -568,7 +578,7 @@ sleep 1
 
 echo ========== Starting ${NAME_PROJECT} process ==========
 
-java -jar ${OPTION} "${FILEPATH}" &
+${COMMAND_JAVA} -jar ${OPTION} "${FILEPATH}" &
 
 echo ========== Started ${NAME_PROJECT} process ==========
 ------------------
@@ -576,22 +586,24 @@ echo ========== Started ${NAME_PROJECT} process ==========
 
 vi ./bash_deployh/stop.sh
 ------------------
-#!/bin/sh
+#!/usr/bin/bash
 
-WORKSPACE=$1
-NAME_PROJECT=$2
-DIRECTORY=$3
-FILENAME=$4
-VALUE_PROFILE=$5
+JAVA_HOME=$1
+COMMAND_JAVA=$2
+WORKSPACE=$3
+NAME_PROJECT=$4
+DIRECTORY=$5
+FILENAME=$6
+VALUE_PROFILE=$7
 FILEPATH=${DIRECTORY}${FILENAME}
 KEY_PROFILE="spring.profiles.active"
 OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 
-echo ========== Terminating ${NAME_PROJECT} process ==========
-
-java -version
+${COMMAND_JAVA} -version
 
 echo USER : $USER
+echo JAVA_HOME : ${JAVA_HOME}
+echo COMMAND_JAVA : ${COMMAND_JAVA}
 echo WORKSPACE : ${WORKSPACE}
 echo NAME_PROJECT : ${NAME_PROJECT}
 echo DIRECTORY : ${DIRECTORY}
@@ -600,6 +612,8 @@ echo VALUE_PROFILE : ${VALUE_PROFILE}
 echo FILEPATH : ${FILEPATH}
 echo KEY_PROFILE : ${KEY_PROFILE}
 echo OPTION : ${OPTION}
+
+echo ========== Terminating ${NAME_PROJECT} process ==========
 
 PID=`ps -ef | grep ${FILEPATH} | grep ${KEY_PROFILE}=${VALUE_PROFILE} | grep -v grep | awk '{print $2}'`
 echo PID : ${PID}
@@ -618,22 +632,24 @@ echo ========== Terminated ${NAME_PROJECT} process ==========
 
 vi ./bash_deployh/copy.sh
 ------------------
-#!/bin/sh
+#!/usr/bin/bash
 
-WORKSPACE=$1
-NAME_PROJECT=$2
-DIRECTORY=$3
-FILENAME=$4
-VALUE_PROFILE=$5
+JAVA_HOME=$1
+COMMAND_JAVA=$2
+WORKSPACE=$3
+NAME_PROJECT=$4
+DIRECTORY=$5
+FILENAME=$6
+VALUE_PROFILE=$7
 FILEPATH=${DIRECTORY}${FILENAME}
 KEY_PROFILE="spring.profiles.active"
 OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 
-echo ========== copying ${NAME_PROJECT} file ==========
-
-java -version
+${COMMAND_JAVA} -version
 
 echo USER : $USER
+echo JAVA_HOME : ${JAVA_HOME}
+echo COMMAND_JAVA : ${COMMAND_JAVA}
 echo WORKSPACE : ${WORKSPACE}
 echo NAME_PROJECT : ${NAME_PROJECT}
 echo DIRECTORY : ${DIRECTORY}
@@ -643,8 +659,13 @@ echo FILEPATH : ${FILEPATH}
 echo KEY_PROFILE : ${KEY_PROFILE}
 echo OPTION : ${OPTION}
 
-rm -rf ${FILEPATH}
-echo removed previous ${NAME_PROJECT} file
+echo ========== copying ${NAME_PROJECT} file ==========
+
+if [ -e ${FILEPATH} ]; then
+    rm -rf ${FILEPATH}
+    echo removed previous ${NAME_PROJECT} ${FILEPATH} file
+fi
+
 cp -r ${WORKSPACE}/build/libs/${FILENAME} ${FILEPATH}
 echo copied new ${NAME_PROJECT} file
 
@@ -654,22 +675,24 @@ echo ========== copied ${NAME_PROJECT} file ==========
 
 vi ./bash_deployh/start.sh
 ------------------
-#!/bin/sh
+#!/usr/bin/bash
 
-WORKSPACE=$1
-NAME_PROJECT=$2
-DIRECTORY=$3
-FILENAME=$4
-VALUE_PROFILE=$5
+JAVA_HOME=$1
+COMMAND_JAVA=$2
+WORKSPACE=$3
+NAME_PROJECT=$4
+DIRECTORY=$5
+FILENAME=$6
+VALUE_PROFILE=$7
 FILEPATH=${DIRECTORY}${FILENAME}
 KEY_PROFILE="spring.profiles.active"
 OPTION="-D${KEY_PROFILE}=${VALUE_PROFILE}"
 
-echo ========== Starting ${NAME_PROJECT} process ==========
-
-java -version
+${COMMAND_JAVA} -version
 
 echo USER : $USER
+echo JAVA_HOME : ${JAVA_HOME}
+echo COMMAND_JAVA : ${COMMAND_JAVA}
 echo WORKSPACE : ${WORKSPACE}
 echo NAME_PROJECT : ${NAME_PROJECT}
 echo DIRECTORY : ${DIRECTORY}
@@ -679,7 +702,9 @@ echo FILEPATH : ${FILEPATH}
 echo KEY_PROFILE : ${KEY_PROFILE}
 echo OPTION : ${OPTION}
 
-java -jar ${OPTION} "${FILEPATH}" &
+echo ========== Starting ${NAME_PROJECT} process ==========
+
+${COMMAND_JAVA} -jar ${OPTION} "${FILEPATH}" &
 
 echo ========== Started ${NAME_PROJECT} process ==========
 ------------------
@@ -691,6 +716,23 @@ sudo vi /etc/sudoers
 root    ALL=(ALL:ALL) ALL
 jenkins ALL=(ALL) NOPASSWD: ALL
 ------------------
+
+
+
+### Path Data ans Log
+drwxr-xr-x nova    nova    /home/JENKINS
+drwxr-xr-x nova    nova    /home/JENKINS/template
+drwxr-xr-x nova    nova    /home/JENKINS/template/api
+drwxr-xr-x nova    nova    /home/JENKINS/template/develop
+drwxr-xr-x nova    nova    /home/JENKINS/template/develop/data
+drwxr-xr-x nova    nova    /home/JENKINS/template/develop/log
+drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle
+drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/data
+drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/data/user
+drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/data/user/image
+-rw-r--r-- jenkins jenkins /home/JENKINS/template/test_gradle/data/user/image/01eddb85-d63f-1eb8-87c9-04529c92ee69
+drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/log
+
 
 
 
@@ -712,6 +754,13 @@ server {
 
     location / {
         try_files $uri $uri/ =404;
+    }
+
+    location /template/docs {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        proxy_pass http://template/template/docs/index.html;
     }
 
     location /template {
