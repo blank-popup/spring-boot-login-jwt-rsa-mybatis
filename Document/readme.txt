@@ -282,12 +282,17 @@ $ echo $JAVA_HOME
 
 
 ### Jenkins
-Google "download jenkins .deb"
-https://pkg.jenkins.io/debian-stable/direct/
-wget https://pkg.jenkins.io/debian-stable/binary/jenkins_2.346.3_all.deb
-sudo dpkg -i jenkins_2.346.3_all.deb
-wget https://pkg.jenkins.io/debian-stable/direct/jenkins_2.426.2_all.deb
-sudo dpkg -i jenkins_2.426.2_all.deb
+$ sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+$ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+$ sudo apt update
+$ sudo apt install jenkins
+
+// Google "download jenkins .deb"
+// https://pkg.jenkins.io/debian-stable/direct/
+// wget https://pkg.jenkins.io/debian-stable/binary/jenkins_2.346.3_all.deb
+// sudo dpkg -i jenkins_2.346.3_all.deb
+// wget https://pkg.jenkins.io/debian-stable/direct/jenkins_2.426.2_all.deb
+// sudo dpkg -i jenkins_2.426.2_all.deb
 
 ### Problem
 Waiting for cache lock: Could not get lock /var/lib/dpkg/lock-frontend. It is held by process 5572
@@ -299,14 +304,6 @@ $ sudo rm /var/lib/dpkg/lcok*
 
 $ sudo dpkg --configure -a
 $ sudo apt update
-
-
-
-$ sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
-$ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-$ sudo apt-get update
-$ sudo apt-get install jenkins
-
 
 
 $WORKSPACE
@@ -435,16 +432,15 @@ Pipeline Project
                             steps{
                                 sh 'chmod +x ./gradlew'
                                 sh 'chmod +x ./bash_deploy/*'
-                                // sh 'rm ./src/main/resources/logback-spring.xml'
-                                // sh 'cp ./src/main/resources/logback-spring-gradle.xml ./src/main/resources/logback-spring.xml'
+                                sh '''
+                                    APP_YML=/home/JENKINS/template/test_gradle/etc/application.yml
+                                    if [ -e ${APP_YML} ]; then
+                                        rm /var/lib/jenkins/workspace/Template/src/main/resources/application.yml
+                                        cp ${APP_YML} /var/lib/jenkins/workspace/Template/src/main/resources
+                                    fi
+                                '''
                             }
                         }
-                //        stage('Change application.yml') {
-                //            steps{
-                //                sh 'rm ./src/main/resources/application.properties'
-                //                sh 'cp /home/env/application.properties /var/lib/jenkins/workspace/pipeline/src/main/resources'
-                //            }
-                //        }
                         stage('Gradle Build') {
                             tools {
                                 jdk("openjdk8")
@@ -733,6 +729,22 @@ drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/data/user/image
 -rw-r--r-- jenkins jenkins /home/JENKINS/template/test_gradle/data/user/image/01eddb85-d63f-1eb8-87c9-04529c92ee69
 drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/log
 
+cd /home
+sudo mkdir JENKINS
+sudo chown nova:nova JENKINS
+mkdir /home/JENKINS/template
+mkdir /home/JENKINS/template/api
+mkdir /home/JENKINS/template/develop
+mkdir /home/JENKINS/template/develop/data
+mkdir /home/JENKINS/template/develop/log
+mkdir /home/JENKINS/template/test_gradle
+mkdir /home/JENKINS/template/test_gradle/data
+mkdir /home/JENKINS/template/test_gradle/data/user
+mkdir /home/JENKINS/template/test_gradle/data/user/image
+mkdir /home/JENKINS/template/test_gradle/log
+mkdir /home/JENKINS/template/test_gradle/etc
+scp -P 18000 Document\01eddb85-d63f-1eb8-87c9-04529c92ee69 nova@192.168.45.245:/home/JENKINS/template/test_gradle/data/user/image/
+sudo chown jenkins:jenkins -R /home/JENKINS/template/test_gradle
 
 
 
