@@ -241,7 +241,7 @@ $ sudo chown mongodb:mongodb mongodb-27017.sock
 
 ### docker
 $ sudo apt update
-$ sudo apt-get install -y ca-certificates curl software-properties-common apt-transport-https gnupg lsb-release
+$ sudo apt install -y ca-certificates curl software-properties-common apt-transport-https gnupg lsb-release
 $ sudo mkdir -p /etc/apt/keyrings
 $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 $ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
@@ -257,8 +257,6 @@ $ sudo usermod -aG docker $USER
 
 ### git
 sudo apt install git
-
-git config --global credential.helper store
 
 
 
@@ -304,8 +302,8 @@ $ sudo apt update
 
 $ sudo wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
 $ echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
-$ sudo apt-get update
-$ sudo apt-get install jenkins
+$ sudo apt update
+$ sudo apt install jenkins
 
 
 
@@ -318,6 +316,18 @@ search "PORT"
 ------------------
 Environment="JENKINS_PORT=18010"
 ------------------
+
+$ sudo vi /etc/sudoers
+------------------
+# User privilege specification
+root    ALL=(ALL:ALL) ALL
+jenkins ALL=(ALL) NOPASSWD: ALL
+------------------
+
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart jenkins
+
+$ sudo vi /var/lib/jenkins/secrets/initialAdminPassword
 
 
 Dashboard > Manage Jenkins > Tools
@@ -341,11 +351,6 @@ Dashboard > Manage Jenkins > System >
 Dashboard > Manage Jenkins > System >
     Shell
         Shell executable : /usr/bin/bash
-
-$ sudo systemctl daemon-reload
-$ sudo systemctl restart jenkins
-
-$ sudo vi /var/lib/jenkins/secrets/initialAdminPassword
 
 
 Forgetting Account
@@ -435,16 +440,18 @@ Pipeline Project
                             steps{
                                 sh 'chmod +x ./gradlew'
                                 sh 'chmod +x ./bash_deploy/*'
-                                // sh 'rm ./src/main/resources/logback-spring.xml'
-                                // sh 'cp ./src/main/resources/logback-spring-gradle.xml ./src/main/resources/logback-spring.xml'
+                                sh '''
+                                    APP_YML_NEW=/home/JENKINS/template/test_gradle/etc/application.yml
+                                    APP_YML_OLD=/var/lib/jenkins/workspace/Template/src/main/resources/application.yml
+                                    if [ -e ${APP_YML_NEW} ]; then
+                                        if [ -e ${APP_YML_OLD} ]; then
+                                            rm ${APP_YML_OLD}
+                                        fi
+                                        cp ${APP_YML_NEW} $(dirname ${APP_YML_OLD})
+                                    fi
+                                '''
                             }
                         }
-                //        stage('Change application.yml') {
-                //            steps{
-                //                sh 'rm ./src/main/resources/application.properties'
-                //                sh 'cp /home/env/application.properties /var/lib/jenkins/workspace/pipeline/src/main/resources'
-                //            }
-                //        }
                         stage('Gradle Build') {
                             tools {
                                 jdk("openjdk8")
@@ -710,16 +717,22 @@ echo ========== Started ${NAME_PROJECT} process ==========
 ------------------
 
 
-sudo vi /etc/sudoers
-------------------
-# User privilege specification
-root    ALL=(ALL:ALL) ALL
-jenkins ALL=(ALL) NOPASSWD: ALL
-------------------
+
+### Path Data and Log
+sudo mkdir -p /home/JENKINS/template/api
+sudo mkdir -p /home/JENKINS/template/develop/data
+sudo mkdir -p /home/JENKINS/template/develop/log
+sudo mkdir -p /home/JENKINS/template/test_gradle/data/user/image
+sudo mkdir -p /home/JENKINS/template/test_gradle/etc
+sudo mkdir -p /home/JENKINS/template/test_gradle/log
+sudo chown nova:nova -R /home/JENKINS
+
+scp -P 18000 src\main\resources\application.yml nova@192.168.200.108:/home/JENKINS/template/test_gradle/etc
+scp -P 18000 Document\01eddb85-d63f-1eb8-87c9-04529c92ee69 nova@192.168.200.108:/home/JENKINS/template/test_gradle/data/user/image
+
+sudo chown jenkins:jenkins -R /home/JENKINS/template/test_gradle
 
 
-
-### Path Data ans Log
 drwxr-xr-x nova    nova    /home/JENKINS
 drwxr-xr-x nova    nova    /home/JENKINS/template
 drwxr-xr-x nova    nova    /home/JENKINS/template/api
@@ -731,9 +744,18 @@ drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/data
 drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/data/user
 drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/data/user/image
 -rw-r--r-- jenkins jenkins /home/JENKINS/template/test_gradle/data/user/image/01eddb85-d63f-1eb8-87c9-04529c92ee69
+drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/etc
+-rw-rw-r-- jenkins jenkins /home/JENKINS/template/test_gradle/etc/application.yml
 drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/log
 
 
+
+### Insert Data(./Document/*.sql)
+
+
+
+### Execute Template Server
+nohup /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -jar -Dspring.profiles.active=develop /home/JENKINS/template/api/loginJwtRSA-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &
 
 
 ### Nginx

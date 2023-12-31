@@ -1,6 +1,8 @@
-@BaseURL = http://localhost:18020/template/api/v1
+# @BaseURL = http://localhost:18020/template/api/v1
 # @BaseURL = http://192.168.200.108:18020/template/api/v1
+@BaseURL = http://192.168.200.108/template/api/v1
 # @BaseURL = http://192.168.45.100:18020/template/api/v1
+# @BaseURL = http://192.168.45.100/template/api/v1
 
 ### SignUp
 POST {{BaseURL}}/auth/signup HTTP/1.1
