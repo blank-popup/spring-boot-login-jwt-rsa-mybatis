@@ -46,7 +46,7 @@ scp -P 22 authorized_keys user@192.168.200.124:/home/user/.ssh
 In VS code setting - C:\Users\user\.ssh\config
 Host HostName
   HostName 192.168.200.112
-  User user
+  User username
   Port 18000
   IdentityFile C:\Users\user\.ssh\id_rsa
 
@@ -57,7 +57,7 @@ $ sudo apt update
 $ sudo apt install mariadb-server mariadb-client
 $ sudo mariadb-secure-installation
 
-Switch to unix_socket authentication [Y/n] n
+Switch to unix_socket authentication [Y/n] y
  ... skipping.
 
 Change the root password? [Y/n] y
@@ -103,7 +103,9 @@ $ sudo systemctl restart mariadb
 
 $ sudo netstat -tulpn
 
-$ sudo mariadb -u root -p
+Switch to unix_socket authentication [Y/n]
+Y -> $ sudo mariadb
+n -> $ sudo mariadb -u root -p
 
 use mysql;
 CREATE DATABASE databasename;
@@ -146,7 +148,7 @@ $ sudo vi /etc/postgresql/14/main/pg_hba.conf
 ------------------
 # "local" is for Unix domain socket connections only
 local   all             all                                     peer
-# IPv4 local connections:kk
+# IPv4 local connections:
 host    all             all             127.0.0.1/32            scram-sha-256
 ------------------
 # "local" is for Unix domain socket connections only
@@ -756,12 +758,14 @@ drwxr-xr-x jenkins jenkins /home/JENKINS/template/test_gradle/log
 
 ### Execute Template Server
 nohup /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -jar -Dspring.profiles.active=develop /home/JENKINS/template/api/loginJwtRSA-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &
+nohup /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -jar -Ddefinition.db.url-jdbc=jdbc:log4jdbc:mariadb://192.168.45.195:19000 -Dspring.profiles.active=develop /home/JENKINS/template/api/loginJwtRSA-0.0.1-SNAPSHOT.jar >/dev/null 2>&1 &
+
 
 
 ### Nginx
-sudo apt install nginx
+$ sudo apt install nginx
 
-sudo vi /etc/nginx/sites-available/default
+$ sudo vi /etc/nginx/sites-available/default
 ------------------
 # Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
 

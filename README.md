@@ -20,3 +20,5 @@ Static Function : Encryption, Decription, UUID, Time and etc
 Sign Up / Sign In / Register Api Key  
 GET, POST, PUT, PATCH, DELETE  
 Upload / Downlod  
+## etc
+Look at files(/Document/readme.txt and /Document/test_run.rest)
